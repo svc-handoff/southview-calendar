@@ -1,16 +1,143 @@
 'use client';
-import {useEffect,useRef,useState} from 'react';
-import Link from 'next/link';
-import {stories,anniversaries,demoTour, type CalendarEvent} from '@/lib/events';
-const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
-export default function Home(){
- const [date,setDate]=useState({year:2026,month:9}),[filter,setFilter]=useState('all'),[live,setLive]=useState<CalendarEvent[]>([]),[connection,setConnection]=useState('loading'),[message,setMessage]=useState(''),[refresh,setRefresh]=useState(0),[links,setLinks]=useState({subscribeUrl:'',manageUrl:''}),[selected,setSelected]=useState<CalendarEvent|null>(null),[setup,setSetup]=useState(false);const dialog=useRef<HTMLDialogElement>(null);
- useEffect(()=>{const controller=new AbortController();setConnection('loading');setLive([]);fetch(`/api/calendar?year=${date.year}&month=${date.month+1}`,{signal:controller.signal}).then(async r=>{const d=await r.json();setConnection(d.status);setMessage(d.message||'');setLive(d.events||[]);setLinks({subscribeUrl:d.subscribeUrl||'',manageUrl:d.manageUrl||''});}).catch(e=>{if(e.name!=='AbortError'){setConnection('error');setMessage('Unable to reach the calendar. Try Refresh.');}});return()=>controller.abort();},[date,refresh]);
- useEffect(()=>{if(selected||setup){dialog.current?.showModal()}else{dialog.current?.close()}},[selected,setup]);
- const history=anniversaries(date.year);const demo:CalendarEvent={...demoTour,kind:'tour'};
- const events=[...history,...(connection==='connected'?live.filter(e=>!history.some(h=>h.storySlug===e.storySlug)):[demo])].filter(e=>e.date.startsWith(`${date.year}-${String(date.month+1).padStart(2,'0')}`)&&(filter==='all'||e.kind===filter)).sort((a,b)=>a.date.localeCompare(b.date));
- const offset=new Date(date.year,date.month,1).getDay(),days=new Date(date.year,date.month+1,0).getDate();
- function changeMonth(n:number){const d=new Date(date.year,date.month+n,1);setDate({year:d.getFullYear(),month:d.getMonth()})}
- function eventLink(e:CalendarEvent,compact=false){return e.kind==='history'&&stories.some(s=>s.slug===e.storySlug)?<Link className={'event history '+(compact?'compact':'')} href={'/history/'+e.storySlug} key={e.id}><span className="dot"/>{e.title}</Link>:<button key={e.id} className={'event tour '+(compact?'compact':'')} onClick={()=>setSelected(e)}><span className="dot"/>{e.title}{e.id==='demo-tour'&&<small>DEMO</small>}</button>}
- return <><header className="masthead"><Link className="brand" href="/">SOUTH–VIEW<span>HISTORY & REMEMBRANCE</span></Link><nav><a href="#calendar">Calendar</a><a href="#timeline">Timeline</a><span className="demo-label">A DEMONSTRATION</span></nav></header><main><section className="intro"><div><p className="eyebrow"><span className="mini-line"/> Atlanta, Georgia · Est. 1886</p><h1>A place of memory.<br/><em>A living history.</em></h1><p className="intro-copy">Discover the people and moments connected to South-View Cemetery. Follow a date into the past, or find a reason to visit in the present.</p></div><aside className="intro-aside"><span className="eyebrow">This month’s collection</span><strong>October</strong><p>Three stories of dignity, courage,<br/>and the struggle for equality.</p><a href="#timeline">Explore the stories <span>↓</span></a></aside></section><section id="calendar" className="calendar-section"><div className="section-heading"><div><p className="eyebrow">01 / The calendar</p><h2>Dates to remember</h2></div><div className="actions">{links.subscribeUrl?<a className="button dark" target="_blank" rel="noreferrer" href={links.subscribeUrl}>Subscribe in Google Calendar ↗</a>:<button className="button dark" onClick={()=>setSetup(true)}>Google Calendar ↗</button>}</div></div><div className="calendar-layout"><div className="calendar"><div className="calendar-toolbar"><div className="month"><h3>{monthNames[date.month]} <span>{date.year}</span></h3><div><button aria-label="Previous month" onClick={()=>changeMonth(-1)}>←</button><button aria-label="Next month" onClick={()=>changeMonth(1)}>→</button></div></div><div className="filters" aria-label="Filter events">{[['all','All events'],['history','Anniversaries'],['tour','Tours']].map(([id,title])=><button key={id} aria-pressed={filter===id} className={filter===id?'active':''} onClick={()=>setFilter(id)}>{title}</button>)}</div></div><div className="weekdays">{['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=><div key={d}>{d}</div>)}</div><div className="month-grid">{Array.from({length:Math.ceil((offset+days)/7)*7},(_,i)=>{const day=i-offset+1;const valid=day>0&&day<=days;const ds=`${date.year}-${String(date.month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;return <div className={'day '+(!valid?'outside':'')} key={i}>{valid&&<><span className="day-number">{day}</span>{events.filter(e=>e.date===ds).map(e=>eventLink(e,true))}</>}</div>})}</div><div className="calendar-footer"><span><i className="legend history"/> Historical anniversary</span><span><i className="legend tour"/> Tour / gathering</span><span>Atlanta time</span></div></div><aside className="month-list"><div className="month-list-title"><span className="eyebrow">In {monthNames[date.month]}</span><span>{events.length} events</span></div>{events.length===0?<p className="empty">No events in this view. <button onClick={()=>{setDate({year:2026,month:9});setFilter('all')}}>Return to October</button></p>:events.map(e=><div className="list-event" key={e.id}><div className="date-box"><span>{monthNames[date.month].slice(0,3)}</span><strong>{Number(e.date.slice(-2))}</strong></div><div>{eventLink(e)}<p>{e.kind==='history'?'Historical anniversary':e.time||'Gathering'}</p></div></div>)}<div className="sync"><span className={'sync-dot '+(connection==='connected'?'connected':'')}/><span>{connection==='connected'?'Connected to Google Calendar':connection==='loading'?'Checking calendar…':connection==='error'?'Calendar unavailable':'Google Calendar details pending'}</span><button onClick={()=>setRefresh(x=>x+1)} aria-label="Refresh Google Calendar">↻</button></div>{connection!=='connected'&&<p className="sync-note">{connection==='error'?message:message||'The tour shown here is sample content. Live scheduling and subscriptions will activate when the demo calendar is connected.'}</p>}{links.manageUrl&&<a className="staff-link" href={links.manageUrl} target="_blank" rel="noreferrer">Staff: edit in Google Calendar ↗</a>}</aside></div></section><section id="timeline" className="timeline-section"><div className="section-heading"><div><p className="eyebrow">02 / Through the years</p><h2>October, across history</h2></div><p className="section-note">Original dates, in chronological order.<br/>Each story is a part of South-View’s legacy.</p></div><div className="timeline">{stories.map((s,i)=><Link className="timeline-item" href={'/history/'+s.slug} key={s.slug}><div className="timeline-date"><span>{s.date.slice(0,4)}</span><small>OCTOBER {Number(s.date.slice(-2))}</small></div><div className="timeline-node"/><div className="timeline-text"><span className="eyebrow">{s.category}</span><h3>{s.title}</h3><p>{s.summary}</p><span className="read-story">Read the story ↗</span></div><div className={'timeline-image image-'+i}><img src={s.image} alt={s.alt}/></div></Link>)}</div></section><section className="closing"><span className="eyebrow">Remembering together</span><p>History lives in the stories<br/>we keep telling.</p><a href="#calendar">Back to the calendar ↑</a></section></main><footer>South-View history demo <span>Historical research. Present-day remembrance.</span></footer><dialog ref={dialog} onCancel={()=>{setSelected(null);setSetup(false)}} onClick={e=>{if(e.target===dialog.current){setSelected(null);setSetup(false)}}}><button className="close-dialog" aria-label="Close details" onClick={()=>{setSelected(null);setSetup(false)}}>×</button>{setup?<><p className="eyebrow">Google Calendar</p><h2>A calendar to follow.</h2><p>The separate demo calendar has been created with these three anniversaries and a fictional walking tour. Its public feed currently shows free/busy only; event details and subscriptions will appear here once full event visibility is approved.</p><p className="notice">The walking tour is fictional; no tour is scheduled.</p></>:selected&&<><p className="eyebrow">{selected.id==='demo-tour'?'Fictional demo event':'Calendar event'}</p><h2>{selected.title}</h2><p className="tour-date">{new Date(selected.date+'T12:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})} · {selected.time||'All day'}</p><p className="tour-description">{selected.description?.replace(/<[^>]*>/g,'')}</p>{selected.url&&/^https:\/\/calendar.google.com\//.test(selected.url)&&<a className="button dark" href={selected.url} target="_blank" rel="noreferrer">Open in Google Calendar ↗</a>}</>}</dialog></>
+
+import { useEffect, useState } from 'react';
+import { stories, anniversaries, demoTour, type CalendarEvent } from '@/lib/events';
+
+const months = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+
+function historyHref(event: CalendarEvent) {
+  return event.storySlug && stories.some((story) => story.slug === event.storySlug)
+    ? `/history/${event.storySlug}`
+    : null;
+}
+
+export default function Home() {
+  const [date, setDate] = useState({ year: 2026, month: 9 });
+  const [live, setLive] = useState<CalendarEvent[]>([]);
+  const [connection, setConnection] = useState('loading');
+  const [selectedTour, setSelectedTour] = useState<CalendarEvent | null>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`/api/calendar?year=${date.year}&month=${date.month + 1}`, { signal: controller.signal })
+      .then(async (response) => {
+        const data = await response.json();
+        setConnection(data.status);
+        setLive(data.events || []);
+      })
+      .catch((error) => {
+        if (error.name !== 'AbortError') setConnection('error');
+      });
+    return () => controller.abort();
+  }, [date]);
+
+  const histories = anniversaries(date.year);
+  const tour = { ...demoTour, kind: 'tour' as const };
+  const events = [
+    ...histories,
+    ...(connection === 'connected' ? live.filter((event) => !histories.some((item) => item.storySlug === event.storySlug)) : [tour]),
+  ].filter((event) => event.date.startsWith(`${date.year}-${String(date.month + 1).padStart(2, '0')}-`));
+  const offset = new Date(date.year, date.month, 1).getDay();
+  const dayCount = new Date(date.year, date.month + 1, 0).getDate();
+  const weekCount = Math.ceil((offset + dayCount) / 7);
+  const cells = Array.from({ length: weekCount * 7 }, (_, index) => {
+    const day = index - offset + 1;
+    return day > 0 && day <= dayCount ? day : null;
+  });
+
+  function changeMonth(amount: number) {
+    const next = new Date(date.year, date.month + amount, 1);
+    setDate({ year: next.getFullYear(), month: next.getMonth() });
+  }
+
+  function goToToday() {
+    const today = new Date();
+    setDate({ year: today.getFullYear(), month: today.getMonth() });
+  }
+
+  function renderEvent(event: CalendarEvent) {
+    const href = historyHref(event);
+    if (href) {
+      return (
+        <a className="calendar-event history-event" href={href} key={event.id}>
+          <span className="event-dot" aria-hidden="true" />
+          <span>{event.title}</span>
+        </a>
+      );
+    }
+    return (
+      <button className="calendar-event tour-event" key={event.id} onClick={() => setSelectedTour(event)}>
+        <span className="event-dot" aria-hidden="true" />
+        <span>{event.title}</span>
+        {event.id === 'demo-tour' && <small>DEMO</small>}
+      </button>
+    );
+  }
+
+  return (
+    <main className="home-page">
+      <section className="calendar-section" aria-label="Calendar">
+        <div className="month-controls">
+          <h1>{months[date.month]} <span>{date.year}</span></h1>
+          <div className="month-buttons">
+            <button aria-label="Previous month" onClick={() => changeMonth(-1)}>‹</button>
+            <button className="today-button" onClick={goToToday}>Today</button>
+            <button aria-label="Next month" onClick={() => changeMonth(1)}>›</button>
+          </div>
+        </div>
+        <div className="calendar-grid">
+          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+            <div className="weekday" key={day}>{day}</div>
+          ))}
+          {cells.map((day, index) => {
+            const dateKey = day
+              ? `${date.year}-${String(date.month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+              : '';
+            const dayEvents = events.filter((event) => event.date === dateKey);
+            const isToday = day !== null && new Date().toDateString() === new Date(date.year, date.month, day).toDateString();
+            return (
+              <div className={`calendar-day${day ? '' : ' blank'}`} key={index}>
+                {day !== null && (
+                  <>
+                    <span className={`day-number${isToday ? ' today' : ''}`}>{day}</span>
+                    <div className="day-events">{dayEvents.map(renderEvent)}</div>
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="timeline-section" aria-label="Historical timeline">
+        <h2>Timeline</h2>
+        <div className="timeline-list">
+          {[...stories].sort((a, b) => a.date.localeCompare(b.date)).map((story) => (
+            <a className="timeline-story" href={`/history/${story.slug}`} key={story.slug}>
+              <time dateTime={story.date}>{story.label}</time>
+              <span className="timeline-mark" aria-hidden="true" />
+              <span className="timeline-copy">
+                <strong>{story.title}</strong>
+                <span>{story.summary}</span>
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {selectedTour && (
+        <dialog open className="tour-dialog" onClick={(event) => {
+          if (event.target === event.currentTarget) setSelectedTour(null);
+        }}>
+          <button className="dialog-close" aria-label="Close" onClick={() => setSelectedTour(null)}>×</button>
+          <p className="tour-label">Fictional demonstration event</p>
+          <h2>{selectedTour.title}</h2>
+          <p>{selectedTour.description}</p>
+        </dialog>
+      )}
+    </main>
+  );
 }
