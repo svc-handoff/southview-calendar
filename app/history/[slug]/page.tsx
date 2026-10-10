@@ -1,0 +1,7 @@
+import Link from 'next/link';
+import {notFound} from 'next/navigation';
+import {stories} from '@/lib/events';
+export default async function StoryPage({params}:{params:Promise<{slug:string}>}){
+ const {slug}=await params; const story=stories.find(s=>s.slug===slug); if(!story) notFound();
+ return <><header className="masthead"><Link className="brand" href="/">SOUTH–VIEW<span>HISTORY & REMEMBRANCE</span></Link><Link className="back" href="/">← Back to the calendar</Link></header><main className="story-page"><div className="eyebrow">{story.category} <span> / </span> {story.label}</div><h1>{story.title}</h1><p className="story-deck">{story.summary}</p><div className="story-layout"><figure><img src={story.image} alt={story.alt}/><figcaption><a href={story.imageSource} target="_blank" rel="noreferrer">{story.credit} ↗</a></figcaption></figure><div className="prose">{story.paragraphs.map(p=><p key={p}>{p}</p>)}<div className="sources"><span className="eyebrow">Explore the sources</span><a href={story.source} target="_blank" rel="noreferrer">{story.sourceLabel} ↗</a><span>{story.book}</span></div></div></div><nav className="more-stories"><span className="eyebrow">Continue through history</span>{stories.filter(s=>s.slug!==slug).map(s=><Link key={s.slug} href={'/history/'+s.slug}><span>{s.label}</span>{s.title} <b>↗</b></Link>)}</nav></main><footer>South-View history demo <span>Historical research. Present-day remembrance.</span></footer></>
+}
