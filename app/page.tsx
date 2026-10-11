@@ -3,6 +3,26 @@
 import { useEffect, useState } from 'react';
 import { stories, anniversaries, demoTour, type CalendarEvent } from '@/lib/events';
 
+const regions = [
+  {
+    id: 'founding',
+    title: 'Founding',
+    dates: '1885–1886',
+    events: [
+      { date: 'October 26, 1885', title: 'Sterling Watts and the origins of South-View', href: '/history/a-cemetery-of-their-own' },
+    ],
+  },
+  {
+    id: 'civil-rights',
+    title: 'Civil Rights',
+    dates: '1964–1967',
+    events: [
+      { date: 'October 14, 1964', title: 'Martin Luther King Jr. receives the Nobel Peace Prize', href: '/history/a-nobel-prize-for-nonviolence' },
+      { date: 'October 7, 1967', title: 'Ruby Doris Smith Robinson', href: '/history/remembering-ruby-doris' },
+    ],
+  },
+];
+
 const months = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
@@ -19,6 +39,7 @@ export default function Home() {
   const [live, setLive] = useState<CalendarEvent[]>([]);
   const [connection, setConnection] = useState('loading');
   const [selectedTour, setSelectedTour] = useState<CalendarEvent | null>(null);
+  const [openRegion, setOpenRegion] = useState<string | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -114,18 +135,33 @@ export default function Home() {
 
       <section className="timeline-section" aria-label="Historical timeline">
         <h2>Timeline</h2>
-        <div className="timeline-list">
-          {[...stories].sort((a, b) => a.date.localeCompare(b.date)).map((story) => (
-            <a className="timeline-story" href={`/history/${story.slug}`} key={story.slug}>
-              <time dateTime={story.date}>{story.label}</time>
-              <span className="timeline-mark" aria-hidden="true" />
-              <span className="timeline-copy">
-                <strong>{story.title}</strong>
-                <span>{story.summary}</span>
-              </span>
-            </a>
+        <div className="region-track">
+          <div className="region-rail" aria-hidden="true" />
+          {regions.map((region) => (
+            <button
+              aria-expanded={openRegion === region.id}
+              aria-controls={`region-${region.id}`}
+              className={`region-card${openRegion === region.id ? ' selected' : ''}`}
+              key={region.id}
+              onClick={() => setOpenRegion(openRegion === region.id ? null : region.id)}
+            >
+              <span className="region-date">{region.dates}</span>
+              <strong>{region.title}</strong>
+              <span className="region-open-label">{openRegion === region.id ? 'Close' : 'Open'} <span aria-hidden="true">{openRegion === region.id ? '−' : '+'}</span></span>
+            </button>
           ))}
         </div>
+        {regions.map((region) => (
+          <div className="region-events" id={`region-${region.id}`} hidden={region.id !== openRegion} key={region.id}>
+            {region.events.map((event) => (
+              <a className="region-event-card" href={event.href} key={event.href}>
+                <time>{event.date}</time>
+                <strong>{event.title}</strong>
+                <span aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </div>
+        ))}
       </section>
 
       {selectedTour && (
