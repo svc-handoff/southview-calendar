@@ -47,17 +47,25 @@ a:focus-visible, button:focus-visible { outline: 2px solid #275b42; outline-offs
 .region-rail { position: absolute; top: 32px; right: 0; left: 0; height: 1px; background: var(--line); }
 .region-card { position: relative; z-index: 1; display: grid; flex: 0 0 220px; min-height: 128px; align-content: start; gap: 9px; padding: 17px; border: 1px solid var(--line); border-radius: 7px; background: #fff; text-align: left; box-shadow: 0 2px 7px #00000008; }
 .region-card:before { position: absolute; top: 9px; left: 17px; width: 8px; height: 8px; border: 2px solid var(--green); border-radius: 50%; background: #fff; content: ''; }
-.region-card:hover, .region-card.selected { border-color: #a8c5b1; box-shadow: 0 3px 12px #244d3615; }
+.region-card:hover { border-color: #a8c5b1; box-shadow: 0 3px 12px #244d3615; }
 .region-date { margin-top: 12px; color: var(--muted); font-size: 11px; }
 .region-card strong { font-size: 17px; font-weight: 500; }
 .region-open-label { display: flex; justify-content: space-between; margin-top: 5px; color: var(--muted); font-size: 11px; }
 .region-open-label span { color: var(--green); font-size: 16px; line-height: 10px; }
-.region-events { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-top: 4px; }
-.region-event-card { display: grid; min-height: 90px; gap: 8px; padding: 15px; border: 1px solid var(--line); border-radius: 6px; background: #fff; }
-.region-event-card:hover { border-color: #a8c5b1; }
-.region-event-card time { color: var(--muted); font-size: 10px; }
-.region-event-card strong { max-width: 340px; font-size: 13px; font-weight: 500; line-height: 1.45; }
-.region-event-card > span { justify-self: end; color: var(--green); font-size: 13px; }
+.region-view { padding-top: 4px; }
+.region-view-heading { display: flex; align-items: baseline; gap: 12px; }
+.region-view-heading > span { color: var(--muted); font-size: 11px; }
+.region-view-heading h3 { margin: 0; font-size: 17px; font-weight: 500; }
+.timeline-back { margin: 0; padding: 0; border: 0; background: transparent; color: var(--muted); font-size: 11px; }
+.timeline-back:hover { color: var(--ink); text-decoration: underline; }
+.region-event-track { position: relative; display: flex; gap: 14px; overflow-x: auto; padding: 20px 2px 12px; }
+.region-event-rail { position: absolute; top: 35px; right: 0; left: 0; height: 1px; background: var(--line); }
+.timeline-event-card { position: relative; z-index: 1; display: grid; flex: 0 0 235px; min-height: 115px; align-content: start; gap: 9px; padding: 17px; border: 1px solid var(--line); border-radius: 7px; background: #fff; }
+.timeline-event-card:hover { border-color: #a8c5b1; }
+.timeline-event-card:before { position: absolute; top: 9px; left: 17px; width: 8px; height: 8px; border: 2px solid var(--green); border-radius: 50%; background: #fff; content: ''; }
+.timeline-event-card time { margin-top: 11px; color: var(--muted); font-size: 10px; }
+.timeline-event-card strong { font-size: 13px; font-weight: 500; line-height: 1.45; }
+.timeline-event-card > span { justify-self: end; color: var(--green); font-size: 13px; }
 
 .tour-dialog { position: fixed; inset: 50% auto auto 50%; width: min(420px, calc(100% - 32px)); transform: translate(-50%, -50%); margin: 0; padding: 28px; border: 1px solid var(--line); border-radius: 8px; background: #fff; box-shadow: 0 12px 48px #0002; }
 .tour-dialog::backdrop { background: #20252255; }
@@ -94,6 +102,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid #275b42; outline-offs
   .timeline-section { margin-top: 28px; }
   .region-track { gap: 10px; }
   .region-card { flex-basis: min(220px, 74vw); min-height: 116px; }
+  .region-event-track { gap: 10px; }
+  .timeline-event-card { flex-basis: min(235px, 78vw); min-height: 105px; }
   .person-page { margin-top: 36px; }
 }
 

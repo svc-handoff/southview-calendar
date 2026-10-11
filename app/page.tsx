@@ -39,7 +39,7 @@ export default function Home() {
   const [live, setLive] = useState<CalendarEvent[]>([]);
   const [connection, setConnection] = useState('loading');
   const [selectedTour, setSelectedTour] = useState<CalendarEvent | null>(null);
-  const [openRegion, setOpenRegion] = useState<string | null>(null);
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -135,33 +135,36 @@ export default function Home() {
 
       <section className="timeline-section" aria-label="Historical timeline">
         <h2>Timeline</h2>
-        <div className="region-track">
-          <div className="region-rail" aria-hidden="true" />
-          {regions.map((region) => (
-            <button
-              aria-expanded={openRegion === region.id}
-              aria-controls={`region-${region.id}`}
-              className={`region-card${openRegion === region.id ? ' selected' : ''}`}
-              key={region.id}
-              onClick={() => setOpenRegion(openRegion === region.id ? null : region.id)}
-            >
-              <span className="region-date">{region.dates}</span>
-              <strong>{region.title}</strong>
-              <span className="region-open-label">{openRegion === region.id ? 'Close' : 'Open'} <span aria-hidden="true">{openRegion === region.id ? '−' : '+'}</span></span>
-            </button>
-          ))}
-        </div>
-        {regions.map((region) => (
-          <div className="region-events" id={`region-${region.id}`} hidden={region.id !== openRegion} key={region.id}>
-            {region.events.map((event) => (
-              <a className="region-event-card" href={event.href} key={event.href}>
-                <time>{event.date}</time>
-                <strong>{event.title}</strong>
-                <span aria-hidden="true">↗</span>
-              </a>
+        {selectedRegion ? (
+          <div className="region-view" key={selectedRegion}>
+            <div className="region-view-heading">
+              <button className="timeline-back" onClick={() => setSelectedRegion(null)}>← All regions</button>
+              <span>{regions.find((region) => region.id === selectedRegion)?.dates}</span>
+              <h3>{regions.find((region) => region.id === selectedRegion)?.title}</h3>
+            </div>
+            <div className="region-event-track">
+              <div className="region-event-rail" aria-hidden="true" />
+              {regions.find((region) => region.id === selectedRegion)?.events.map((event) => (
+                <a className="timeline-event-card" href={event.href} key={event.href}>
+                  <time>{event.date}</time>
+                  <strong>{event.title}</strong>
+                  <span aria-hidden="true">↗</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="region-track">
+            <div className="region-rail" aria-hidden="true" />
+            {regions.map((region) => (
+              <button className="region-card" key={region.id} onClick={() => setSelectedRegion(region.id)}>
+                <span className="region-date">{region.dates}</span>
+                <strong>{region.title}</strong>
+                <span className="region-open-label">View timeline <span aria-hidden="true">→</span></span>
+              </button>
             ))}
           </div>
-        ))}
+        )}
       </section>
 
       {selectedTour && (
