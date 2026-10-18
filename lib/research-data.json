@@ -7,7 +7,10 @@
       "image": "/images/benjamin-mays.jpg",
       "credit": "Portrait by Robert Templeton; courtesy of Tim Templeton via Wikimedia Commons (CC BY-SA 4.0).",
       "imageSource": "https://commons.wikimedia.org/wiki/File:Benjamin_Mays_portrait.jpg",
-      "imageStatus": "usable_with_attribution_and_sharealike"
+      "imageStatus": "usable_with_attribution_and_sharealike",
+      "timelineDate": "c. 1894 · exact date unconfirmed",
+      "timelineSort": "1894-08-01",
+      "license": "CC BY-SA 4.0"
     },
     {
       "name": "William H. Crogman",
@@ -16,7 +19,10 @@
       "image": "/images/william-crogman.jpg",
       "credit": "William H. Crogman portrait, Atlanta University Photographs, Robert W. Woodruff Library, via Digital Library of Georgia.",
       "imageSource": "https://commons.wikimedia.org/wiki/File:William_H._Crogman_(cropped).jpg",
-      "imageStatus": "public_domain_us"
+      "imageStatus": "public_domain_us",
+      "timelineDate": "1841-05-05",
+      "timelineSort": "1841-05-05",
+      "license": "Public domain in the United States (published before 1931)"
     },
     {
       "name": "Robert Grant",
@@ -25,7 +31,10 @@
       "image": "/images/portrait-pending.svg",
       "credit": "Portrait pending rights clearance",
       "imageSource": "https://www.zionhill.org/historyarchive",
-      "imageStatus": "permission_required"
+      "imageStatus": "permission_required",
+      "timelineDate": "1872 · exact day not established",
+      "timelineSort": "1872-00-00",
+      "license": "No reuse license found; obtain permission from Zion Hill Baptist Church Archives before publishing."
     },
     {
       "name": "Grace Towns Hamilton",
@@ -34,7 +43,10 @@
       "image": "/images/portrait-pending.svg",
       "credit": "Portrait pending rights clearance",
       "imageSource": "https://dlg.usg.edu/record/auu_gthamilton_auc-152-0054",
-      "imageStatus": "permission_required"
+      "imageStatus": "permission_required",
+      "timelineDate": "1907-02-10",
+      "timelineSort": "1907-02-10",
+      "license": "Archive item has no clear reuse license in the record; obtain permission before publishing."
     },
     {
       "name": "Alonzo Herndon",
@@ -43,7 +55,10 @@
       "image": "/images/alonzo-herndon.jpg",
       "credit": "Alonzo Herndon portrait, source image from Sweet Auburn; via Wikimedia Commons.",
       "imageSource": "https://commons.wikimedia.org/wiki/File:Alonzo_herndon.jpg",
-      "imageStatus": "public_domain_us"
+      "imageStatus": "public_domain_us",
+      "timelineDate": "1858-06-26",
+      "timelineSort": "1858-06-26",
+      "license": "Public domain in the United States (Commons PD-US determination)"
     },
     {
       "name": "Annie L. McPheeters",
@@ -52,7 +67,10 @@
       "image": "/images/portrait-pending.svg",
       "credit": "Portrait pending rights clearance",
       "imageSource": "https://dlg.usg.edu/record/dlg_aaed_aarl90-005-010-134",
-      "imageStatus": "permission_required"
+      "imageStatus": "permission_required",
+      "timelineDate": "1908-02-22",
+      "timelineSort": "1908-02-22",
+      "license": "No explicit image reuse license found on the archive record; request permission from Auburn Avenue Research Library."
     },
     {
       "name": "John W. Dobbs",
@@ -61,7 +79,10 @@
       "image": "/images/portrait-pending.svg",
       "credit": "Portrait pending rights clearance",
       "imageSource": "https://commons.wikimedia.org/wiki/File:%22Through_His_Eyes%22_(Ralph_Helmick,_1996),_mask_of_John_Wesley_Dobbs_in_Sweet_Auburn,_Atlanta.jpg",
-      "imageStatus": "unavailable_portrait"
+      "imageStatus": "unavailable_portrait",
+      "timelineDate": "1882 · exact day not established",
+      "timelineSort": "1882-00-00",
+      "license": null
     },
     {
       "name": "Graham W. Jackson Sr.",
@@ -70,7 +91,10 @@
       "image": "/images/portrait-pending.svg",
       "credit": "Portrait pending rights clearance",
       "imageSource": "https://dlg.usg.edu/record/nge_ngen_graham-jackson-sr-002",
-      "imageStatus": "permission_required"
+      "imageStatus": "permission_required",
+      "timelineDate": "1903-02-22",
+      "timelineSort": "1903-02-22",
+      "license": "No explicit reuse license found; request permission from Auburn Avenue Research Library."
     },
     {
       "name": "Ludie Clay Andrews",
@@ -79,7 +103,10 @@
       "image": "/images/portrait-pending.svg",
       "credit": "Portrait pending rights clearance",
       "imageSource": "https://georgiawomen.org/ludie-clay-andrews",
-      "imageStatus": "permission_required"
+      "imageStatus": "permission_required",
+      "timelineDate": "1874-03-03",
+      "timelineSort": "1874-03-03",
+      "license": "No explicit image reuse license found; permission required."
     },
     {
       "name": "Bazoline E. Usher",
@@ -88,7 +115,10 @@
       "image": "/images/bazoline-usher.jpg",
       "credit": "Library of Congress, Prints and Photographs Division, LC-DIG-cph-3d02231.",
       "imageSource": "https://commons.wikimedia.org/wiki/File:Bazoline_Estelle_Usher,_Atlanta_University_student,_half-length_portrait,_facing_front_LCCN98518739.jpg",
-      "imageStatus": "public_domain_us"
+      "imageStatus": "public_domain_us",
+      "timelineDate": "1885-12-26",
+      "timelineSort": "1885-12-26",
+      "license": "Public domain in the United States (U.S. publication before 1931)"
     },
     {
       "name": "John Lewis",
@@ -97,7 +127,10 @@
       "image": "/images/john-lewis.jpg",
       "credit": "U.S. Congress, official portrait of Congressman John Lewis (public domain).",
       "imageSource": "https://commons.wikimedia.org/wiki/File:Johnlewis.jpg",
-      "imageStatus": "public_domain_us"
+      "imageStatus": "public_domain_us",
+      "timelineDate": "1940-02-21",
+      "timelineSort": "1940-02-21",
+      "license": "Public domain (U.S. federal government work)"
     },
     {
       "name": "Dr. Moses Amos",
@@ -106,7 +139,10 @@
       "image": "/images/portrait-pending.svg",
       "credit": "Portrait pending rights clearance",
       "imageSource": "https://commons.wikimedia.org/wiki/Category:African_American_history_of_the_1900s",
-      "imageStatus": "license_review_required"
+      "imageStatus": "license_review_required",
+      "timelineDate": "1866 · exact day not established",
+      "timelineSort": "1866-00-00",
+      "license": "Historical periodical image; Commons file page/license needs confirmation before reuse."
     },
     {
       "name": "Dinah Watts Pace",
@@ -115,7 +151,10 @@
       "image": "/images/dinah-watts-pace.png",
       "credit": "Mrs. Dinah Watts Pace, in Lawson Andrew Scruggs, Women of Distinction (1893), via Wikimedia Commons.",
       "imageSource": "https://commons.wikimedia.org/wiki/File:Women_of_distinction_-_Mrs._Dinah_Watts_Pace.png",
-      "imageStatus": "public_domain_us"
+      "imageStatus": "public_domain_us",
+      "timelineDate": "1853-01-09",
+      "timelineSort": "1853-01-09",
+      "license": "Public domain in the United States (published 1893)"
     },
     {
       "name": "Freddye Henderson",
@@ -124,7 +163,10 @@
       "image": "/images/portrait-pending.svg",
       "credit": "Portrait pending rights clearance",
       "imageSource": "https://jacksonvillefreepress.com/after-65-years-the-first-african-american-owned-travel-agency-continues-to-provide-travelers-with-unique-experiences/",
-      "imageStatus": "permission_required"
+      "imageStatus": "permission_required",
+      "timelineDate": "1917-02-18",
+      "timelineSort": "1917-02-18",
+      "license": "No explicit reuse license found; obtain permission from AARL before publishing."
     },
     {
       "name": "Carolyn D. Yancey",
@@ -133,7 +175,10 @@
       "image": "/images/portrait-pending.svg",
       "credit": "Portrait pending rights clearance",
       "imageSource": "https://album.atlantahistorycenter.com/digital/collection/p17222coll55",
-      "imageStatus": "permission_required"
+      "imageStatus": "permission_required",
+      "timelineDate": "1921 · exact day not established",
+      "timelineSort": "1921-00-00",
+      "license": "No explicit reuse license found for the photographs; obtain permission before publishing."
     },
     {
       "name": "Geneva Haugabrooks",
@@ -142,7 +187,10 @@
       "image": "/images/portrait-pending.svg",
       "credit": "Portrait pending rights clearance",
       "imageSource": "https://dlg.usg.edu/record/geh_byd_3914",
-      "imageStatus": "permission_required_noncommercial_no_derivatives"
+      "imageStatus": "permission_required_noncommercial_no_derivatives",
+      "timelineDate": "Dates not established",
+      "timelineSort": "9999-99-99",
+      "license": "CC BY-NC-ND 4.0 (noncommercial use only; no derivatives); check project use and get permission if uncertain."
     },
     {
       "name": "Horace Mann Bond",
@@ -151,7 +199,10 @@
       "image": "/images/portrait-pending.svg",
       "credit": "Portrait pending rights clearance",
       "imageSource": "https://commons.wikimedia.org/wiki/File:Horace_Mann_Bond.jpg",
-      "imageStatus": "license_review_required"
+      "imageStatus": "license_review_required",
+      "timelineDate": "1904-11-08",
+      "timelineSort": "1904-11-08",
+      "license": "Commons lists public domain due non-renewal, but file has been nominated for deletion over licensing; resolve/verify before use."
     },
     {
       "name": "Jean Childs Young",
@@ -160,7 +211,10 @@
       "image": "/images/portrait-pending.svg",
       "credit": "Portrait pending rights clearance",
       "imageSource": "https://commons.wikimedia.org/wiki/Category:New_York_Amsterdam_News,_1977",
-      "imageStatus": "permission_required"
+      "imageStatus": "permission_required",
+      "timelineDate": "1933-07-01",
+      "timelineSort": "1933-07-01",
+      "license": "No free reuse license verified for the newspaper photograph; obtain rights clearance before publication."
     },
     {
       "name": "John W. E. Bowen",
@@ -169,7 +223,10 @@
       "image": "/images/portrait-pending.svg",
       "credit": "Portrait pending rights clearance",
       "imageSource": "https://commons.wikimedia.org/wiki/File:Africa_and_the_American_Negro.pdf",
-      "imageStatus": "public_domain_us"
+      "imageStatus": "public_domain_us",
+      "timelineDate": "1855 · exact day not established",
+      "timelineSort": "1855-00-00",
+      "license": "Public domain in the United States (1896 publication)"
     },
     {
       "name": "Lillian Miles Lewis",
@@ -178,7 +235,10 @@
       "image": "/images/portrait-pending.svg",
       "credit": "Portrait pending rights clearance",
       "imageSource": "https://www.johnandlillianmileslewisfoundation.org/lillianmileslewis",
-      "imageStatus": "permission_required"
+      "imageStatus": "permission_required",
+      "timelineDate": "2012-12-31",
+      "timelineSort": "2012-12-31",
+      "license": "No explicit image reuse license found; request permission from the foundation."
     },
     {
       "name": "Martin Luther King Jr.",
@@ -187,7 +247,10 @@
       "image": "/images/king.jpg",
       "credit": "New York World-Telegram and Sun Collection, Library of Congress, Prints and Photographs Division (public domain).",
       "imageSource": "https://commons.wikimedia.org/wiki/File:Martin_Luther_King_Jr_NYWTS.jpg",
-      "imageStatus": "public_domain_us"
+      "imageStatus": "public_domain_us",
+      "timelineDate": "1929-01-15",
+      "timelineSort": "1929-01-15",
+      "license": "Public domain in the United States; LoC identifies no known copyright restrictions for this work-for-hire image."
     }
   ],
   "events": [

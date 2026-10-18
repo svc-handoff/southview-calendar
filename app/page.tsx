@@ -15,7 +15,7 @@ const regions = [
   {
     id: 'civil-rights',
     title: 'Civil Rights',
-    dates: '1964–1967',
+    dates: '1841–2020',
     events: [
       { date: 'October 14, 1964', title: 'Martin Luther King Jr. receives the Nobel Peace Prize', href: '/history/a-nobel-prize-for-nonviolence' },
       { date: 'October 7, 1967', title: 'Ruby Doris Smith Robinson', href: '/history/remembering-ruby-doris' },
@@ -144,7 +144,12 @@ export default function Home() {
             </div>
             <div className="region-event-track">
               <div className="region-event-rail" aria-hidden="true" />
-              {regions.find((region) => region.id === selectedRegion)?.events.map((event) => (
+              {[...(regions.find((region) => region.id === selectedRegion)?.events || []), ...(selectedRegion === 'civil-rights' ? storiesWithProfiles.filter((story) => story.profile).map((story) => ({ date: story.timelineDate || 'Dates not established', title: story.title, href: `/history/${story.slug}`, sort: story.timelineSort || '9999-99-99' })) : [])]
+                .sort((a, b) => {
+                  const sortA = 'sort' in a ? a.sort : new Date(a.date).toISOString().slice(0, 10);
+                  const sortB = 'sort' in b ? b.sort : new Date(b.date).toISOString().slice(0, 10);
+                  return sortA.localeCompare(sortB);
+                }).map((event) => (
                 <a className="timeline-event-card" href={event.href} key={event.href}>
                   <time>{event.date}</time>
                   <strong>{event.title}</strong>

@@ -1,6 +1,6 @@
 import research from './research-data.json';
 
-export type Story = {slug:string; title:string; shortTitle:string; date:string; label:string; category:string; summary:string; paragraphs:string[]; image:string; alt:string; credit:string; imageSource:string; source:string; sourceLabel:string; book:string; profile?:boolean};
+export type Story = {slug:string; title:string; shortTitle:string; date:string; label:string; category:string; summary:string; paragraphs:string[]; image:string; alt:string; credit:string; imageSource:string; source:string; sourceLabel:string; book:string; profile?:boolean; timelineDate?:string; timelineSort?:string};
 export const stories: Story[] = [
  {slug:'a-cemetery-of-their-own',title:'A cemetery of their own',shortTitle:'Sterling Watts’s burial',date:'1885-10-26',label:'October 26, 1885',category:'Origins',summary:'A burial under segregation frames the story of South-View’s founding.',paragraphs:[
  'On October 26, 1885, Sterling Watts was buried in Rest Haven, the segregated African American section of Atlanta’s Westview Cemetery. City of the Dead opens with a reconstruction of that day, describing the indignities faced by his family. His son Albert Watts would become one of the six men who founded South-View Cemetery the following year. The burial date is given in the book; Albert’s thoughts in the opening scene are the author’s reconstruction, not a surviving first-person account.',
@@ -30,12 +30,16 @@ export const profiles: Story[] = research.profiles.map((person) => ({
   paragraphs: [placeholder, placeholder],
   image: person.image,
   alt: person.imageStatus === 'permission_required' || person.imageStatus?.includes('permission') || person.imageStatus === 'unavailable_portrait' || person.imageStatus === 'license_review_required' ? 'Portrait pending rights clearance' : person.name,
-  credit: person.credit,
+  credit: person.image === '/images/portrait-pending.svg'
+    ? 'Portrait withheld pending rights clearance. View source record.'
+    : `${person.credit}${person.license ? ` · ${person.license}` : ''}`,
   imageSource: person.imageSource,
   source: person.imageSource,
   sourceLabel: person.credit,
   book: '',
   profile: true,
+  timelineDate: person.timelineDate,
+  timelineSort: person.timelineSort,
 }));
 export const storiesWithProfiles = [...stories, ...profiles];
 
