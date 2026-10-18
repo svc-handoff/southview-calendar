@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { stories, anniversaries, demoTour, type CalendarEvent } from '@/lib/events';
+import { storiesWithProfiles, anniversaries, demoTour, type CalendarEvent } from '@/lib/events';
 
 const regions = [
   {
@@ -29,7 +29,7 @@ const months = [
 ];
 
 function historyHref(event: CalendarEvent) {
-  return event.storySlug && stories.some((story) => story.slug === event.storySlug)
+  return event.storySlug && storiesWithProfiles.some((story) => story.slug === event.storySlug)
     ? `/history/${event.storySlug}`
     : null;
 }
@@ -38,7 +38,7 @@ export default function Home() {
   const [date, setDate] = useState({ year: 2026, month: 9 });
   const [live, setLive] = useState<CalendarEvent[]>([]);
   const [connection, setConnection] = useState('loading');
-  const [selectedTour, setSelectedTour] = useState<CalendarEvent | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 
   useEffect(() => {
@@ -90,7 +90,7 @@ export default function Home() {
       );
     }
     return (
-      <button className="calendar-event tour-event" key={event.id} onClick={() => setSelectedTour(event)}>
+      <button className={`calendar-event ${event.kind === 'tour' ? 'tour-event' : 'history-event'}`} key={event.id} onClick={() => setSelectedEvent(event)}>
         <span className="event-dot" aria-hidden="true" />
         <span>{event.title}</span>
         {event.id === 'demo-tour' && <small>DEMO</small>}
@@ -167,14 +167,17 @@ export default function Home() {
         )}
       </section>
 
-      {selectedTour && (
+      {selectedEvent && (
         <dialog open className="tour-dialog" onClick={(event) => {
-          if (event.target === event.currentTarget) setSelectedTour(null);
+          if (event.target === event.currentTarget) setSelectedEvent(null);
         }}>
-          <button className="dialog-close" aria-label="Close" onClick={() => setSelectedTour(null)}>×</button>
-          <p className="tour-label">Fictional demonstration event</p>
-          <h2>{selectedTour.title}</h2>
-          <p>{selectedTour.description}</p>
+          <button className="dialog-close" aria-label="Close" onClick={() => setSelectedEvent(null)}>×</button>
+          <p className="tour-label">{selectedEvent.kind === 'tour' ? 'Fictional demonstration event' : selectedEvent.sourceLabel || 'South-View history'}</p>
+          <h2>{selectedEvent.title}</h2>
+          <p>{selectedEvent.description}</p>
+          {selectedEvent.dateNote && <p>{selectedEvent.dateNote}</p>}
+          {selectedEvent.source?.startsWith('http') && <p><a href={selectedEvent.source} target="_blank" rel="noreferrer">Source ↗</a></p>}
+          {selectedEvent.kind === 'tour' && <p>{demoTour.time} · {demoTour.date}</p>}
         </dialog>
       )}
     </main>

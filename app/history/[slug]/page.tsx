@@ -1,11 +1,11 @@
 import { notFound } from 'next/navigation';
-import { stories } from '@/lib/events';
+import { storiesWithProfiles } from '@/lib/events';
 
 const placeholder = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.';
 
 export default async function StoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const story = stories.find((item) => item.slug === slug);
+  const story = storiesWithProfiles.find((item) => item.slug === slug);
   if (!story) notFound();
 
   return (
@@ -15,7 +15,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
         <h1>{story.title}</h1>
         <figure>
           <img src={story.image} alt={story.alt} />
-          <figcaption><a href={story.imageSource} target="_blank" rel="noreferrer">{story.credit}</a></figcaption>
+          <figcaption>{story.imageSource ? <a href={story.imageSource} target="_blank" rel="noreferrer">{story.credit}</a> : story.credit}</figcaption>
         </figure>
         <div className="person-placeholder">
           <p>{placeholder}</p>

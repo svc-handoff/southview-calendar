@@ -1,0 +1,700 @@
+{
+  "profiles": [
+    {
+      "name": "Benjamin E. Mays",
+      "slug": "benjamin-e-mays",
+      "blurb": "Benjamin Elijah Mays was a Baptist minister, educator, scholar, and outspoken critic of segregation. As Morehouse College president from 1940 to 1967, he mentored Martin Luther King Jr. and helped shape the language and moral framework of the civil-rights movement. He later chaired Atlanta’s school board during school desegregation. Mays was first buried at South-View; his remains were moved to Morehouse in 1995.",
+      "image": "/images/benjamin-mays.jpg",
+      "credit": "Portrait by Robert Templeton; courtesy of Tim Templeton via Wikimedia Commons (CC BY-SA 4.0).",
+      "imageSource": "https://commons.wikimedia.org/wiki/File:Benjamin_Mays_portrait.jpg",
+      "imageStatus": "usable_with_attribution_and_sharealike"
+    },
+    {
+      "name": "William H. Crogman",
+      "slug": "william-h-crogman",
+      "blurb": "Born in Philipsburg on Sint Maarten, William Henry Crogman became a classicist and educator in the United States. After teaching at Claflin, he joined Clark University in Atlanta in 1876, became a senior professor, and served as Clark’s president from 1903 to 1910. He advocated education and equal citizenship and taught at Clark for decades.",
+      "image": "/images/william-crogman.jpg",
+      "credit": "William H. Crogman portrait, Atlanta University Photographs, Robert W. Woodruff Library, via Digital Library of Georgia.",
+      "imageSource": "https://commons.wikimedia.org/wiki/File:William_H._Crogman_(cropped).jpg",
+      "imageStatus": "public_domain_us"
+    },
+    {
+      "name": "Robert Grant",
+      "slug": "robert-grant",
+      "blurb": "Robert Grant was a blacksmith, drayman, minister, and community organizer in post-Civil-War Atlanta. He helped organize Zion Hill Baptist Church in 1872 and was among the Black businessmen who established South-View Cemetery, creating a dignified burial ground under segregation. Zion Hill’s history says Grant died in 1896; an exact date of birth or death was not found.",
+      "image": "/images/portrait-pending.svg",
+      "credit": "Portrait pending rights clearance",
+      "imageSource": "https://www.zionhill.org/historyarchive",
+      "imageStatus": "permission_required"
+    },
+    {
+      "name": "Grace Towns Hamilton",
+      "slug": "grace-towns-hamilton",
+      "blurb": "Grace Towns Hamilton was an Atlanta educator, Urban League leader, and politician who became the first Black woman elected to Georgia’s General Assembly. She led the Atlanta Urban League, worked on housing, education, health, and voter-registration issues, and later served in the legislature from 1966 to 1985. Her career made her a key bridge between Atlanta’s civic reform networks and state politics.",
+      "image": "/images/portrait-pending.svg",
+      "credit": "Portrait pending rights clearance",
+      "imageSource": "https://dlg.usg.edu/record/auu_gthamilton_auc-152-0054",
+      "imageStatus": "permission_required"
+    },
+    {
+      "name": "Alonzo Herndon",
+      "slug": "alonzo-herndon",
+      "blurb": "Born enslaved in Walton County, Alonzo Franklin Herndon built a successful barbering business in Atlanta and became one of the city’s leading Black entrepreneurs. In 1905 he acquired the Atlanta Benevolent and Protective Association, the foundation of Atlanta Life Insurance Company, which became one of the country’s major Black-owned insurers. His business, philanthropy, and civic support strengthened Atlanta’s Black community.",
+      "image": "/images/alonzo-herndon.jpg",
+      "credit": "Alonzo Herndon portrait, source image from Sweet Auburn; via Wikimedia Commons.",
+      "imageSource": "https://commons.wikimedia.org/wiki/File:Alonzo_herndon.jpg",
+      "imageStatus": "public_domain_us"
+    },
+    {
+      "name": "Annie L. McPheeters",
+      "slug": "annie-l-mcpheeters",
+      "blurb": "Annie Lou McPheeters was a librarian, educator, and advocate for African American history and culture. At Atlanta’s Auburn Branch Library she developed adult education programming and established the Negro History Collection, later moving with the collection to West Hunter Branch. She supported library desegregation and helped make research materials available to Black communities who had long been excluded from public resources.",
+      "image": "/images/portrait-pending.svg",
+      "credit": "Portrait pending rights clearance",
+      "imageSource": "https://dlg.usg.edu/record/dlg_aaed_aarl90-005-010-134",
+      "imageStatus": "permission_required"
+    },
+    {
+      "name": "John W. Dobbs",
+      "slug": "john-w-dobbs",
+      "blurb": "John Wesley Dobbs was an Atlanta civic and political leader known as the unofficial “Mayor of Auburn Avenue.” A railway mail clerk for more than three decades, he helped build Black political power through voter registration and organizations including the Atlanta Negro Voters League. His organizing helped press for the hiring of Atlanta’s first Black police officers in 1948 and influenced the city’s civil-rights movement.",
+      "image": "/images/portrait-pending.svg",
+      "credit": "Portrait pending rights clearance",
+      "imageSource": "https://commons.wikimedia.org/wiki/File:%22Through_His_Eyes%22_(Ralph_Helmick,_1996),_mask_of_John_Wesley_Dobbs_in_Sweet_Auburn,_Atlanta.jpg",
+      "imageStatus": "unavailable_portrait"
+    },
+    {
+      "name": "Graham W. Jackson Sr.",
+      "slug": "graham-w-jackson-sr",
+      "blurb": "Graham Washington Jackson Sr. was an Atlanta musician and bandleader known for virtuoso performances on organ, piano, and accordion. After moving to Atlanta to attend Morehouse in 1924, he formed the Seminole Syncopators and built a long career performing for presidents and audiences across the country. A familiar figure in Atlanta music, he also served on Georgia’s State Board of Corrections and was named the state’s official musician by Governor Jimmy Carter.",
+      "image": "/images/portrait-pending.svg",
+      "credit": "Portrait pending rights clearance",
+      "imageSource": "https://dlg.usg.edu/record/nge_ngen_graham-jackson-sr-002",
+      "imageStatus": "permission_required"
+    },
+    {
+      "name": "Ludie Clay Andrews",
+      "slug": "ludie-clay-andrews",
+      "blurb": "Ludie Clay Andrews was a pioneering Atlanta nurse and nursing educator. After graduating from Spelman’s MacVicar Hospital nurse-training program in 1906, she led hospital training programs and worked to open Georgia’s nursing profession to Black women. Following a decade-long campaign, Black nurses gained access to state registration in 1919–1920, and Andrews became Georgia’s first Black registered nurse. She is buried at South-View.",
+      "image": "/images/portrait-pending.svg",
+      "credit": "Portrait pending rights clearance",
+      "imageSource": "https://georgiawomen.org/ludie-clay-andrews",
+      "imageStatus": "permission_required"
+    },
+    {
+      "name": "Bazoline E. Usher",
+      "slug": "bazoline-e-usher",
+      "blurb": "Bazoline Estelle Usher spent more than four decades teaching Black students in Atlanta’s segregated public schools. She became the first Black director and supervisor of Negro schools in Atlanta and the first African American with an office at City Hall. In 1943 she organized Girl Scout troops for Black girls, expanding leadership and recreation opportunities when many institutions excluded them.",
+      "image": "/images/bazoline-usher.jpg",
+      "credit": "Library of Congress, Prints and Photographs Division, LC-DIG-cph-3d02231.",
+      "imageSource": "https://commons.wikimedia.org/wiki/File:Bazoline_Estelle_Usher,_Atlanta_University_student,_half-length_portrait,_facing_front_LCCN98518739.jpg",
+      "imageStatus": "public_domain_us"
+    },
+    {
+      "name": "John Lewis",
+      "slug": "john-lewis",
+      "blurb": "John Lewis was a civil-rights organizer whose activism began in the Nashville sit-ins and Freedom Rides and brought him to the leadership of the Student Nonviolent Coordinating Committee. On Bloody Sunday in 1965, Alabama state troopers beat Lewis and other marchers as they crossed Selma’s Edmund Pettus Bridge. He later represented Georgia’s Fifth District in Congress for more than three decades and became known as the “conscience of Congress.” He was buried at South-View before reinterment at the King Center.",
+      "image": "/images/john-lewis.jpg",
+      "credit": "U.S. Congress, official portrait of Congressman John Lewis (public domain).",
+      "imageSource": "https://commons.wikimedia.org/wiki/File:Johnlewis.jpg",
+      "imageStatus": "public_domain_us"
+    },
+    {
+      "name": "Dr. Moses Amos",
+      "slug": "moses-amos",
+      "blurb": "Moses Amos became Georgia’s first licensed Black pharmacist and a prominent Atlanta druggist. He opened Gate City Drug Store, a Black-owned pharmacy serving the city’s African American community, and spent decades filling prescriptions and building an independent business. The South-View Preservation Foundation describes his career as spanning roughly fifty years; an exact birth or death day was not established in this research.",
+      "image": "/images/portrait-pending.svg",
+      "credit": "Portrait pending rights clearance",
+      "imageSource": "https://commons.wikimedia.org/wiki/Category:African_American_history_of_the_1900s",
+      "imageStatus": "license_review_required"
+    },
+    {
+      "name": "Dinah Watts Pace",
+      "slug": "dinah-watts-pace",
+      "blurb": "Born enslaved in Georgia, Dinah Watts Pace pursued education at Atlanta University and became a teacher and community institution-builder. In Covington she founded a school and a home for children without parents, educating hundreds of young people over the course of decades. Her work connected schooling, care, and community leadership during Reconstruction and its aftermath.",
+      "image": "/images/dinah-watts-pace.png",
+      "credit": "Mrs. Dinah Watts Pace, in Lawson Andrew Scruggs, Women of Distinction (1893), via Wikimedia Commons.",
+      "imageSource": "https://commons.wikimedia.org/wiki/File:Women_of_distinction_-_Mrs._Dinah_Watts_Pace.png",
+      "imageStatus": "public_domain_us"
+    },
+    {
+      "name": "Freddye Henderson",
+      "slug": "freddye-henderson",
+      "blurb": "Freddye Scarborough Henderson was an Atlanta entrepreneur, educator, columnist, and travel pioneer. She and her husband opened Henderson Travel Service in 1955, building a Black-owned agency that organized international travel at a time when Black travelers faced discrimination. In 1957 she arranged a group trip to Ghana for that country’s independence celebrations, helping open international travel routes and experiences for African American clients.",
+      "image": "/images/portrait-pending.svg",
+      "credit": "Portrait pending rights clearance",
+      "imageSource": "https://jacksonvillefreepress.com/after-65-years-the-first-african-american-owned-travel-agency-continues-to-provide-travelers-with-unique-experiences/",
+      "imageStatus": "permission_required"
+    },
+    {
+      "name": "Carolyn D. Yancey",
+      "slug": "carolyn-d-yancey",
+      "blurb": "Carolyn Dunbar Yancey was an educator and civic leader who taught in Detroit before settling in Atlanta. She was elected to the Atlanta Board of Education in 1982 and served for sixteen years, contributing to education policy and community institutions. Her papers and photographs document a life of public service alongside her husband, Atlanta civic leader Asa G. Yancey.",
+      "image": "/images/portrait-pending.svg",
+      "credit": "Portrait pending rights clearance",
+      "imageSource": "https://album.atlantahistorycenter.com/digital/collection/p17222coll55",
+      "imageStatus": "permission_required"
+    },
+    {
+      "name": "Geneva Haugabrooks",
+      "slug": "geneva-haugabrooks",
+      "blurb": "Geneva Haugabrooks was an Atlanta entrepreneur and educator who became known for her funeral and business enterprises and for public service in the city’s Black community. South-View’s profile lists her as an entrepreneur and teacher; this search did not establish authoritative exact life dates or a sufficiently documented milestone to add a dated event. Obtain a cemetery or archival biography before writing a fuller page.",
+      "image": "/images/portrait-pending.svg",
+      "credit": "Portrait pending rights clearance",
+      "imageSource": "https://dlg.usg.edu/record/geh_byd_3914",
+      "imageStatus": "permission_required_noncommercial_no_derivatives"
+    },
+    {
+      "name": "Horace Mann Bond",
+      "slug": "horace-mann-bond",
+      "blurb": "Horace Mann Bond was a historian, education researcher, and college administrator whose work challenged racist claims about Black intelligence and documented the history of Black education. He led Fort Valley State College and Lincoln University before returning to Atlanta University as dean and research director. His research for the NAACP Legal Defense Fund contributed to the evidentiary context for Brown v. Board of Education; he was also the father of civil-rights leader Julian Bond.",
+      "image": "/images/portrait-pending.svg",
+      "credit": "Portrait pending rights clearance",
+      "imageSource": "https://commons.wikimedia.org/wiki/File:Horace_Mann_Bond.jpg",
+      "imageStatus": "license_review_required"
+    },
+    {
+      "name": "Jean Childs Young",
+      "slug": "jean-childs-young",
+      "blurb": "Jean Childs Young was an educator and advocate for children’s rights who also participated in the civil-rights movement. She developed citizenship-school curriculum for the Southern Christian Leadership Conference and joined voter-registration work and major demonstrations, including the 1963 March on Washington and the Selma-to-Montgomery march. As first lady of Atlanta during Andrew Young’s mayoralty, she continued her work on education and children’s issues nationally and locally.",
+      "image": "/images/portrait-pending.svg",
+      "credit": "Portrait pending rights clearance",
+      "imageSource": "https://commons.wikimedia.org/wiki/Category:New_York_Amsterdam_News,_1977",
+      "imageStatus": "permission_required"
+    },
+    {
+      "name": "John W. E. Bowen",
+      "slug": "john-w-e-bowen",
+      "blurb": "John Wesley Edward Bowen was a theologian, minister, scholar, and educator who became one of the first Black professors at Gammon Theological Seminary in Atlanta. He taught historical theology, later led Gammon as president, and wrote and spoke on African American history, religion, and citizenship. In 1895 he delivered “An Appeal to the King” during Negro Day at the Cotton States and International Exposition, a major public address on racial equality.",
+      "image": "/images/portrait-pending.svg",
+      "credit": "Portrait pending rights clearance",
+      "imageSource": "https://commons.wikimedia.org/wiki/File:Africa_and_the_American_Negro.pdf",
+      "imageStatus": "public_domain_us"
+    },
+    {
+      "name": "Lillian Miles Lewis",
+      "slug": "lillian-miles-lewis",
+      "blurb": "Lillian Miles Lewis was an educator and academic who worked at Atlanta University and Clark Atlanta University, and a trusted adviser to her husband, Congressman John Lewis. Her archive includes correspondence, photographs, and records connected with both her own work and her husband’s public life. She died in Atlanta in 2012; a precise date of birth was not established in this research.",
+      "image": "/images/portrait-pending.svg",
+      "credit": "Portrait pending rights clearance",
+      "imageSource": "https://www.johnandlillianmileslewisfoundation.org/lillianmileslewis",
+      "imageStatus": "permission_required"
+    },
+    {
+      "name": "Martin Luther King Jr.",
+      "slug": "martin-luther-king-jr",
+      "blurb": "Martin Luther King Jr. was an Atlanta-born Baptist minister and central leader of the modern civil-rights movement. His leadership in the Montgomery bus boycott, nonviolent direct-action campaigns, and voting-rights organizing helped drive major changes in American law and public life. King was assassinated in Memphis in 1968 and was initially buried at South-View before his remains were moved to the King Center.",
+      "image": "/images/king.jpg",
+      "credit": "New York World-Telegram and Sun Collection, Library of Congress, Prints and Photographs Division (public domain).",
+      "imageSource": "https://commons.wikimedia.org/wiki/File:Martin_Luther_King_Jr_NYWTS.jpg",
+      "imageStatus": "public_domain_us"
+    }
+  ],
+  "events": [
+    {
+      "date": "1987-01-03",
+      "title": "John Lewis begins service in the U.S. House",
+      "description": "Lewis began representing Georgia’s Fifth Congressional District, extending his public service from the civil-rights movement into Congress.",
+      "source": "https://www.archives.gov/research/african-americans/individuals/john-lewis",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "john-lewis"
+    },
+    {
+      "date": "1969-01-06",
+      "title": "Ludie Clay Andrews dies",
+      "description": "Andrews led nursing education and campaigned for Black nurses’ professional recognition in Georgia.",
+      "source": "https://www.georgiawomen.org/ludie-clay-andrews",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "ludie-clay-andrews"
+    },
+    {
+      "date": "1994-01-10",
+      "title": "John Wesley Dobbs Avenue is dedicated",
+      "description": "Atlanta renamed Houston Street as John Wesley Dobbs Avenue, honoring the civic leader and organizer.",
+      "source": "https://www.georgiaencyclopedia.org/articles/history-archaeology/john-wesley-dobbs-1882-1961/",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "john-w-dobbs"
+    },
+    {
+      "date": "1929-01-15",
+      "title": "Martin Luther King Jr. is born in Atlanta",
+      "description": "King became a Baptist minister and a leading strategist and public voice of the civil-rights movement.",
+      "source": "https://home.nps.gov/people/martinlutherkingjr.htm",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "martin-luther-king-jr"
+    },
+    {
+      "date": "1969-01-15",
+      "title": "South-View holds memorial for Martin Luther King Jr.",
+      "description": "About 300 people gathered at King’s South-View gravesite for a memorial service on what the book identifies as his 40th birthday.",
+      "source": "https://home.nps.gov/people/martinlutherkingjr.htm",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "martin-luther-king-jr"
+    },
+    {
+      "date": "1983-01-15",
+      "title": "Graham W. Jackson Sr. dies",
+      "description": "Jackson was a theatre organist, pianist, accordionist, and choral conductor who spent much of his career in Atlanta.",
+      "source": "https://www.georgiaencyclopedia.org/articles/arts-culture/graham-jackson-sr/",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "graham-w-jackson-sr"
+    },
+    {
+      "date": "1933-01-25",
+      "title": "Dinah Watts Pace dies",
+      "description": "Pace was an educator who established a school and home for Black children in Covington, Georgia.",
+      "source": "https://paradiseatlmbc.org/our-history",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "dinah-watts-pace"
+    },
+    {
+      "date": "1992-02-08",
+      "title": "Bazoline E. Usher dies",
+      "description": "Usher was an Atlanta educator who supervised the city’s Black schools and established Girl Scout troops for Black girls.",
+      "source": "https://www.atlantahistorycenter.com/blog/bazoline-estelle-usher/",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "bazoline-e-usher"
+    },
+    {
+      "date": "1886-02-20",
+      "title": "Atlanta paper reports Black community buying a cemetery",
+      "description": "The Atlanta Constitution reported a $600 down payment on 25 acres for a new cemetery on McDonough Road, an early step toward South-View.",
+      "source": "City of the Dead, ch. 4",
+      "sourceLabel": "City of the Dead",
+      "dateNote": ""
+    },
+    {
+      "date": "1940-02-21",
+      "title": "John Lewis is born",
+      "description": "Lewis became a civil-rights organizer, SNCC chair, and longtime U.S. representative from Georgia.",
+      "source": "https://www.archives.gov/research/african-americans/individuals/john-lewis",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "john-lewis"
+    },
+    {
+      "date": "1903-02-22",
+      "title": "Graham W. Jackson Sr. is born",
+      "description": "Jackson became a celebrated Atlanta musician and performed for President Franklin D. Roosevelt’s funeral train in 1945.",
+      "source": "https://www.georgiaencyclopedia.org/articles/arts-culture/graham-jackson-sr/",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "graham-w-jackson-sr"
+    },
+    {
+      "date": "1908-02-22",
+      "title": "Annie L. McPheeters is born",
+      "description": "McPheeters became a librarian and civil-rights advocate who developed the Auburn Avenue Library’s Negro History Collection.",
+      "source": "https://www.georgiaencyclopedia.org/articles/education/annie-l-mcpheeters-1908-1994/",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "annie-l-mcpheeters"
+    },
+    {
+      "date": "1965-03-07",
+      "title": "Bloody Sunday in Selma",
+      "description": "John Lewis and fellow marchers were attacked by state troopers on the Edmund Pettus Bridge during a voting-rights march.",
+      "source": "https://www.archives.gov/research/african-americans/individuals/john-lewis",
+      "sourceLabel": "Source",
+      "dateNote": ""
+    },
+    {
+      "date": "1886-03-18",
+      "title": "First reported burials at South-View",
+      "description": "The Atlanta Constitution reported that ten or twelve bodies had already been buried at the new cemetery; an adjoining landowner objected to the burials.",
+      "source": "City of the Dead, ch. 4",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "",
+      "storySlug": "a-cemetery-of-their-own"
+    },
+    {
+      "date": "1904-03-31",
+      "title": "Harriet Graham dies, prompting a suspicious-death inquiry",
+      "description": "Harriet Graham, widow of South-View founder George Graham, died unexpectedly at home; the coroner reopened the case after an anonymous threat came to light, but the alleged murder remained unsolved.",
+      "source": "D. L. Henderson, South-View: City of the Dead, chapter 15, OCR page estimate 174 (printed page near 159).",
+      "sourceLabel": "City of the Dead",
+      "dateNote": ""
+    },
+    {
+      "date": "1904-04-03",
+      "title": "Harriet Graham is buried at South-View",
+      "description": "South-View founder George Graham’s widow was buried at the cemetery on Easter Sunday after a coroner’s inquiry into her sudden death; the book says the case remained unresolved.",
+      "source": "D. L. Henderson, South-View: City of the Dead, chapter 15, OCR page estimate 175 (printed page near 160).",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "",
+      "storySlug": "a-cemetery-of-their-own"
+    },
+    {
+      "date": "1968-04-04",
+      "title": "Martin Luther King Jr. is assassinated",
+      "description": "King was killed in Memphis, Tennessee, after leading a national campaign for civil rights and economic justice.",
+      "source": "https://home.nps.gov/people/martinlutherkingjr.htm",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "martin-luther-king-jr"
+    },
+    {
+      "date": "1945-04-13",
+      "title": "Graham W. Jackson performs at FDR’s funeral procession",
+      "description": "Jackson played “Going Home” on accordion as President Franklin D. Roosevelt’s funeral procession passed in Warm Springs.",
+      "source": "https://www.fdrlibrary.org/fdr-facts",
+      "sourceLabel": "Franklin D. Roosevelt Presidential Library",
+      "storySlug": "graham-w-jackson-sr"
+    },
+    {
+      "date": "1886-04-21",
+      "title": "South-View Cemetery charter approved",
+      "description": "After a hearing on the charter application, the state approved the South-View Cemetery Association charter; the book notes that burials then continued.",
+      "source": "City of the Dead, ch. 4",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "",
+      "storySlug": "robert-grant"
+    },
+    {
+      "date": "1900-05-06",
+      "title": "Henry Rutherford Butler calls for cemetery beautification",
+      "description": "In his Atlanta Constitution column, the physician urged South-View lot owners to keep graves “green and clean” as an expression of care for the dead.",
+      "source": "City of the Dead, ch. 6",
+      "sourceLabel": "City of the Dead",
+      "dateNote": ""
+    },
+    {
+      "date": "1902-05-17",
+      "title": "Pittsburgh riot kills Black residents in Atlanta",
+      "description": "The book reports that a white mob attacked the Pittsburgh community south of Atlanta; four African American men and five white men died. Three Black victims—Will Richardson, James Harrison, and Milton Risdon—were buried at South-View.",
+      "source": "D. L. Henderson, South-View: City of the Dead, chapter 11, section “The Pittsburgh Riot,” OCR page estimate 130–134 (printed pages around 116–119).",
+      "sourceLabel": "City of the Dead",
+      "dateNote": ""
+    },
+    {
+      "date": "1940-05-17",
+      "title": "Henry Ossian Flipper is interred at South-View",
+      "description": "Flipper, the first African American graduate of West Point, was buried at South-View after dying in Atlanta at his brother’s home.",
+      "source": "D. L. Henderson, South-View: City of the Dead, chapter 11, OCR page estimate 128.",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "",
+      "storySlug": "a-cemetery-of-their-own"
+    },
+    {
+      "date": "1915-05-19",
+      "title": "Bishop Henry McNeal Turner is buried at South-View",
+      "description": "An estimated 25,000 mourners gathered at Big Bethel AME Church before thousands followed Turner’s funeral procession to his grave at South-View.",
+      "source": "City of the Dead, ch. 11",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "",
+      "storySlug": "a-cemetery-of-their-own"
+    },
+    {
+      "date": "1888-05-22",
+      "title": "Founders transfer cemetery land to the Association",
+      "description": "J. C. Huggins, acting for Charles Morgan’s estate, and four other charter members sold about 25 acres to the South-View Cemetery Association for $1,250, advancing its land ownership and expansion.",
+      "source": "D. L. Henderson, South-View: City of the Dead, chapter 4, OCR page estimate 38.",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "",
+      "storySlug": "a-cemetery-of-their-own"
+    },
+    {
+      "date": "1963-06-12",
+      "title": "John Wesley Dobbs monument dedicated at South-View",
+      "description": "Georgia Prince Hall Masons and Eastern Stars gathered at Dobbs’s gravesite to unveil a broken-column monument honoring his three decades as grandmaster.",
+      "source": "City of the Dead, ch. 10",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "",
+      "storySlug": "john-w-dobbs"
+    },
+    {
+      "date": "1992-06-17",
+      "title": "Grace Towns Hamilton dies",
+      "description": "Hamilton was an Atlanta educator and civic leader who became the first Black woman elected to the Georgia General Assembly.",
+      "source": "https://www.georgiaencyclopedia.org/articles/history-archaeology/grace-towns-hamilton-1907-1992/",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "grace-towns-hamilton"
+    },
+    {
+      "date": "1858-06-26",
+      "title": "Alonzo Herndon is born",
+      "description": "Born enslaved, Herndon became an Atlanta entrepreneur and built Atlanta Life Insurance into a major Black-owned company.",
+      "source": "https://www.georgiaencyclopedia.org/articles/business-economy/alonzo-herndon-1858-1927/",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "alonzo-herndon"
+    },
+    {
+      "date": "1933-07-01",
+      "title": "Jean Childs Young is born",
+      "description": "Young became an educator and children’s-rights advocate and worked in civil-rights organizing alongside her husband, Andrew Young.",
+      "source": "https://www.georgiaencyclopedia.org/articles/history-archaeology/jean-childs-young-1933-1994/",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "jean-childs-young"
+    },
+    {
+      "date": "1983-07-06",
+      "title": "Atlanta declares T. J. Flanagan Day",
+      "description": "The city council named July 6, 1983, “T. J. Flanagan Day” in the year the poet, columnist, and minister died.",
+      "source": "City of the Dead, ch. 14",
+      "sourceLabel": "City of the Dead",
+      "dateNote": ""
+    },
+    {
+      "date": "2020-07-17",
+      "title": "John Lewis dies",
+      "description": "Lewis was a civil-rights leader and longtime congressman remembered for his commitment to nonviolent activism.",
+      "source": "https://www.archives.gov/research/african-americans/individuals/john-lewis",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "john-lewis"
+    },
+    {
+      "date": "1927-07-21",
+      "title": "Alonzo Herndon dies",
+      "description": "Herndon’s business leadership and philanthropy helped strengthen Atlanta’s Black community.",
+      "source": "https://www.georgiaencyclopedia.org/articles/business-economy/alonzo-herndon-1858-1927/",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "alonzo-herndon"
+    },
+    {
+      "date": "1887-07-26",
+      "title": "Rev. William R. Clemmons dies after violent assault",
+      "description": "The South-View narrative recounts that the Mount Olivet pastor died from injuries after an assault and that church members gathered at his home and church.",
+      "source": "City of the Dead, ch. 8",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "Do not claim a South-View burial; the extracted passage does not establish his burial place."
+    },
+    {
+      "date": "1940-08-01",
+      "title": "Benjamin E. Mays is appointed president of Morehouse",
+      "description": "Mays began his long presidency of Morehouse College, where he became an influential educator and mentor to Martin Luther King Jr.",
+      "source": "https://kinginstitute.stanford.edu/benjamin-mays-appointed-president-morehouse",
+      "sourceLabel": "The Martin Luther King, Jr. Research and Education Institute",
+      "storySlug": "benjamin-e-mays"
+    },
+    {
+      "date": "1893-08-07",
+      "title": "South-View trustees seek relief from city license fee",
+      "description": "During the economic panic, trustees petitioned Atlanta to waive the cemetery’s $100 license fee, explaining that many of its burials were for poor residents.",
+      "source": "City of the Dead, ch. 5",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "",
+      "storySlug": "a-cemetery-of-their-own"
+    },
+    {
+      "date": "1963-08-28",
+      "title": "John Lewis speaks at the March on Washington",
+      "description": "Lewis, then chair of SNCC, addressed the mass demonstration for jobs and freedom in Washington, D.C.",
+      "source": "https://www.archives.gov/research/african-americans/individuals/john-lewis",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "john-lewis"
+    },
+    {
+      "date": "1961-08-30",
+      "title": "John Wesley Dobbs dies",
+      "description": "Dobbs was a civic and political organizer whose work included building Black voter participation in Atlanta.",
+      "source": "https://www.georgiaencyclopedia.org/articles/history-archaeology/john-wesley-dobbs-1882-1961/",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "john-w-dobbs"
+    },
+    {
+      "date": "1994-09-16",
+      "title": "Jean Childs Young dies",
+      "description": "Young was an educator, civil-rights participant, and advocate for children.",
+      "source": "https://www.georgiaencyclopedia.org/articles/history-archaeology/jean-childs-young-1933-1994/",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "jean-childs-young"
+    },
+    {
+      "date": "1980-09-26",
+      "title": "Angel monument falls at South-View",
+      "description": "A stone angel on the Brown family lot toppled around noon; cemetery historian Albert Watts later connected the unexplained fall to the day Virginia Berry died.",
+      "source": "City of the Dead, ch. 13",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "The reported timing and coincidence are part of cemetery oral history, not a verified causal claim.",
+      "storySlug": "a-cemetery-of-their-own"
+    },
+    {
+      "date": "1967-10-07",
+      "title": "Ruby Doris Smith Robinson dies",
+      "description": "Robinson, an Atlanta-born organizer and SNCC executive secretary, helped sustain direct-action campaigns across the South. She is buried at South-View.",
+      "source": "https://snccdigital.org/people/ruby-doris-smith-robinson/",
+      "sourceLabel": "SNCC Digital Gateway",
+      "storySlug": "remembering-ruby-doris"
+    },
+    {
+      "date": "1905-10-10",
+      "title": "Amos Rucker dies",
+      "description": "Rucker, who was born enslaved and later lived in Atlanta, died at age 81. The book notes that claims about his Civil War role are disputed.",
+      "source": "City of the Dead, chapter 15, OCR page estimate 170; date shown in a burial-record caption.",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "The date comes from an OCR transcription of the burial-record caption; check the original register."
+    },
+    {
+      "date": "1905-10-12",
+      "title": "Amos Rucker is buried at South-View",
+      "description": "Rucker’s burial record places his interment at South-View two days after his death.",
+      "source": "City of the Dead, chapter 15, OCR page estimate 170; date shown in a burial-record caption.",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "The date comes from an OCR transcription of the burial-record caption; check the original register."
+    },
+    {
+      "date": "1944-10-13",
+      "title": "Tuskegee Airman Walter Westmoreland is killed in combat",
+      "description": "The book recounts that Westmoreland’s plane was shot down during an escort mission over Germany and that he was later buried at South-View.",
+      "source": "City of the Dead, chapter 15, OCR page estimate 266.",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "The event date is legible in OCR, but the name and unit need confirmation against the printed page or military records."
+    },
+    {
+      "date": "1964-10-14",
+      "title": "Martin Luther King Jr. is announced as Nobel Peace Prize laureate",
+      "description": "King learned he had been selected for the Nobel Peace Prize, recognizing his leadership in the nonviolent civil-rights movement. He received the prize on December 10.",
+      "source": "https://kinginstitute.stanford.edu/nobel-peace-prize",
+      "sourceLabel": "The Martin Luther King, Jr. Research and Education Institute",
+      "storySlug": "martin-luther-king-jr"
+    },
+    {
+      "date": "1895-10-21",
+      "title": "John W. E. Bowen delivers “An Appeal to the King”",
+      "description": "Bowen, a theologian and professor, delivered the address during the Atlanta exposition’s Negro Day program.",
+      "source": "https://www.bu.edu/missiology/missionary-biography/a-c/bowen-john-wesley-edward-1855-1933/",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "john-w-e-bowen"
+    },
+    {
+      "date": "2015-10-25",
+      "title": "Sterling Watts is reinterred at South-View",
+      "description": "The remains of Sterling Watts were moved from Rest Haven to South-View, bringing his story back to the cemetery founded by his son and fellow organizers.",
+      "source": "City of the Dead, chapter 15, OCR page estimate 280.",
+      "sourceLabel": "City of the Dead",
+      "storySlug": "a-cemetery-of-their-own"
+    },
+    {
+      "date": "1885-10-26",
+      "title": "Sterling Watts is buried in segregated Rest Haven",
+      "description": "Albert Watts watched his father buried through Westview Cemetery’s back gate in Rest Haven, its segregated section; the book presents the experience as a catalyst for creating a Black-owned cemetery.",
+      "source": "City of the Dead, ch. 1",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "",
+      "storySlug": "a-cemetery-of-their-own"
+    },
+    {
+      "date": "1904-11-08",
+      "title": "Horace Mann Bond is born",
+      "description": "Bond became a prominent educator, college president, and researcher whose scholarship supported legal challenges to school segregation.",
+      "source": "https://www.georgiaencyclopedia.org/articles/education/horace-mann-bond-1904-1972/",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "horace-mann-bond"
+    },
+    {
+      "date": "1898-11-09",
+      "title": "Wade Hampton is executed at Atlanta’s new county prison",
+      "description": "Hampton became the first person executed at the Fulton County prison known as the Tower; the book recounts that many spectators first watched a circus parade before gathering near the jail.",
+      "source": "D. L. Henderson, South-View: City of the Dead, chapter 12, section “Am I Born to Die?,” OCR page estimate 135.",
+      "sourceLabel": "City of the Dead",
+      "dateNote": ""
+    },
+    {
+      "date": "1898-11-10",
+      "title": "Wade Hampton is buried at South-View",
+      "description": "Undertaker L. L. Lee removed Hampton’s body after the execution, and Hampton was buried at South-View the following day.",
+      "source": "D. L. Henderson, South-View: City of the Dead, chapter 12, section “Am I Born to Die?,” OCR page estimate 136.",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "",
+      "storySlug": "a-cemetery-of-their-own"
+    },
+    {
+      "date": "1927-11-17",
+      "title": "Lucius Holsey monument is unveiled at South-View",
+      "description": "The five-year-old great-granddaughter of Bishop Lucius Holsey unveiled his monument in South-View’s historic section; the book describes it as the first monument erected by African Americans in honor of a church leader.",
+      "source": "D. L. Henderson, South-View: City of the Dead, chapter 11, Holsey section, OCR page estimate 147.",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "",
+      "storySlug": "a-cemetery-of-their-own"
+    },
+    {
+      "date": "1955-12-05",
+      "title": "Montgomery bus boycott begins",
+      "description": "The boycott began after Rosa Parks’ arrest; King emerged as a national civil-rights leader through the campaign.",
+      "source": "https://kinginstitute.stanford.edu/montgomery-bus-boycott",
+      "sourceLabel": "Source",
+      "dateNote": ""
+    },
+    {
+      "date": "1886-12-06",
+      "title": "Charles Morgan buys first South-View association shares",
+      "description": "Morgan purchased the first three shares of stock in the cemetery association, investing in its early operation.",
+      "source": "City of the Dead, ch. 3",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "",
+      "storySlug": "a-cemetery-of-their-own"
+    },
+    {
+      "date": "1964-12-10",
+      "title": "Martin Luther King Jr. receives the Nobel Peace Prize",
+      "description": "King received the Nobel Peace Prize for his leadership in the nonviolent civil-rights movement.",
+      "source": "https://home.nps.gov/people/martinlutherkingjr.htm",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "martin-luther-king-jr"
+    },
+    {
+      "date": "1886-12-17",
+      "title": "South-View founder Charles Morgan is buried",
+      "description": "Morgan died days after purchasing the association’s first shares and was buried in a family lot at South-View.",
+      "source": "City of the Dead, ch. 3",
+      "sourceLabel": "City of the Dead",
+      "dateNote": "",
+      "storySlug": "a-cemetery-of-their-own"
+    },
+    {
+      "date": "1972-12-21",
+      "title": "Horace Mann Bond dies",
+      "description": "Bond was an educator, college president, and researcher whose scholarship supported challenges to school segregation.",
+      "source": "https://www.georgiaencyclopedia.org/articles/education/horace-mann-bond-1904-1972/",
+      "sourceLabel": "Source",
+      "dateNote": "Biographical research lists December 21, 1972.",
+      "storySlug": "horace-mann-bond"
+    },
+    {
+      "date": "1994-12-23",
+      "title": "Annie L. McPheeters dies",
+      "description": "McPheeters’ library work preserved and opened African American history materials to Atlanta readers.",
+      "source": "https://www.georgiaencyclopedia.org/articles/education/annie-l-mcpheeters-1908-1994/",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "annie-l-mcpheeters"
+    },
+    {
+      "date": "1885-12-26",
+      "title": "Bazoline E. Usher is born",
+      "description": "Usher became an Atlanta educator and later supervised the city’s Black schools.",
+      "source": "https://www.atlantahistorycenter.com/blog/bazoline-estelle-usher/",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "bazoline-e-usher"
+    },
+    {
+      "date": "2012-12-31",
+      "title": "Lillian Miles Lewis dies",
+      "description": "Lewis was an educator and political figure whose papers are preserved at the Atlanta University Center.",
+      "source": "https://findingaids.auctr.edu/repositories/2/resources/174",
+      "sourceLabel": "Source",
+      "dateNote": "",
+      "storySlug": "lillian-miles-lewis"
+    }
+  ]
+}

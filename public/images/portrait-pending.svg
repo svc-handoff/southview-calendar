@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800">
+  <rect width="640" height="800" fill="#f3f3f0"/>
+  <circle cx="320" cy="285" r="105" fill="#d5d8d1"/>
+  <path d="M115 700c18-157 92-240 205-240s187 83 205 240" fill="#d5d8d1"/>
+  <text x="320" y="760" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#646862">Portrait pending rights clearance</text>
+</svg>

@@ -1,4 +1,6 @@
-export type Story = {slug:string; title:string; shortTitle:string; date:string; label:string; category:string; summary:string; paragraphs:string[]; image:string; alt:string; credit:string; imageSource:string; source:string; sourceLabel:string; book:string};
+import research from './research-data.json';
+
+export type Story = {slug:string; title:string; shortTitle:string; date:string; label:string; category:string; summary:string; paragraphs:string[]; image:string; alt:string; credit:string; imageSource:string; source:string; sourceLabel:string; book:string; profile?:boolean};
 export const stories: Story[] = [
  {slug:'a-cemetery-of-their-own',title:'A cemetery of their own',shortTitle:'Sterling Watts’s burial',date:'1885-10-26',label:'October 26, 1885',category:'Origins',summary:'A burial under segregation frames the story of South-View’s founding.',paragraphs:[
  'On October 26, 1885, Sterling Watts was buried in Rest Haven, the segregated African American section of Atlanta’s Westview Cemetery. City of the Dead opens with a reconstruction of that day, describing the indignities faced by his family. His son Albert Watts would become one of the six men who founded South-View Cemetery the following year. The burial date is given in the book; Albert’s thoughts in the opening scene are the author’s reconstruction, not a surviving first-person account.',
@@ -14,5 +16,39 @@ export const stories: Story[] = [
  ],image:'/images/ruby.jpg',alt:'Ruby Doris Smith Robinson',credit:'From SNCC Digital Gateway / Civil Rights Movement Archive',imageSource:'https://snccdigital.org/people/ruby-doris-smith-robinson/',source:'https://snccdigital.org/people/ruby-doris-smith-robinson/',sourceLabel:'SNCC Digital Gateway',book:'City of the Dead, p. 238'}
 ];
 export const demoTour = {id:'demo-tour',title:'South-View walking tour',date:'2026-10-24',time:'10:00–11:30 a.m. ET',description:'An imagined guided walk through South-View’s history, with stops exploring the cemetery’s origins and its connections to the civil rights movement. Meet at the main entrance, 1990 Jonesboro Road SE, Atlanta. This is a fictional event for demonstration; no tour is scheduled.'};
-export type CalendarEvent = {id:string; title:string; date:string; endDate?:string; time?:string; description?:string; url?:string; storySlug?:string; kind:'history'|'tour'};
-export function anniversaries(year:number):CalendarEvent[]{return stories.map(s=>({id:s.slug,title:s.shortTitle,date:`${year}${s.date.slice(4)}`,storySlug:s.slug,kind:'history'}));}
+export type CalendarEvent = {id:string; title:string; date:string; endDate?:string; time?:string; description?:string; url?:string; storySlug?:string; source?:string; sourceLabel?:string; dateNote?:string; kind:'history'|'tour'};
+
+const placeholder = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.';
+export const profiles: Story[] = research.profiles.map((person) => ({
+  slug: person.slug,
+  title: person.name,
+  shortTitle: person.name,
+  date: '2000-01-01',
+  label: person.name,
+  category: 'South-View history',
+  summary: person.blurb,
+  paragraphs: [placeholder, placeholder],
+  image: person.image,
+  alt: person.imageStatus === 'permission_required' || person.imageStatus?.includes('permission') || person.imageStatus === 'unavailable_portrait' || person.imageStatus === 'license_review_required' ? 'Portrait pending rights clearance' : person.name,
+  credit: person.credit,
+  imageSource: person.imageSource,
+  source: person.imageSource,
+  sourceLabel: person.credit,
+  book: '',
+  profile: true,
+}));
+export const storiesWithProfiles = [...stories, ...profiles];
+
+export function anniversaries(year:number):CalendarEvent[]{
+  return research.events.map((event, index) => ({
+    id: `${event.date}-${index}`,
+    title: event.title,
+    date: `${year}${event.date.slice(4)}`,
+    description: event.description,
+    source: event.source,
+    sourceLabel: event.sourceLabel,
+    dateNote: event.dateNote,
+    storySlug: event.storySlug,
+    kind: 'history',
+  }));
+}
