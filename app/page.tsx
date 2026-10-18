@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { storiesWithProfiles, anniversaries, demoTour, type CalendarEvent } from '@/lib/events';
+import { storiesWithProfiles, historicalArticles, displayHistoricalDate, anniversaries, demoTour, type CalendarEvent } from '@/lib/events';
 
 const regions = [
   {
@@ -21,6 +21,12 @@ const regions = [
       { date: 'October 7, 1967', title: 'Ruby Doris Smith Robinson', href: '/history/remembering-ruby-doris' },
     ],
   },
+  {
+    id: 'all-events',
+    title: 'All Events',
+    dates: '1841–2020',
+    events: [],
+  },
 ];
 
 const months = [
@@ -29,6 +35,7 @@ const months = [
 ];
 
 function historyHref(event: CalendarEvent) {
+  if (event.articleSlug) return `/events/${event.articleSlug}`;
   return event.storySlug && storiesWithProfiles.some((story) => story.slug === event.storySlug)
     ? `/history/${event.storySlug}`
     : null;
@@ -144,7 +151,9 @@ export default function Home() {
             </div>
             <div className="region-event-track">
               <div className="region-event-rail" aria-hidden="true" />
-              {[...(regions.find((region) => region.id === selectedRegion)?.events || []), ...(selectedRegion === 'civil-rights' ? storiesWithProfiles.filter((story) => story.profile).map((story) => ({ date: story.timelineDate || 'Dates not established', title: story.title, href: `/history/${story.slug}`, sort: story.timelineSort || '9999-99-99' })) : [])]
+              {[...(selectedRegion === 'all-events'
+                ? historicalArticles.map((article) => ({ date: displayHistoricalDate(article.date), title: article.title, href: `/events/${article.slug}`, sort: article.date }))
+                : regions.find((region) => region.id === selectedRegion)?.events || []), ...(selectedRegion === 'civil-rights' ? storiesWithProfiles.filter((story) => story.profile).map((story) => ({ date: story.timelineDate || 'Dates not established', title: story.title, href: `/history/${story.slug}`, sort: story.timelineSort || '9999-99-99' })) : [])]
                 .sort((a, b) => {
                   const sortA = 'sort' in a ? a.sort : new Date(a.date).toISOString().slice(0, 10);
                   const sortB = 'sort' in b ? b.sort : new Date(b.date).toISOString().slice(0, 10);

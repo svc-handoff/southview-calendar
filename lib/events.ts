@@ -16,7 +16,7 @@ export const stories: Story[] = [
  ],image:'/images/ruby.jpg',alt:'Ruby Doris Smith Robinson',credit:'From SNCC Digital Gateway / Civil Rights Movement Archive',imageSource:'https://snccdigital.org/people/ruby-doris-smith-robinson/',source:'https://snccdigital.org/people/ruby-doris-smith-robinson/',sourceLabel:'SNCC Digital Gateway',book:'City of the Dead, p. 238'}
 ];
 export const demoTour = {id:'demo-tour',title:'South-View walking tour',date:'2026-10-24',time:'10:00–11:30 a.m. ET',description:'An imagined guided walk through South-View’s history, with stops exploring the cemetery’s origins and its connections to the civil rights movement. Meet at the main entrance, 1990 Jonesboro Road SE, Atlanta. This is a fictional event for demonstration; no tour is scheduled.'};
-export type CalendarEvent = {id:string; title:string; date:string; endDate?:string; time?:string; description?:string; url?:string; storySlug?:string; source?:string; sourceLabel?:string; dateNote?:string; kind:'history'|'tour'};
+export type CalendarEvent = {id:string; title:string; date:string; endDate?:string; time?:string; description?:string; url?:string; storySlug?:string; articleSlug?:string; source?:string; sourceLabel?:string; dateNote?:string; kind:'history'|'tour'};
 
 const placeholder = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.';
 export const profiles: Story[] = research.profiles.map((person) => ({
@@ -43,6 +43,89 @@ export const profiles: Story[] = research.profiles.map((person) => ({
 }));
 export const storiesWithProfiles = [...stories, ...profiles];
 
+const genericImage = {
+  image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Unidentified_cemetery_in_Georgia_LCCN99472251.jpg',
+  alt: 'An unidentified historic cemetery in Georgia; this is an illustrative image, not South-View Cemetery.',
+  imageCredit: 'Unknown photographer; Library of Congress, Prints & Photographs Division, via Wikimedia Commons. Public domain in the United States; published before 1931. Illustrative image, not South-View Cemetery.',
+  imageSource: 'https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg',
+};
+const illustrativeImages = {
+  riot: {
+    image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Atlanta_Constitution,_front_page,_September_23,_1906.png',
+    alt: 'Front page of The Atlanta Constitution from September 23, 1906, covering the Atlanta race massacre.',
+    imageCredit: 'The Atlanta Constitution, front page, September 23, 1906. Public domain in the United States; published before 1931.',
+    imageSource: 'https://commons.wikimedia.org/wiki/File:Atlanta_Constitution,_front_page,_September_23,_1906.png',
+  },
+  airmen: {
+    image: 'https://tile.loc.gov/storage-services/service/pnp/fsa/8b29000/8b29200/8b29205r.jpg',
+    alt: 'Tuskegee Airmen cadets at training in Tuskegee, Alabama, in 1942.',
+    imageCredit: 'U.S. Army Signal Corps; Farm Security Administration–Office of War Information Photograph Collection, Library of Congress. Public domain; no known restrictions.',
+    imageSource: 'https://www.loc.gov/item/2017767766/',
+  },
+  march: {
+    image: 'https://cdn.loc.gov/service/pnp/ds/04400/04411v.jpg',
+    alt: 'Civil rights marchers gathered at the Lincoln Memorial in Washington, D.C., August 28, 1963.',
+    imageCredit: 'Warren K. Leffler, photographer; Library of Congress, Prints & Photographs Division. No known restrictions on publication.',
+    imageSource: 'https://www.loc.gov/pictures/item/2013648832/',
+  },
+};
+
+function eventSlug(date: string, title: string) {
+  const titlePart = title.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  return `${date}-${titlePart}`;
+}
+
+function imageForEvent(event: (typeof research.events)[number]) {
+  const title = event.title.toLowerCase();
+  if (/atlanta race riot|pittsburgh riot|riot memorial|riot victims/.test(title)) return illustrativeImages.riot;
+  if (/tuskegee|westmoreland|airman|airmen/.test(title)) return illustrativeImages.airmen;
+  if (/march|selma|bloody sunday|voting-rights|boycott|ruby doris/.test(title)) return illustrativeImages.march;
+  const person = profiles.find((profile) => title.includes(profile.title.toLowerCase()));
+  if (person && person.image !== '/images/portrait-pending.svg') {
+    return { image: person.image, alt: person.alt, imageCredit: person.credit, imageSource: person.imageSource };
+  }
+  if (person && /civil.rights|movement|segregation|voting/.test(person.summary.toLowerCase())) return illustrativeImages.march;
+  if (/martin luther king|\bking\b/.test(title)) {
+    const king = profiles.find((profile) => profile.slug === 'martin-luther-king-jr');
+    if (king) return { image: king.image, alt: king.alt, imageCredit: king.credit, imageSource: king.imageSource };
+  }
+  return genericImage;
+}
+
+function eventContext(event: (typeof research.events)[number]) {
+  const title = event.title.toLowerCase();
+  const person = profiles.find((profile) => title.includes(profile.title.toLowerCase()));
+  if (person) return person.summary;
+  if (/martin luther king|\bking\b/.test(title)) return profiles.find((profile) => profile.slug === 'martin-luther-king-jr')?.summary || '';
+  if (event.sourceLabel === 'City of the Dead') {
+    return 'The book places this episode within the history of South-View and the people connected to it. Its account preserves the date and context as part of the cemetery’s record of Atlanta’s Black community.';
+  }
+  return `The source listed below documents this milestone. It is included here alongside South-View’s history and the lives of Atlanta’s civic, cultural, and civil-rights leaders.`;
+}
+
+export const historicalArticles = research.events.map((event, index) => {
+  const slug = eventSlug(event.date, event.title);
+  const image = imageForEvent(event);
+  return {
+    id: `${event.date}-${index}`,
+    slug,
+    title: event.title,
+    date: event.date,
+    description: event.description,
+    paragraphs: [event.description, eventContext(event)],
+    source: event.source,
+    sourceLabel: event.sourceLabel,
+    dateNote: event.dateNote,
+    storySlug: event.storySlug,
+    ...image,
+  };
+});
+
+export function displayHistoricalDate(date: string) {
+  const [year, month, day] = date.split('-').map(Number);
+  return new Date(year, month - 1, day).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+
 export function anniversaries(year:number):CalendarEvent[]{
   return research.events.map((event, index) => ({
     id: `${event.date}-${index}`,
@@ -53,6 +136,7 @@ export function anniversaries(year:number):CalendarEvent[]{
     sourceLabel: event.sourceLabel,
     dateNote: event.dateNote,
     storySlug: event.storySlug,
+    articleSlug: eventSlug(event.date, event.title),
     kind: 'history',
   }));
 }
