@@ -3,7 +3,7 @@ import { displayHistoricalDate, historicalArticles } from '@/lib/events';
 
 export default async function EventPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const article = historicalArticles.find((item) => item.slug === slug);
+  const article = historicalArticles.find((item) => item.slug === slug || item.legacySlugs?.includes(slug));
   if (!article) notFound();
 
   return (

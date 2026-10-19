@@ -76,6 +76,7 @@ export const historicalArticles = research.events.map((event, index) => {
   return {
     id: `${event.date}-${index}`,
     slug,
+    legacySlugs: content.legacySlugs || [],
     title: event.title,
     date: event.date,
     description: event.description,
