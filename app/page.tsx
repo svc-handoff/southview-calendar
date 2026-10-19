@@ -9,7 +9,7 @@ const regions = [
     title: 'Founding',
     dates: '1885–1886',
     events: [
-      { date: 'October 26, 1885', title: 'Sterling Watts and the origins of South-View', href: '/history/a-cemetery-of-their-own' },
+      { date: 'October 26, 1885', title: 'Sterling Watts and the origins of South-View', href: '/events/1885-10-26-sterling-watts-is-buried-in-segregated-rest-haven' },
     ],
   },
   {
@@ -17,8 +17,8 @@ const regions = [
     title: 'Civil Rights',
     dates: '1841–2020',
     events: [
-      { date: 'October 14, 1964', title: 'Martin Luther King Jr. receives the Nobel Peace Prize', href: '/history/a-nobel-prize-for-nonviolence' },
-      { date: 'October 7, 1967', title: 'Ruby Doris Smith Robinson', href: '/history/remembering-ruby-doris' },
+      { date: 'October 14, 1964', title: 'Martin Luther King Jr. receives the Nobel Peace Prize', href: '/events/1964-10-14-martin-luther-king-jr-is-announced-as-nobel-peace-prize-laureate' },
+      { date: 'October 7, 1967', title: 'Ruby Doris Smith Robinson', href: '/events/1967-10-07-ruby-doris-smith-robinson-dies' },
     ],
   },
   {

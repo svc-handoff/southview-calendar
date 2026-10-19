@@ -12,17 +12,22 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
       <article className="event-article">
         <p className="event-date">{displayHistoricalDate(article.date)}</p>
         <h1>{article.title}</h1>
-        <figure>
+        {article.image && <figure>
           <img src={article.image} alt={article.alt} />
-          <figcaption><a href={article.imageSource} target="_blank" rel="noreferrer">{article.imageCredit}</a></figcaption>
-        </figure>
+          <figcaption>
+            {article.imageSource && <>Image record: <a href={article.imageSource} target="_blank" rel="noreferrer">view source ↗</a>. </>}
+            {article.imageCredit}
+          </figcaption>
+        </figure>}
         <div className="event-copy">
           {article.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
           {article.dateNote && <aside className="event-note">Date note: {article.dateNote}</aside>}
         </div>
-        <p className="event-source">Source: {article.source?.startsWith('http')
+        {article.sources?.length ? <div className="event-source"><strong>Sources</strong><ul>{article.sources.map((source, index) => <li key={`${source.url || source.note}-${index}`}>
+          {source.url ? <a href={source.url} target="_blank" rel="noreferrer">{source.label || new URL(source.url).hostname} ↗</a> : <>{source.label}: {source.note}</>}
+        </li>)}</ul></div> : article.source && <p className="event-source">Source: {article.source?.startsWith('http')
           ? <a href={article.source} target="_blank" rel="noreferrer">{article.sourceLabel || 'View source'} ↗</a>
-          : article.source || 'South-View: City of the Dead'}</p>
+          : article.source}</p>}
       </article>
     </main>
   );
