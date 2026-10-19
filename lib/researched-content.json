@@ -692,12 +692,12 @@
       ],
       "dateNote": "",
       "image": {
-        "url": null,
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Henry_Ossian_Flipper,_c1880.jpg",
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Henry_Ossian_Flipper,_c1880.jpg",
         "creator": "Photographer unknown; image from Miriam Matthews Photograph Collection, UCLA Library Digital Collections",
-        "rights": "Commons file page requires a fresh license check; verify rights before publishing.",
+        "rights": "Public domain in the United States; the portrait was published before January 1, 1931. Photographer unknown; image from the Miriam Matthews Photograph Collection, UCLA Library.",
         "alt": "Studio portrait of Henry Ossian Flipper in military uniform",
-        "status": "permission-required"
+        "status": "cleared"
       }
     },
     "1915-05-19": {
