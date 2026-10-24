@@ -26,6 +26,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid #275b42; outline-offs
 .month-buttons button { min-width: 36px; height: 34px; padding: 0 10px; border: 1px solid var(--line); border-radius: 5px; background: #fff; font-size: 20px; line-height: 1; }
 .month-buttons .today-button { font-size: 12px; }
 .month-buttons button:hover { background: #f6f8f6; }
+.month-buttons .reminder-button { padding: 0 11px; border-color: #b7cbbd; color: #214e35; font-size: 11px; }
+.month-buttons .reminder-button:hover { background: var(--green-pale); }
 .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
 .weekday { min-height: 34px; padding: 10px 8px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--muted); font-size: 11px; text-align: center; }
 .calendar-day { min-height: 112px; min-width: 0; padding: 7px 6px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -72,7 +74,36 @@ a:focus-visible, button:focus-visible { outline: 2px solid #275b42; outline-offs
 .dialog-close { position: absolute; top: 8px; right: 12px; border: 0; background: transparent; color: var(--muted); font-size: 24px; }
 .tour-label { margin: 0 0 10px; color: var(--rust); font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
 .tour-dialog h2 { margin: 0 0 12px; font-size: 21px; font-weight: 500; }
+.tour-dialog .event-description { white-space: pre-line; }
 .tour-dialog p:last-child { margin: 0; color: #555d57; font-size: 13px; line-height: 1.65; }
+
+.reminder-dialog { position: fixed; inset: 50% auto auto 50%; width: min(520px, calc(100% - 28px)); max-height: min(86vh, 760px); overflow-y: auto; transform: translate(-50%, -50%); margin: 0; padding: 27px; border: 1px solid var(--line); border-radius: 8px; background: #fff; box-shadow: 0 12px 48px #0002; }
+.reminder-dialog::backdrop { background: #20252255; }
+.reminder-dialog h2 { margin: 0 0 10px; font-size: 21px; font-weight: 500; }
+.reminder-intro { margin: 0 0 20px; color: #555d57; font-size: 13px; line-height: 1.55; }
+.reminder-search { display: grid; gap: 7px; }
+.reminder-search label { color: var(--muted); font-size: 11px; }
+.reminder-search-row { display: flex; gap: 8px; }
+.reminder-search-row input { min-width: 0; flex: 1; height: 38px; padding: 0 10px; border: 1px solid var(--line); border-radius: 4px; font: inherit; }
+.reminder-search-row button, .download-reminders { min-height: 38px; padding: 0 14px; border: 1px solid #356b50; border-radius: 4px; background: #356b50; color: #fff; font-size: 12px; }
+.reminder-search-row button:hover, .download-reminders:hover { background: #28563d; }
+.reminder-search-row button:disabled, .download-reminders:disabled { cursor: not-allowed; opacity: .5; }
+.reminder-message { margin: 12px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.reminder-results { display: grid; gap: 10px; margin-top: 16px; }
+.reminder-results-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.reminder-results-heading .reminder-message { margin: 0; }
+.reminder-bulk-actions { display: flex; flex: 0 0 auto; gap: 6px; }
+.reminder-bulk-actions button { min-height: 30px; padding: 0 9px; border: 1px solid var(--line); border-radius: 4px; background: #fff; color: #214e35; font-size: 11px; }
+.reminder-bulk-actions button:hover { background: var(--green-pale); }
+.reminder-match { display: grid; gap: 5px; width: 100%; margin: 0; padding: 12px; border: 1px solid var(--line); border-radius: 5px; background: #fff; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.reminder-match:hover { border-color: #789784; background: #f8faf8; }
+.reminder-match:focus-visible { outline: 2px solid #356b50; outline-offset: 2px; }
+.reminder-match.selected { border-color: #356b50; background: var(--green-pale); box-shadow: inset 3px 0 #356b50; }
+.reminder-match:disabled { cursor: not-allowed; opacity: .58; }
+.reminder-match strong { font-size: 13px; font-weight: 600; }
+.reminder-match span { color: #444b46; font-size: 12px; line-height: 1.4; }
+.reminder-footnote { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+.download-reminders { justify-self: start; }
 
 /* Minimal person cards opened from calendar and timeline links. */
 .person-page { position: relative; width: min(860px, calc(100% - 40px)); margin: 48px auto 80px; }
@@ -105,6 +136,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid #275b42; outline-offs
   .month-controls h1 { font-size: 21px; }
   .month-buttons { gap: 4px; }
   .month-buttons button { min-width: 32px; height: 32px; padding: 0 8px; }
+  .month-buttons .reminder-button { font-size: 10px; }
+  .reminder-dialog { padding: 22px 18px; }
+  .reminder-results-heading { align-items: flex-start; flex-direction: column; }
   .weekday { min-height: 31px; padding: 9px 2px; font-size: 10px; }
   .calendar-day { min-height: 84px; padding: 4px 2px; }
   .day-number { width: 22px; height: 22px; margin-bottom: 3px; font-size: 11px; }

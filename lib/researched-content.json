@@ -217,7 +217,7 @@
       ],
       "dateNote": "February 8 is repeated in biographical sources, while Georgia Women of Achievement confirms only the year.",
       "image": {
-        "url": "/images/bazoline-usher.jpg",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Bazoline_Estelle_Usher%2C_Atlanta_University_student%2C_half-length_portrait%2C_facing_front_LCCN98518739.jpg",
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Bazoline_Estelle_Usher,_Atlanta_University_student,_half-length_portrait,_facing_front_LCCN98518739.jpg",
         "creator": "Library of Congress, Prints and Photographs Division",
         "rights": "Public domain in the United States; published before 1931.",
@@ -250,7 +250,7 @@
       ],
       "dateNote": "",
       "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
+        "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
         "creator": "Unidentified photographer; Library of Congress collection",
         "rights": "Public domain in the United States; historic photograph published before 1931. It is an unidentified Georgia cemetery, not South-View; label as illustrative.",
@@ -374,12 +374,12 @@
       ],
       "dateNote": "",
       "image": {
-        "url": "/images/john-lewis.jpg",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Johnlewis.jpg",
-        "creator": "U.S. House of Representatives",
-        "rights": "Public domain, official U.S. government portrait; this is a portrait of Lewis, not a photograph of Bloody Sunday.",
-        "alt": "Official portrait of John Lewis, leader of the Bloody Sunday march",
-        "status": "cleared"
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Photograph_of_John_Lewis,_Hosea_William,_Albert_Turner_and_Bob_Mants_Leading_Marchers_over_the_Edmund_Pettus_Bridge_on_Bloody_Sunday_-_NARA_-_16899023.jpg",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Photograph_of_John_Lewis,_Hosea_William,_Albert_Turner_and_Bob_Mants_Leading_Marchers_over_the_Edmund_Pettus_Bridge_on_Bloody_Sunday_-_NARA_-_16899023.jpg",
+        "creator": "U.S. Department of Transportation employee; preserved by the National Archives and Records Administration",
+        "rights": "Public domain U.S. federal government work; image provided to Wikimedia Commons by NARA.",
+        "alt": "John Lewis, Hosea Williams, Albert Turner, and Bob Mants leading marchers across the Edmund Pettus Bridge on Bloody Sunday.",
+        "status": "public-domain"
       },
       "legacySlugs": [
         "1965-03-07-bloody-sunday-in-selma"
@@ -407,7 +407,7 @@
       ],
       "dateNote": "The newspaper reports that ten or twelve people had already been buried, but it does not identify the first burial date.",
       "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
+        "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
         "creator": "Unidentified photographer; Library of Congress collection",
         "rights": "Public domain in the United States; historic photograph published before 1931. It is not verified as South-View; label as illustrative.",
@@ -432,7 +432,7 @@
       ],
       "dateNote": "",
       "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
+        "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
         "creator": "Unidentified photographer; Library of Congress collection",
         "rights": "Public domain in the United States; not a portrait of Harriet Graham or a verified view of South-View. Label as illustrative.",
@@ -457,7 +457,7 @@
       ],
       "dateNote": "",
       "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
+        "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
         "creator": "Unidentified photographer; Library of Congress collection",
         "rights": "Public domain in the United States; not a verified image of South-View. Label as illustrative.",
@@ -550,7 +550,7 @@
       ],
       "dateNote": "",
       "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
+        "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
         "creator": "Unidentified photographer; Library of Congress collection",
         "rights": "Public domain in the United States; not verified as South-View. Label as illustrative.",
@@ -678,12 +678,12 @@
       ],
       "dateNote": "",
       "image": {
-        "url": "https://www.loc.gov/pictures/resource/cph.3c38376/",
-        "sourcePage": "https://www.loc.gov/pictures/item/2009630222/",
-        "creator": "Harper’s Weekly, 1863; Library of Congress Prints and Photographs Division",
-        "rights": "No known restrictions on publication per Library of Congress record.",
-        "alt": "1863 wood engraving portrait of Reverend Henry McNeal Turner",
-        "status": "cleared"
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Bishop_Henry_McNeal_Turner.png",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Bishop_Henry_McNeal_Turner.png",
+        "creator": "Unknown; reproduced in The Afro-American Press and Its Editors (1891)",
+        "rights": "Public domain in the United States; published before January 1, 1931.",
+        "alt": "Portrait of Bishop Henry McNeal Turner, reproduced in an 1891 book.",
+        "status": "public-domain"
       },
       "legacySlugs": [
         "1915-05-19-bishop-henry-mcneal-turner-is-buried-at-south-view"
@@ -709,7 +709,7 @@
       ],
       "dateNote": "",
       "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
+        "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
         "creator": "Unidentified photographer; Library of Congress collection",
         "rights": "Public domain in the United States; not verified as South-View. Label as illustrative.",
@@ -953,7 +953,7 @@
       ],
       "dateNote": "The date and incident details come from D. L. Henderson’s cemetery history; no independent case record was located online.",
       "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
+        "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
         "creator": "Library of Congress, Prints and Photographs Division",
         "rights": "Public domain in the United States (published before 1931); image depicts an unidentified Georgia cemetery, not South-View.",
@@ -1012,7 +1012,7 @@
       ],
       "dateNote": "The date and fee amount come from the cemetery’s account of the city-council petition; the account does not say that the fee was waived.",
       "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
+        "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
         "creator": "Library of Congress, Prints and Photographs Division",
         "rights": "Public domain in the United States (published before 1931); image depicts an unidentified Georgia cemetery, not South-View.",
@@ -1129,7 +1129,7 @@
       ],
       "dateNote": "The account of the monument’s fall comes from cemetery historian Albert H. Watts’s recollection, recorded by D. L. Henderson.",
       "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
+        "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
         "creator": "Library of Congress, Prints and Photographs Division",
         "rights": "Public domain in the United States (published before 1931); image depicts an unidentified Georgia cemetery, not South-View.",
@@ -1195,7 +1195,7 @@
       ],
       "dateNote": "",
       "image": {
-        "url": "/images/amos-rucker-1905.png",
+        "url": null,
         "sourcePage": "https://upload.wikimedia.org/wikipedia/commons/7/71/Confederate_veteran_%28serial%29_%28IA_confederateveter17conf%29.pdf",
         "creator": "The Atlanta Constitution (artist uncredited), 1905",
         "rights": "Public-domain newspaper illustration reproduced in D. L. Henderson, South-View: An African American City of the Dead, p. 156.",
@@ -1207,10 +1207,10 @@
       ]
     },
     "1905-10-12": {
-      "title": "Confederate veterans escort Amos Rucker’s funeral to South-View",
+      "title": "Amos Rucker dies and is buried at South-View",
       "paragraphs": [
-        "Amos Rucker was buried at South-View on October 12, 1905, two days after his death. The funeral procession included former governor Allen D. Candler and Confederate veterans; former Confederate general Clement A. Evans conducted the service. Veterans dressed Rucker in a gray uniform and placed a Confederate flag over his coffin.",
-        "Rucker had been enslaved and forced to accompany his enslaver’s son during the Civil War, cooking and maintaining his uniform. After emancipation he worked in Atlanta’s post office and became a familiar member of the W. H. T. Walker veterans’ camp. The honors given at his funeral show how white veterans folded a formerly enslaved man into Confederate remembrance, often describing coerced service as loyalty. The record supports his role as an army servant, not an enlisted soldier or verified medal recipient."
+        "Amos Rucker died in Atlanta on October 10, 1905, at about eighty-one, and was buried at South-View two days later. Enslaved by the Rucker family, he was forced to accompany a young white man into Confederate service, where he worked as an army servant. After emancipation he worked in Atlanta’s post office and became a familiar member of the W. H. T. Walker veterans’ camp.",
+        "Former governor Allen D. Candler and Confederate veterans joined Rucker’s funeral; former Confederate general Clement A. Evans conducted the service. Veterans dressed him in a gray uniform and placed a Confederate flag over his coffin. The honors show how white veterans folded a formerly enslaved man into Confederate remembrance, often describing coerced service as loyalty. The record supports his role as an army servant, not an enlisted soldier or verified medal recipient."
       ],
       "sources": [
         {
@@ -1224,7 +1224,7 @@
       ],
       "dateNote": "",
       "image": {
-        "url": "/images/amos-rucker-1905.png",
+        "url": null,
         "sourcePage": "https://upload.wikimedia.org/wikipedia/commons/7/71/Confederate_veteran_%28serial%29_%28IA_confederateveter17conf%29.pdf",
         "creator": "The Atlanta Constitution (artist uncredited), 1905",
         "rights": "Public-domain newspaper illustration reproduced in D. L. Henderson, South-View: An African American City of the Dead, p. 156.",
@@ -1232,6 +1232,7 @@
         "status": "public-domain"
       },
       "legacySlugs": [
+        "1905-10-10-amos-rucker-dies",
         "1905-10-12-amos-rucker-is-buried-at-south-view"
       ]
     },
@@ -1348,7 +1349,7 @@
       ],
       "dateNote": "",
       "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
+        "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
         "creator": "Library of Congress, Prints and Photographs Division",
         "rights": "Public domain in the United States (published before 1931); image depicts an unidentified Georgia cemetery, not South-View.",
@@ -1406,7 +1407,7 @@
       ],
       "dateNote": "The execution date and details are drawn from D. L. Henderson’s cemetery history; an independent case record was not located online.",
       "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
+        "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
         "creator": "Library of Congress, Prints and Photographs Division",
         "rights": "Public domain in the United States (published before 1931); image depicts an unidentified Georgia cemetery, not South-View.",
@@ -1435,7 +1436,7 @@
       ],
       "dateNote": "The burial date and undertaker detail are drawn from D. L. Henderson’s cemetery history; an independent burial record was not located online.",
       "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
+        "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
         "creator": "Library of Congress, Prints and Photographs Division",
         "rights": "Public domain in the United States (published before 1931); image depicts an unidentified Georgia cemetery, not South-View.",
@@ -1522,7 +1523,7 @@
       ],
       "dateNote": "",
       "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
+        "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
         "creator": "Library of Congress, Prints and Photographs Division",
         "rights": "Public domain in the United States (published before 1931); image depicts an unidentified Georgia cemetery, not South-View.",
@@ -1584,7 +1585,7 @@
       ],
       "dateNote": "",
       "image": {
-        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
+        "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
         "creator": "Library of Congress, Prints and Photographs Division",
         "rights": "Public domain in the United States (published before 1931); image depicts an unidentified Georgia cemetery, not South-View.",
@@ -2024,7 +2025,7 @@
         }
       ],
       "image": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Benjamin_Mays_portrait.jpg",
+        "url": "/images/benjamin-mays.jpg",
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Benjamin_Mays_portrait.jpg",
         "creator": "Robert Templeton",
         "rights": "CC BY-SA 4.0; credit creator and link license; adaptations must be shared alike.",
@@ -2111,7 +2112,7 @@
         }
       ],
       "image": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Bazoline_Estelle_Usher%2C_Atlanta_University_student%2C_half-length_portrait%2C_facing_front_LCCN98518739.jpg",
+        "url": "/images/bazoline-usher.jpg",
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Bazoline_Estelle_Usher,_Atlanta_University_student,_half-length_portrait,_facing_front_LCCN98518739.jpg",
         "creator": "Library of Congress, Prints and Photographs Division",
         "rights": "Public domain in the United States; published before 1931.",
@@ -2289,7 +2290,7 @@
         }
       ],
       "image": {
-        "url": "https://dlg.usg.edu/thumbnails/geh/byd/geh_byd_3914.jpg",
+        "url": null,
         "sourcePage": "https://dlg.usg.edu/record/geh_byd_3914",
         "creator": "Boyd Lewis, photographer; Kenan Research Center, Atlanta History Center",
         "rights": "CC BY-NC-ND 4.0. Noncommercial use only; displayed unmodified. Attribution required.",

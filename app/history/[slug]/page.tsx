@@ -1,4 +1,5 @@
 import { notFound, redirect } from 'next/navigation';
+import Link from 'next/link';
 import { historicalArticles, storiesWithProfiles } from '@/lib/events';
 
 export default async function StoryPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -14,13 +15,13 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
 
   return (
     <main className="person-page">
-      <a className="person-back" href="/" aria-label="Back to calendar">←</a>
+      <Link className="person-back" href="/" aria-label="Back to calendar">←</Link>
       <article className="person-card">
         <h1>{story.title}</h1>
-        <figure>
+        {story.image ? <figure>
           <img src={story.image} alt={story.alt} />
           <figcaption>{story.imageSource && <>Image record: <a href={story.imageSource} target="_blank" rel="noreferrer">view source ↗</a>. </>}{story.credit}</figcaption>
-        </figure>
+        </figure> : null}
         <div className="person-placeholder">
           {story.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
         </div>

@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { displayHistoricalDate, historicalArticles } from '@/lib/events';
 
 export default async function EventPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -8,7 +9,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 
   return (
     <main className="event-page">
-      <a className="person-back" href="/" aria-label="Back to calendar and timeline">←</a>
+      <Link className="person-back" href="/" aria-label="Back to calendar and timeline">←</Link>
       <article className="event-article">
         <p className="event-date">{displayHistoricalDate(article.date)}</p>
         <h1>{article.title}</h1>
