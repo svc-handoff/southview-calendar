@@ -1,6 +1,7 @@
 import { notFound, redirect } from 'next/navigation';
 import { resolveHistoricalArticle, storiesWithProfiles } from '@/lib/events';
 import { readCalendarSnapshot } from '@/lib/google-calendar';
+import { demoArticleText, displayedArticleParagraphs } from '@/lib/article-display';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,9 +24,9 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
           <figcaption>{story.imageSource && <>Image record: <a href={story.imageSource} target="_blank" rel="noreferrer">view source ↗</a>. </>}{story.credit}</figcaption>
         </figure> : null}
         <div className="person-placeholder">
-          {story.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+          {displayedArticleParagraphs(story.paragraphs).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
         </div>
-        {story.sources?.length ? <div className="event-source"><strong>Sources</strong><ul>{story.sources.map((source, index) => <li key={`${source.url || source.note}-${index}`}>
+        {!demoArticleText && story.sources?.length ? <div className="event-source"><strong>Sources</strong><ul>{story.sources.map((source, index) => <li key={`${source.url || source.note}-${index}`}>
           {source.url ? <a href={source.url} target="_blank" rel="noreferrer">{source.label || new URL(source.url).hostname} ↗</a> : <>{source.label}: {source.note}</>}
         </li>)}</ul></div> : null}
       </article>
