@@ -125,7 +125,12 @@ export function resolveHistoricalArticle(reference?:string,articles:HistoricalAr
     try{key=new URL(key).pathname;}catch{return undefined;}
   }
   key=key.replace(/^\/?(?:history|events)\//,'').replace(/^\/+|\/+$/g,'');
-  return articles.find(article=>[article.slug,article.storySlug,...article.legacySlugs,...article.storyAliases].includes(key));
+  const exact=articles.find(article=>article.slug===key);
+  if(exact)return exact;
+  const alias=articles.find(article=>[...article.legacySlugs,...article.storyAliases].includes(key));
+  if(alias)return alias;
+  const personArticles=articles.filter(article=>article.storySlug===key);
+  return personArticles.length===1?personArticles[0]:undefined;
 }
 
 function calendarTitle(value:string){
@@ -137,29 +142,35 @@ export function dedupeCalendarEvents(events:CalendarEvent[],articles:HistoricalA
   const historicalTitles=new Map(articles.flatMap(article=>article.calendarAliases.map(title=>[calendarTitle(title),article] as const)));
   const linkedArticle=(event:CalendarEvent)=>{
     if(event.kind==='history'){
-      const references=[event.articleSlug,event.storySlug,event.url,
+      const references=[event.articleSlug,event.url,
         ...(event.description?.match(/https?:\/\/[^\s<>]+\/(?:history|events)\/[a-z0-9-]+/gi)||[])];
       for(const reference of references){const article=resolveHistoricalArticle(reference,articles);if(article)return article;}
+      const story=resolveHistoricalArticle(event.storySlug,articles);
+      if(story)return story;
+      const sameDay=articles.filter(article=>article.storySlug===event.storySlug&&article.date.slice(5)===event.date.slice(5));
+      if(event.storySlug&&sameDay.length===1)return sameDay[0];
     }
     return event.kind==='history'||!event.time?historicalTitles.get(calendarTitle(event.title)):undefined;
   };
   const preferred=new Map<string,CalendarEvent>();
+  const occurrenceKey=(article:HistoricalArticle,event:CalendarEvent)=>`${article.slug}:${event.date}:${event.time||''}`;
   for(const event of events){
     const article=linkedArticle(event);
     if(!article)continue;
-    const previous=preferred.get(article.subjectId);
-    if(!previous||(previous.articleSlug!==article.slug&&event.articleSlug===article.slug))preferred.set(article.subjectId,event);
+    const key=occurrenceKey(article,event);
+    const previous=preferred.get(key);
+    if(!previous||(previous.articleSlug!==article.slug&&event.articleSlug===article.slug))preferred.set(key,event);
   }
   const result:CalendarEvent[]=[];
   const seenIds=new Set<string>();
   const seenContents=new Set<string>();
   for(const event of events){
-    // Resolve editorial aliases before comparing dates: a merged birthday or
-    // funeral must not reappear from an older Calendar entry in another month.
+    // Deduplicate only copies of the same occurrence on the same calendar
+    // date and time. A person's other milestones are independent events.
     const article=linkedArticle(event);
-    if(article&&preferred.get(article.subjectId)!==event)continue;
+    if(article&&preferred.get(occurrenceKey(article,event))!==event)continue;
     const idKey=`${event.id}:${event.date}:${event.time||''}`;
-    const contentKey=`${event.kind}:${event.date}:${event.time||''}:${calendarTitle(event.title)}`;
+    const contentKey=article?occurrenceKey(article,event):`${event.kind}:${event.date}:${event.time||''}:${calendarTitle(event.title)}`;
     if(seenIds.has(idKey)||seenContents.has(contentKey))continue;
     seenIds.add(idKey);
     seenContents.add(contentKey);
@@ -178,7 +189,7 @@ export function timelineEntries(startYear:number,endYear:number){
     const year=Number(article.date.slice(0,4));
     return year>=startYear&&year<=endYear;
   }).map(article=>({date:displayHistoricalDate(article.date),title:article.title,href:`/events/${article.slug}`,sort:article.date,subjectId:article.subjectId}));
-  const biographies=profiles.filter(profile=>!resolveHistoricalArticle(profile.slug)).filter(profile=>{
+  const biographies=profiles.filter(profile=>!historicalArticles.some(article=>article.storySlug===profile.slug)).filter(profile=>{
     const year=Number((profile.timelineSort||'').slice(0,4));
     return year>=startYear&&year<=endYear;
   }).map(profile=>({date:profile.timelineDate||'Dates not established',title:profile.title,href:`/history/${profile.slug}`,sort:profile.timelineSort||'9999-99-99',subjectId:profile.slug}));

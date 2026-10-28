@@ -255,6 +255,16 @@
   ],
   "events": [
     {
+      "date": "1987-01-03",
+      "title": "John Lewis begins service in the U.S. House",
+      "description": "John Lewis began his first term representing Georgia’s Fifth District on January 3, 1987. By then he had spent decades organizing for civil rights: he joined the Nashville sit-ins and Freedom Rides, chaired the Student Nonviolent Coordinating Committee, and was beaten on the Edmund Pettus Bridge during the 1965 Selma march.",
+      "source": "https://www.archives.gov/research/african-americans/individuals/john-lewis",
+      "sourceLabel": "U.S. House of Representatives, History, Art & Archives",
+      "dateNote": "",
+      "storySlug": "john-lewis",
+      "subjectId": "john-lewis"
+    },
+    {
       "date": "1969-01-06",
       "title": "Ludie Clay Andrews dies after a life in nursing",
       "description": "Ludie Clay Andrews died on January 6, 1969, from injuries caused by a house fire. A graduate of Spelman’s nursing program, she helped organize Grady Hospital’s Municipal Training School for Colored Nurses in 1914 and later supervised nursing at MacVicar Hospital.",
@@ -263,6 +273,46 @@
       "dateNote": "",
       "storySlug": "ludie-clay-andrews",
       "subjectId": "ludie-clay-andrews"
+    },
+    {
+      "date": "1994-01-10",
+      "title": "Atlanta renames Houston Street for John Wesley Dobbs",
+      "description": "On January 10, 1994, Atlanta renamed Houston Street John Wesley Dobbs Avenue. Mayor Maynard Jackson, Dobbs’s grandson, led the tribute to a civic organizer remembered as the “unofficial mayor” of Auburn Avenue, the commercial and cultural heart of Black Atlanta.",
+      "source": "https://www.georgiaencyclopedia.org/articles/history-archaeology/john-wesley-dobbs-1882-1961/",
+      "sourceLabel": "New Georgia Encyclopedia: John Wesley Dobbs",
+      "dateNote": "",
+      "storySlug": "john-w-dobbs",
+      "subjectId": "john-w-dobbs"
+    },
+    {
+      "date": "1929-01-15",
+      "title": "Martin Luther King Jr. is born in Atlanta",
+      "description": "Martin Luther King Jr. was born on January 15, 1929, at 501 Auburn Avenue in Atlanta. His childhood unfolded in Sweet Auburn, a thriving Black neighborhood whose churches, businesses, and civic institutions stood within a city divided by segregation. At Ebenezer Baptist Church, his father and grandfather served as ministers, placing King in a family tradition of religious leadership.",
+      "source": "https://home.nps.gov/people/martinlutherkingjr.htm",
+      "sourceLabel": "National Park Service: King’s Atlanta youth and leadership",
+      "dateNote": "",
+      "storySlug": "martin-luther-king-jr",
+      "subjectId": "martin-luther-king-jr"
+    },
+    {
+      "date": "1969-01-15",
+      "title": "Mourners gather at King’s South-View tomb on his birthday",
+      "description": "On January 15, 1969, Martin Luther King Jr.’s birthday, mourners gathered at his tomb at South-View Cemetery. A National Museum of African American History and Culture photograph records the gravesite with an eternal flame and a wreath from Alpha Phi Alpha, the fraternity King had joined as a Morehouse student. The photograph captures a new public place of mourning less than a year after his assassination.",
+      "source": "https://home.nps.gov/people/martinlutherkingjr.htm",
+      "sourceLabel": "Smithsonian National Museum of African American History and Culture: South-View gravesite photograph",
+      "dateNote": "",
+      "storySlug": "martin-luther-king-jr",
+      "subjectId": "martin-luther-king-jr"
+    },
+    {
+      "date": "1983-01-15",
+      "title": "Graham Jackson dies after a career in Atlanta music",
+      "description": "Graham Washington Jackson Sr. died on January 15, 1983, after a career that moved between jazz, church music, theaters, and public life. After coming to Atlanta in 1924, he formed the Seminole Syncopators and performed on WSB radio; in 1928 he became music director at Booker T. Washington High School, then Atlanta’s public high school for Black students.",
+      "source": "https://www.georgiaencyclopedia.org/articles/arts-culture/graham-jackson-sr/",
+      "sourceLabel": "New Georgia Encyclopedia: Graham Jackson Sr.",
+      "dateNote": "",
+      "storySlug": "graham-w-jackson-sr",
+      "subjectId": "graham-w-jackson-sr"
     },
     {
       "date": "1933-01-25",
@@ -285,6 +335,46 @@
       "subjectId": "bazoline-e-usher"
     },
     {
+      "date": "1886-02-20",
+      "title": "Atlanta’s Black community moves to buy land for South-View",
+      "description": "On February 20, 1886, the Atlanta Constitution reported that Black Atlantans were buying a new cemetery. As reproduced and discussed in D. L. Henderson’s history, the group had paid $600 toward a 25-acre tract on McDonough Road, priced at $3,500. The plan was already a community investment before South-View received its charter.",
+      "source": "City of the Dead, ch. 4",
+      "sourceLabel": "Zion Hill Baptist Church: Rev. Robert Grant and South-View’s founding",
+      "dateNote": "",
+      "subjectId": "south-view-founding",
+      "storySlug": "robert-grant"
+    },
+    {
+      "date": "1940-02-21",
+      "title": "John Lewis is born near Troy, Alabama",
+      "description": "John Robert Lewis was born on February 21, 1940, near Troy, Alabama, to sharecroppers. As a young man he heard Martin Luther King Jr. on the radio and began looking for a way to challenge the segregation that shaped Black life in the South.",
+      "source": "https://www.archives.gov/research/african-americans/individuals/john-lewis",
+      "sourceLabel": "National Park Service: John R. Lewis",
+      "dateNote": "",
+      "storySlug": "john-lewis",
+      "subjectId": "john-lewis"
+    },
+    {
+      "date": "1903-02-22",
+      "title": "Graham W. Jackson is born in Portsmouth, Virginia",
+      "description": "Graham Washington Jackson was born in Portsmouth, Virginia, on February 22, 1903. He showed an early gift for piano and organ, then moved to Atlanta in 1924 to attend Morehouse College. Within months he had formed the Seminole Syncopators, an Atlanta jazz band that played on WSB radio and in local theaters.",
+      "source": "https://www.georgiaencyclopedia.org/articles/arts-culture/graham-jackson-sr/",
+      "sourceLabel": "New Georgia Encyclopedia: Graham Jackson Sr.",
+      "dateNote": "",
+      "storySlug": "graham-w-jackson-sr",
+      "subjectId": "graham-w-jackson-sr"
+    },
+    {
+      "date": "1908-02-22",
+      "title": "Annie L. McPheeters is born in Floyd County",
+      "description": "Annie Lou Watters was born in Berwin, Floyd County, Georgia, on February 22, 1908. After college and library training, she joined Atlanta’s Auburn Avenue branch, where she built a collection of books by and about Black people at a time when public institutions often excluded Black readers and history from their shelves.",
+      "source": "https://www.georgiaencyclopedia.org/articles/education/annie-l-mcpheeters-1908-1994/",
+      "sourceLabel": "New Georgia Encyclopedia: Annie L. McPheeters",
+      "dateNote": "",
+      "storySlug": "annie-l-mcpheeters",
+      "subjectId": "annie-l-mcpheeters"
+    },
+    {
       "date": "1965-03-07",
       "title": "Bloody Sunday: John Lewis and marchers are attacked in Selma",
       "description": "On March 7, 1965, John Lewis and Hosea Williams led hundreds of peaceful voting-rights marchers out of Selma toward Montgomery. At the Edmund Pettus Bridge, Alabama state troopers and deputized men ordered them to turn back, then attacked with clubs and tear gas. Lewis suffered a fractured skull. Images of the violence carried the marchers’ demand for voting rights to a national audience; President Lyndon Johnson signed the Voting Rights Act that August.",
@@ -295,6 +385,16 @@
       "storySlug": "john-lewis"
     },
     {
+      "date": "1886-03-18",
+      "title": "A neighbor’s legal challenge interrupts South-View’s early burials",
+      "description": "On March 18, 1886, the Atlanta Constitution reported that ten or twelve people had already been buried at the new South-View grounds. Adjoining landowner A. J. Harper sought to stop the burials, claiming they threatened health and property values. The newspaper’s report records a dispute in the cemetery’s first weeks; it does not establish the date of the first burial.",
+      "source": "City of the Dead, ch. 4",
+      "sourceLabel": "D. L. Henderson, South-View: An African American City of the Dead (2018), catalog record",
+      "dateNote": "",
+      "storySlug": "robert-grant",
+      "subjectId": "south-view-founding"
+    },
+    {
       "date": "1904-03-31",
       "title": "Harriet Graham dies and is buried at South-View",
       "description": "Harriet Graham, widow of South-View founder George Graham and a shareholder in the cemetery herself, was found dead at her Fraser Street home on March 31, 1904. A coroner’s jury initially attributed her death to heart disease. Investigators then learned that an anonymous miniature coffin containing a threatening message had been left at her door.",
@@ -302,6 +402,16 @@
       "sourceLabel": "D. L. Henderson, South-View: An African American City of the Dead (2018), pp. 159–160; catalog record",
       "dateNote": "",
       "subjectId": "harriet-graham"
+    },
+    {
+      "date": "1968-04-04",
+      "title": "Martin Luther King Jr. is assassinated in Memphis",
+      "description": "Martin Luther King Jr. was shot on the balcony of the Lorraine Motel in Memphis on April 4, 1968. He had returned to support the city’s Black sanitation workers, whose strike protested low wages, unsafe work, and the indignity of having to carry their own trash in leaking containers. King was pronounced dead at St. Joseph’s Hospital that evening.",
+      "source": "https://home.nps.gov/people/martinlutherkingjr.htm",
+      "sourceLabel": "Stanford King Institute: Assassination of Martin Luther King Jr.",
+      "dateNote": "",
+      "storySlug": "martin-luther-king-jr",
+      "subjectId": "martin-luther-king-jr"
     },
     {
       "date": "1945-04-13",
@@ -360,6 +470,26 @@
       "subjectId": "henry-mcneal-turner"
     },
     {
+      "date": "1888-05-22",
+      "title": "South-View’s founders transfer 25 acres to the association",
+      "description": "On May 22, 1888, five South-View founders transferred about twenty-five acres to the cemetery association for $1,250. J. C. Huggins signed on behalf of Charles Morgan’s estate; Jacob McKinley, George W. Graham, Robert Grant, and Albert Watts joined the transaction. The sale put the cemetery’s original grounds under the association’s ownership and gave the new institution a formal basis for managing and expanding the burial ground.",
+      "source": "D. L. Henderson, South-View: City of the Dead, chapter 4, OCR page estimate 38.",
+      "sourceLabel": "Georgia Historical Society: South-View Cemetery",
+      "dateNote": "",
+      "storySlug": "robert-grant",
+      "subjectId": "south-view-founding"
+    },
+    {
+      "date": "1963-06-12",
+      "title": "Prince Hall Masons dedicate John Wesley Dobbs’s broken-column memorial",
+      "description": "On June 12, 1963, Georgia Prince Hall Masons and Eastern Stars gathered at John Wesley Dobbs’s South-View grave to dedicate a broken-column monument. The column marked the death of a grand master and symbolized unfinished work. The ritual was led by Rev. Xenophon Lamar Neal, Dobbs’s successor; the monument was made by Turner Memorial Enterprises, a Black-owned Atlanta monument company.",
+      "source": "City of the Dead, ch. 10",
+      "sourceLabel": "D. L. Henderson, South-View: An African American City of the Dead",
+      "dateNote": "",
+      "storySlug": "john-w-dobbs",
+      "subjectId": "john-w-dobbs"
+    },
+    {
       "date": "1992-06-17",
       "title": "Grace Towns Hamilton dies after a career in Georgia politics",
       "description": "Grace Towns Hamilton died on June 17, 1992, after a career that moved from civil-rights administration into state politics. As executive director of the Atlanta Urban League from 1943 to 1961, she worked on housing, education, health services, and voter registration for Black residents. Her approach sought concrete gains within segregation, a strategy that eventually brought her into conflict with the national Urban League.",
@@ -370,6 +500,26 @@
       "subjectId": "grace-towns-hamilton"
     },
     {
+      "date": "1858-06-26",
+      "title": "Alonzo Herndon is born enslaved in Walton County",
+      "description": "Alonzo Franklin Herndon was born enslaved in Walton County, Georgia, on June 26, 1858. His mother, Sophenie, was enslaved by Frank Herndon, his white father. After emancipation, the family was forced off the farm and struggled to survive. As a young man Alonzo labored and peddled goods, then left home with eleven dollars saved and learned the barber’s trade.",
+      "source": "https://www.georgiaencyclopedia.org/articles/business-economy/alonzo-herndon-1858-1927/",
+      "sourceLabel": "New Georgia Encyclopedia: Alonzo Herndon",
+      "dateNote": "",
+      "storySlug": "alonzo-herndon",
+      "subjectId": "alonzo-herndon"
+    },
+    {
+      "date": "1933-07-01",
+      "title": "Jean Childs Young is born in Marion, Alabama",
+      "description": "Jean Childs was born in Marion, Alabama, on July 1, 1933, the youngest of five children. She wanted to study law but found narrow options for Black women and chose teaching. At Manchester College in Indiana, she became the first African American elected May Queen in 1953 and graduated in elementary education the following year.",
+      "source": "https://www.georgiaencyclopedia.org/articles/history-archaeology/jean-childs-young-1933-1994/",
+      "sourceLabel": "New Georgia Encyclopedia: Jean Childs Young",
+      "dateNote": "",
+      "storySlug": "jean-childs-young",
+      "subjectId": "jean-childs-young"
+    },
+    {
       "date": "1983-07-06",
       "title": "Atlanta honors poet, painter, and minister Thomas Jefferson Flanagan",
       "description": "Atlanta City Council proclaimed July 6, 1983, Dr. Thomas Jefferson Flanagan Day. By then Flanagan had spent decades writing for the city’s Black press: he worked with the Atlanta Independent and joined the Atlanta Daily World’s editorial staff soon after the paper began publication in 1928. His work included editorials, poetry, and books such as The Road to Mount McKeithan and The Canyons at Providence.",
@@ -377,6 +527,16 @@
       "sourceLabel": "Atlanta Daily World obituary, Georgia State University Digital Collections",
       "dateNote": "",
       "subjectId": "thomas-jefferson-flanagan"
+    },
+    {
+      "date": "2020-07-17",
+      "title": "John Lewis dies after a life in the civil-rights movement and Congress",
+      "description": "John Lewis died in Atlanta on July 17, 2020, after living with pancreatic cancer. As a young organizer, he joined Nashville’s sit-ins and the Freedom Rides, chaired the Student Nonviolent Coordinating Committee, and was beaten by state troopers during the 1965 Selma-to-Montgomery march. He had been one of the principal speakers at the 1963 March on Washington, where he called for federal civil-rights legislation and continued nonviolent protest.",
+      "source": "https://www.archives.gov/research/african-americans/individuals/john-lewis",
+      "sourceLabel": "U.S. House of Representatives: John R. Lewis",
+      "dateNote": "",
+      "storySlug": "john-lewis",
+      "subjectId": "john-lewis"
     },
     {
       "date": "1927-07-21",
@@ -415,6 +575,16 @@
       "sourceLabel": "D. L. Henderson, South-View: An African American City of the Dead",
       "dateNote": "",
       "subjectId": "south-view-license-fee"
+    },
+    {
+      "date": "1963-08-28",
+      "title": "John Lewis calls for federal action at the March on Washington",
+      "description": "On August 28, 1963, twenty-three-year-old John Lewis addressed the March on Washington for Jobs and Freedom as chairman of the Student Nonviolent Coordinating Committee. He represented a younger generation facing arrests and violence in sit-ins, Freedom Rides, and voter-registration campaigns. His prepared remarks demanded effective federal civil-rights legislation and proposed a continuing campaign of nonviolent protest across the South.",
+      "source": "https://www.archives.gov/research/african-americans/individuals/john-lewis",
+      "sourceLabel": "U.S. House of Representatives: John R. Lewis",
+      "dateNote": "",
+      "storySlug": "john-lewis",
+      "subjectId": "john-lewis"
     },
     {
       "date": "1961-08-30",
@@ -504,6 +674,16 @@
       "subjectId": "sterling-watts"
     },
     {
+      "date": "1904-11-08",
+      "title": "Horace Mann Bond is born in Nashville",
+      "description": "Horace Mann Bond was born in Nashville, Tennessee, on November 8, 1904, into a family of educators and ministers. He entered Lincoln University at fourteen, graduated in 1923 and earned a doctorate at the University of Chicago. His scholarship examined how poverty and unequal schools shaped Black children’s educational opportunities.",
+      "source": "https://www.georgiaencyclopedia.org/articles/education/horace-mann-bond-1904-1972/",
+      "sourceLabel": "New Georgia Encyclopedia — Horace Mann Bond",
+      "dateNote": "",
+      "storySlug": "horace-mann-bond",
+      "subjectId": "horace-mann-bond"
+    },
+    {
       "date": "1898-11-09",
       "title": "Wade Hampton is executed and buried at South-View",
       "description": "Wade Hampton was nineteen when he was hanged at Atlanta’s Fulton County jail, known as the Tower, on November 9, 1898. Imprisoned as a child for burglary, he had been leased to work at the Chattahoochee Brick Company, where an explosion cost him a leg. He was later convicted of killing another young prisoner and sentenced to death.",
@@ -529,6 +709,25 @@
       "sourceLabel": "Martin Luther King, Jr. Research and Education Institute, Stanford — Montgomery Bus Boycott",
       "dateNote": "",
       "subjectId": "montgomery-bus-boycott"
+    },
+    {
+      "date": "1886-12-06",
+      "title": "Charles H. Morgan buys the first recorded South-View shares",
+      "description": "On December 6, 1886, South-View Cemetery Association’s stock book recorded Charles H. Morgan buying its first three shares. A grocer and one of the men who petitioned for the cemetery’s charter, Morgan committed money to a new Black-led institution only months after its founding. Each share was valued at one hundred dollars.",
+      "source": "City of the Dead, ch. 3",
+      "sourceLabel": "D. L. Henderson, South-View: An African American City of the Dead (2018), ch. 3; catalog record",
+      "dateNote": "",
+      "subjectId": "charles-h-morgan"
+    },
+    {
+      "date": "1964-12-10",
+      "title": "Martin Luther King Jr. accepts the Nobel Peace Prize in Oslo",
+      "description": "Martin Luther King Jr. accepted the Nobel Peace Prize in Oslo on December 10, 1964. He dedicated it to the civil-rights movement and the people risking their safety to challenge segregation. In his speech, he recalled the violence directed at Black children in Birmingham and at voting-rights workers in Mississippi, insisting that the struggle was still unfinished.",
+      "source": "https://home.nps.gov/people/martinlutherkingjr.htm",
+      "sourceLabel": "Nobel Prize — Martin Luther King Jr.’s acceptance speech, December 10, 1964",
+      "dateNote": "",
+      "storySlug": "martin-luther-king-jr",
+      "subjectId": "martin-luther-king-jr"
     },
     {
       "date": "1886-12-17",
@@ -558,6 +757,16 @@
       "dateNote": "",
       "storySlug": "annie-l-mcpheeters",
       "subjectId": "annie-l-mcpheeters"
+    },
+    {
+      "date": "1885-12-26",
+      "title": "Atlanta educator Bazoline E. Usher is born",
+      "description": "Bazoline Estelle Usher was born in Walton County, Georgia, on December 26, 1885. She studied at Atlanta University and graduated in 1906, then taught in Virginia before returning to Atlanta in 1915. Over the next decades she became a teacher, principal and leader in the city’s public education system.",
+      "source": "https://www.atlantahistorycenter.com/blog/bazoline-estelle-usher/",
+      "sourceLabel": "Atlanta History Center — Bazoline Usher visual arts materials",
+      "dateNote": "",
+      "storySlug": "bazoline-e-usher",
+      "subjectId": "bazoline-e-usher"
     },
     {
       "date": "2012-12-31",

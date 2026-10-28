@@ -22,9 +22,11 @@ const record=(article,extra={})=>[
   `LAST-MODIFIED:${extra.modified||'20261027T000000Z'}`,
 ];
 
-test('one featured entry per subject, with usable articles and images',()=>{
-  assert.equal(historicalArticles.length,33);
-  assert.equal(new Set(historicalArticles.map(article=>article.subjectId)).size,33);
+test('distinct milestones remain separate, with usable articles and images',()=>{
+  assert.equal(historicalArticles.length,54);
+  assert.equal(new Set(historicalArticles.map(article=>article.slug)).size,54);
+  assert.equal(historicalArticles.filter(article=>article.subjectId==='john-lewis').length,5);
+  assert.equal(historicalArticles.filter(article=>article.subjectId==='martin-luther-king-jr').length,5);
   for(const article of historicalArticles){
     assert.ok(article.paragraphs.length>=2&&article.paragraphs.length<=3,article.title);
     assert.ok(article.sources.length,article.title);
@@ -34,8 +36,8 @@ test('one featured entry per subject, with usable articles and images',()=>{
 
 test('all consolidated articles round-trip through folded Google Calendar descriptions',()=>{
   const parsed=parseCalendarFeed(feed(historicalArticles.map(article=>record(article))),2027);
-  assert.equal(parsed.events.length,33);
-  assert.equal(parsed.articles.length,33);
+  assert.equal(parsed.events.length,54);
+  assert.equal(parsed.articles.length,54);
   for(const article of historicalArticles){
     const actual=parsed.articles.find(item=>item.slug===article.slug);
     assert.deepEqual(actual.paragraphs,article.paragraphs);
@@ -47,7 +49,7 @@ test('all consolidated articles round-trip through folded Google Calendar descri
 });
 
 test('Google Calendar title, copy and anniversary date edits are authoritative',()=>{
-  const article=historicalArticles.find(item=>item.subjectId==='martin-luther-king-jr');
+  const article=historicalArticles.find(item=>item.date==='1964-10-14');
   const updated=calendarArticleDescription({...article,paragraphs:['Edited in Google Calendar.','The updated story.']});
   const parsed=parseCalendarFeed(feed([record(article,{title:'Updated Calendar title',description:updated,start:'20261015'})]),2026);
   assert.equal(parsed.articles[0].title,'Updated Calendar title');
@@ -57,34 +59,53 @@ test('Google Calendar title, copy and anniversary date edits are authoritative',
 });
 
 test('Calendar rich-text normalization preserves separate article paragraphs',()=>{
-  const article=historicalArticles.find(item=>item.subjectId==='martin-luther-king-jr');
+  const article=historicalArticles.find(item=>item.date==='1964-10-14');
   const normalized=calendarArticleDescription(article).replace(/\n\n/g,'\n');
   const parsed=parseCalendarFeed(feed([record(article,{description:normalized})]),2026);
   assert.deepEqual(parsed.articles[0].paragraphs,article.paragraphs);
 });
 
-test('old birthday and anniversary copies resolve to one featured record across months',()=>{
-  const article=historicalArticles.find(item=>item.subjectId==='john-lewis');
-  const birthday=article.legacySlugs.find(slug=>slug.startsWith('1940-02-21'));
-  assert.equal(resolveHistoricalArticle(birthday).slug,article.slug);
+test('a birthday and later milestone survive; a same-day copy is removed',()=>{
+  const article=historicalArticles.find(item=>item.date==='1965-03-07');
+  const birthday=historicalArticles.find(item=>item.date==='1940-02-21');
+  assert.equal(resolveHistoricalArticle(birthday.slug).slug,birthday.slug);
   const parsed=parseCalendarFeed(feed([
     ['UID:old-copy','DTSTART;VALUE=DATE:20260221','SUMMARY:Anniversary: John Lewis is born near Troy, Alabama','DESCRIPTION:[southview-story:john-lewis]'],
+    record(birthday),
     record(article),
     record(article,{id:'duplicate-copy'}),
   ]),2026);
-  assert.equal(parsed.events.length,1);
-  assert.equal(parsed.events[0].date,'2026-03-07');
+  assert.equal(parsed.events.length,2);
+  assert.deepEqual(new Set(parsed.events.map(event=>event.date)),new Set(['2026-02-21','2026-03-07']));
 });
 
-test('the newest subject record wins if someone duplicates a Calendar anniversary',()=>{
+test('the newest record wins only for copies of the same occurrence on the same day',()=>{
   const article=historicalArticles[0];
   const parsed=parseCalendarFeed(feed([
-    record(article,{id:'older',start:'20260107',modified:'20261026T000000Z'}),
+    record(article,{id:'older',start:'20260108',modified:'20261026T000000Z'}),
     record(article,{id:'newer',start:'20260108',title:'Newest title',modified:'20261027T000000Z'}),
   ]),2026);
   assert.equal(parsed.events.length,1);
   assert.equal(parsed.events[0].date,'2026-01-08');
   assert.equal(parsed.articles[0].title,'Newest title');
+});
+
+test('separate dates for the same article are not silently merged',()=>{
+  const article=historicalArticles[0];
+  const parsed=parseCalendarFeed(feed([
+    record(article,{id:'first-day',start:'20260107'}),
+    record(article,{id:'second-day',start:'20260108'}),
+  ]),2026);
+  assert.equal(parsed.events.length,2);
+});
+
+test('different historic years on the same anniversary day remain distinct',()=>{
+  const birthday=historicalArticles.find(article=>article.date==='1929-01-15');
+  const memorial=historicalArticles.find(article=>article.date==='1969-01-15');
+  const parsed=parseCalendarFeed(feed([record(birthday),record(memorial),record(birthday,{id:'birthday-copy'})]),2026);
+  assert.equal(parsed.articles.length,2);
+  assert.equal(parsed.events.length,2);
+  assert.ok(parsed.events.every(event=>event.date==='2026-01-15'));
 });
 
 test('separate tour times survive; copied scheduled events appear once',()=>{
@@ -115,5 +136,5 @@ test('former story links and merged burial links all point to one article',()=>{
     ['1898-11-10-wade-hampton-is-buried-at-south-view-after-his-execution','wade-hampton'],
   ])assert.equal(resolveHistoricalArticle(alias)?.subjectId,subject,alias);
   const entries=timelineEntries(0,9999);
-  assert.equal(new Set(entries.map(item=>item.subjectId)).size,entries.length);
+  assert.equal(new Set(entries.map(item=>item.href)).size,entries.length);
 });

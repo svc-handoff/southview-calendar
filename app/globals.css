@@ -104,6 +104,13 @@ a:focus-visible, button:focus-visible { outline: 2px solid #275b42; outline-offs
 .reminder-match span { color: #444b46; font-size: 12px; line-height: 1.4; }
 .reminder-footnote { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
 .download-reminders { justify-self: start; }
+.reminder-export-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.reminder-export-actions button { flex: 1 1 180px; padding: 8px 12px; }
+.google-reminders { min-height: 38px; border: 1px solid #356b50; border-radius: 4px; background: #fff; color: #214e35; font-size: 12px; }
+.google-reminders:hover { background: var(--green-pale); }
+.google-reminders:disabled { cursor: not-allowed; opacity: .5; }
+.reminder-export-status { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.reminder-export-status a { color: #214e35; text-decoration: underline; }
 
 /* Minimal person cards opened from calendar and timeline links. */
 .person-page { position: relative; width: min(860px, calc(100% - 40px)); margin: 48px auto 80px; }

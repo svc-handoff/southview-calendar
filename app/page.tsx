@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { calendarEventsForMonth, type CalendarEvent, type HistoricalArticle } from '@/lib/events';
+import { loadGoogleCalendar, authorizeGoogleCalendar, addGoogleBirthdays, type BirthdayReminder } from '@/lib/google-reminders';
 
 const months = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -87,6 +88,20 @@ export default function Home() {
   const [lookupLoading, setLookupLoading] = useState(false);
   const [matchType, setMatchType] = useState<MemorialSearchType>('name');
   const [fuzzyMatches, setFuzzyMatches] = useState(false);
+  const [googleReady, setGoogleReady] = useState(false);
+  const [googleLoadError, setGoogleLoadError] = useState('');
+  const [googleAdding, setGoogleAdding] = useState(false);
+  const [googleMessage, setGoogleMessage] = useState('');
+  const [googleProgress, setGoogleProgress] = useState('');
+  const [googleCalendarUrl, setGoogleCalendarUrl] = useState('');
+  useEffect(() => {
+    if (!showReminderBuilder) return;
+    let active = true;
+    loadGoogleCalendar().then(() => { if (active) { setGoogleReady(true); setGoogleLoadError(''); } }).catch((error: unknown) => {
+      if (active) setGoogleLoadError(error instanceof Error ? error.message : 'Google sign-in could not load. Please reload.');
+    });
+    return () => { active = false; };
+  }, [showReminderBuilder]);
   useEffect(() => {
     const controller = new AbortController();
     fetch(`/api/calendar?year=${date.year}&month=${date.month + 1}`, { signal: controller.signal })
@@ -126,6 +141,8 @@ export default function Home() {
     setLookupError('');
     setMatches([]);
     setReminderSelections({});
+    setGoogleMessage('');
+    setGoogleCalendarUrl('');
     setLookupLoading(true);
     try {
       const response = await fetch(`/api/memorials?name=${encodeURIComponent(lookupName)}`, { cache: 'no-store' });
@@ -150,11 +167,40 @@ export default function Home() {
 
   const selectedReminderCount = matches.filter((match) => reminderSelections[match.id] && match.birthDate).length;
 
-  function downloadReminders() {
-    const reminders = matches.flatMap((match) => {
+  function selectedBirthdays(): BirthdayReminder[] {
+    return matches.flatMap((match) => {
       if (!reminderSelections[match.id] || !match.birthDate) return [];
       return [{ title: `Birthday: ${match.name}`, date: match.birthDate, id: `${match.id}-birth` }];
     });
+  }
+
+  async function addToGoogleCalendar() {
+    const reminders = selectedBirthdays();
+    if (!reminders.length || googleAdding || !googleReady) return;
+    setGoogleAdding(true);
+    setGoogleMessage('');
+    setGoogleCalendarUrl('');
+    setGoogleProgress('Sign in to Google…');
+    try {
+      const token = await authorizeGoogleCalendar();
+      setGoogleProgress(`Adding 0 of ${reminders.length}…`);
+      const result = await addGoogleBirthdays(token, reminders, ({ added, existing, total }) => {
+        setGoogleProgress(`Adding ${added + existing} of ${total}…`);
+      });
+      const added = `${result.added} birthday${result.added === 1 ? '' : 's'} added`;
+      const existing = result.existing ? `; ${result.existing} already in your calendar` : '';
+      setGoogleMessage(`${added}${existing}. Yearly reminders are in your South-View birthdays calendar.`);
+      setGoogleCalendarUrl(result.calendarUrl);
+    } catch (error) {
+      setGoogleMessage(error instanceof Error ? error.message : 'Could not add birthdays. Please try again.');
+    } finally {
+      setGoogleAdding(false);
+      setGoogleProgress('');
+    }
+  }
+
+  function downloadReminders() {
+    const reminders = selectedBirthdays();
     if (!reminders.length) return;
     const searchLabel = lookupName.trim();
     const blob = new Blob([makeIcsCalendar(`${searchLabel} — South-View Reminders`, reminders)], { type: 'text/calendar;charset=utf-8' });
@@ -164,6 +210,18 @@ export default function Home() {
     link.download = `south-view-reminders-${searchLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}.ics`;
     link.click();
     URL.revokeObjectURL(url);
+  }
+
+  function renderReminderActions(announce = false) {
+    return <div className="reminder-export-section">
+      <div className="reminder-export-actions" aria-label="Export selected birthdays">
+        <button type="button" className="download-reminders" onClick={downloadReminders} disabled={!selectedReminderCount || googleAdding}>Download {selectedReminderCount} selected birthday{selectedReminderCount === 1 ? '' : 's'} (.ics)</button>
+        <button type="button" className="google-reminders" onClick={addToGoogleCalendar} disabled={!selectedReminderCount || googleAdding || !googleReady}>{googleAdding ? googleProgress : 'Add to Google Calendar'}</button>
+      </div>
+      {(googleProgress || googleMessage || googleLoadError) && <p className="reminder-export-status" role={announce ? 'status' : undefined}>
+        {googleAdding ? googleProgress : googleMessage || googleLoadError}{!googleAdding && googleCalendarUrl && <> <a href={googleCalendarUrl} target="_blank" rel="noreferrer">Open Google Calendar ↗</a></>}
+      </p>}
+    </div>;
   }
 
   function renderEvent(event: CalendarEvent) {
@@ -243,12 +301,12 @@ export default function Home() {
           <button className="dialog-close" aria-label="Close" onClick={() => setShowReminderBuilder(false)}>×</button>
           <p className="tour-label">South-View reminders</p>
           <h2 id="reminder-title">Remember someone</h2>
-            <p className="reminder-intro">Search a last name to gather a family group, or enter a full name to find one person. Partial names and small spelling differences are matched by closeness. Select any number of people to add their birthdays to one calendar file.</p>
+            <p className="reminder-intro">Search a last name to gather a family group, or enter a full name to find one person. Partial names and small spelling differences are matched by closeness. Select people to add their birthdays to Google Calendar or download a calendar file.</p>
           <form className="reminder-search" onSubmit={(event) => { event.preventDefault(); void searchMemorial(); }}>
             <label htmlFor="memorial-name">Last name or full name</label>
             <div className="reminder-search-row">
-                <input id="memorial-name" value={lookupName} onChange={(event) => setLookupName(event.target.value)} autoComplete="off" required minLength={3} maxLength={100} />
-              <button type="submit" disabled={lookupLoading}>{lookupLoading ? 'Searching…' : 'Search'}</button>
+                <input id="memorial-name" value={lookupName} onChange={(event) => setLookupName(event.target.value)} autoComplete="off" required minLength={3} maxLength={100} disabled={googleAdding} />
+              <button type="submit" disabled={lookupLoading || googleAdding}>{lookupLoading ? 'Searching…' : 'Search'}</button>
             </div>
           </form>
           {lookupError && <p className="reminder-message" role="status">{lookupError}</p>}
@@ -257,11 +315,11 @@ export default function Home() {
               <div className="reminder-results-heading">
                 <p className="reminder-message">{fuzzyMatches ? `Closest ${matchType === 'surname' ? 'last-name' : 'name'} matches for “${lookupName.trim()}” · ${matches.length} records` : matchType === 'surname' ? `${matches.length} people with last name ${lookupName.trim()}.` : `${matches.length} matching record${matches.length === 1 ? '' : 's'}.`}</p>
                 <div className="reminder-bulk-actions">
-                  <button type="button" onClick={() => selectAllReminders(true)}>Add all</button>
-                  <button type="button" onClick={() => selectAllReminders(false)}>Clear</button>
+                  <button type="button" onClick={() => selectAllReminders(true)} disabled={googleAdding}>Add all</button>
+                  <button type="button" onClick={() => selectAllReminders(false)} disabled={googleAdding}>Clear</button>
                 </div>
               </div>
-              <button type="button" className="download-reminders" onClick={downloadReminders} disabled={!selectedReminderCount}>Download {selectedReminderCount} selected birthday{selectedReminderCount === 1 ? '' : 's'}</button>
+              {renderReminderActions(true)}
               {matches.length > 1 && <p className="reminder-message">{fuzzyMatches ? 'Results are ranked by name similarity; review them before using Add all.' : 'Select a person by clicking anywhere on their card, or use Add all to select everyone with a recorded birth date.'}</p>}
               {matches.map((match) => (
                 <button
@@ -269,15 +327,15 @@ export default function Home() {
                   key={match.id}
                   type="button"
                   aria-pressed={Boolean(reminderSelections[match.id])}
-                  disabled={!match.birthDate}
+                  disabled={!match.birthDate || googleAdding}
                   onClick={() => setReminderSelections((current) => ({ ...current, [match.id]: !current[match.id] }))}
                 >
                   <strong>{match.name}</strong>
                   <span>{match.birthDate ? `Birthday · ${formatDate(match.birthDate)}` : 'Birth date not recorded'}</span>
                 </button>
               ))}
-              <p className="reminder-footnote">Birthdays are added as yearly all-day events with an alert the day before. Some calendar apps may ask you to confirm the import or set alerts after importing.</p>
-              <button type="button" className="download-reminders" onClick={downloadReminders} disabled={!selectedReminderCount}>Download {selectedReminderCount} selected birthday{selectedReminderCount === 1 ? '' : 's'}</button>
+              <p className="reminder-footnote">Birthdays repeat yearly with a reminder the day before. Google Calendar asks you to sign in and approve access; it is currently available to approved demo accounts. You can also download the calendar file for other apps.</p>
+              {renderReminderActions()}
             </div>
           )}
         </dialog>

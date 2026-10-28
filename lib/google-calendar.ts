@@ -106,9 +106,9 @@ export function parseCalendarFeed(ics:string, year:number){
   const description=history?.paragraphs.join('\n\n')||rawDescription;
   const slug=history?.storySlug||storySlug(description);
   if(history){
-   const previous=articles.get(history.subjectId);
+   const previous=articles.get(history.slug);
    const modified=e['LAST-MODIFIED']||e.DTSTAMP||'';
-   if(!previous||modified>previous.modified)articles.set(history.subjectId,{article:history,modified});
+   if(!previous||modified>previous.modified)articles.set(history.slug,{article:history,modified});
   }
   const time=start?`${end?timeFormatter.formatRange(start,end):timeFormatter.format(start)} ET`:undefined;
   return [{id:e.UID||`ics-${index}`,title:unescapeIcs(e.SUMMARY||'Untitled event'),date,description,time,storySlug:slug,articleSlug:history?.slug,kind:history||slug?'history' as const:'tour' as const,url:e.URL}];
