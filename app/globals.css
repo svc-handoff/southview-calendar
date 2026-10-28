@@ -114,7 +114,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid #275b42; outline-offs
 
 /* Minimal person cards opened from calendar and timeline links. */
 .person-page { position: relative; width: min(860px, calc(100% - 40px)); margin: 48px auto 80px; }
-.person-back { position: absolute; top: 0; left: 0; color: var(--muted); font-size: 22px; }
+.person-back { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin-bottom: 12px; color: var(--muted); font-size: 22px; }
+.person-back:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
 .person-card { width: min(580px, 100%); margin: 0 auto; }
 .person-card h1 { margin: 0 0 18px; font-family: Georgia, serif; font-size: clamp(23px, 4vw, 34px); font-weight: 400; }
 .person-card figure { margin: 0; }

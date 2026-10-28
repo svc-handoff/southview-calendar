@@ -1,5 +1,4 @@
 import { notFound, redirect } from 'next/navigation';
-import Link from 'next/link';
 import { displayHistoricalDate, resolveHistoricalArticle } from '@/lib/events';
 import { readCalendarSnapshot } from '@/lib/google-calendar';
 
@@ -14,7 +13,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 
   return (
     <main className="event-page">
-      <Link className="person-back" href="/" aria-label="Back to calendar and timeline">←</Link>
+      <a className="person-back" href="/" aria-label="Back to calendar">←</a>
       <article className="event-article">
         <p className="event-date">{displayHistoricalDate(article.date)}</p>
         <h1>{article.title}</h1>

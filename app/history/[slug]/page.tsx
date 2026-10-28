@@ -1,5 +1,4 @@
 import { notFound, redirect } from 'next/navigation';
-import Link from 'next/link';
 import { resolveHistoricalArticle, storiesWithProfiles } from '@/lib/events';
 import { readCalendarSnapshot } from '@/lib/google-calendar';
 
@@ -16,7 +15,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
 
   return (
     <main className="person-page">
-      <Link className="person-back" href="/" aria-label="Back to calendar">←</Link>
+      <a className="person-back" href="/" aria-label="Back to calendar">←</a>
       <article className="person-card">
         <h1>{story.title}</h1>
         {story.image ? <figure>
