@@ -1,52 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { storiesWithProfiles, historicalArticles, displayHistoricalDate, anniversaries, demoTour, type CalendarEvent } from '@/lib/events';
-
-const regions = [
-  {
-    id: 'reconstruction',
-    title: 'Reconstruction',
-    start: 1865,
-    end: 1877,
-    dates: '1865–1877',
-  },
-  {
-    id: 'founding',
-    title: 'Founding',
-    start: 1885,
-    end: 1895,
-    dates: '1885–1895',
-  },
-  {
-    id: 'segregation',
-    title: 'Segregation',
-    start: 1858,
-    end: 1965,
-    dates: '1858–1965',
-  },
-  {
-    id: 'world-wars',
-    title: 'World Wars',
-    start: 1914,
-    end: 1945,
-    dates: '1914–1945',
-  },
-  {
-    id: 'civil-rights',
-    title: 'Civil Rights Movement',
-    start: 1954,
-    end: 1975,
-    dates: '1954–1975',
-  },
-  {
-    id: 'modern-era',
-    title: 'Modern Era',
-    start: 1970,
-    end: new Date().getFullYear(),
-    dates: `1970–${new Date().getFullYear()}`,
-  },
-];
+import { calendarEventsForMonth, type CalendarEvent, type HistoricalArticle } from '@/lib/events';
 
 const months = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -54,7 +9,6 @@ const months = [
 ];
 
 type MemorialMatch = { id: string; name: string; birthDate: string | null; deathDate: string };
-type TimelineItem = { date: string; title: string; href: string; sort: string };
 type MemorialSearchType = 'surname' | 'name';
 function formatDate(date: string) {
   const [year, month, day] = date.split('-').map(Number);
@@ -116,17 +70,15 @@ function makeIcsCalendar(name: string, reminders: { title: string; date: string;
 
 function historyHref(event: CalendarEvent) {
   if (event.articleSlug) return `/events/${event.articleSlug}`;
-  return event.storySlug && storiesWithProfiles.some((story) => story.slug === event.storySlug)
-    ? `/history/${event.storySlug}`
-    : null;
+  return null;
 }
 
 export default function Home() {
   const [date, setDate] = useState({ year: 2026, month: 9 });
   const [live, setLive] = useState<CalendarEvent[]>([]);
+  const [calendarArticles,setCalendarArticles] = useState<HistoricalArticle[]>([]);
   const [connection, setConnection] = useState('loading');
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
-  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [showReminderBuilder, setShowReminderBuilder] = useState(false);
   const [lookupName, setLookupName] = useState('');
   const [matches, setMatches] = useState<MemorialMatch[]>([]);
@@ -139,9 +91,11 @@ export default function Home() {
     const controller = new AbortController();
     fetch(`/api/calendar?year=${date.year}&month=${date.month + 1}`, { signal: controller.signal })
       .then(async (response) => {
-        const data = await response.json() as { status: string; events?: CalendarEvent[] };
+        const data = await response.json() as { status: string; events?: CalendarEvent[]; articles?:HistoricalArticle[] };
+        if(!response.ok)throw new Error('Calendar unavailable');
         setConnection(data.status);
         setLive(data.events || []);
+        setCalendarArticles(data.articles || []);
       })
       .catch((error) => {
         if (error.name !== 'AbortError') setConnection('error');
@@ -149,19 +103,7 @@ export default function Home() {
     return () => controller.abort();
   }, [date]);
 
-  const histories = anniversaries(date.year);
-  const tour = { ...demoTour, kind: 'tour' as const };
-  const monthEvents = [
-    ...histories,
-    ...(connection === 'connected' ? live : [tour]),
-  ].filter((event) => event.date.startsWith(`${date.year}-${String(date.month + 1).padStart(2, '0')}-`));
-  const events = [...new Map(monthEvents.map((event) => {
-    const titleKey = event.title.normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-    const identity = event.articleSlug
-      ? `article:${event.articleSlug}:${event.date}`
-      : `event:${event.storySlug || titleKey}:${titleKey}:${event.date}`;
-    return [identity, event];
-  })).values()];
+  const events = calendarEventsForMonth(date.year,date.month+1,live,calendarArticles);
   const offset = new Date(date.year, date.month, 1).getDay();
   const dayCount = new Date(date.year, date.month + 1, 0).getDate();
   const weekCount = Math.ceil((offset + dayCount) / 7);
@@ -224,26 +166,6 @@ export default function Home() {
     URL.revokeObjectURL(url);
   }
 
-  const selectedTimelineItems: TimelineItem[] = selectedRegion ? (() => {
-    const region = regions.find((item) => item.id === selectedRegion);
-    if (!region) return [];
-    const articles = historicalArticles
-      .filter((article) => {
-        const year = Number(article.date.slice(0, 4));
-        return year >= region.start && year <= region.end;
-      })
-      .map((article) => ({ date: displayHistoricalDate(article.date), title: article.title, href: `/events/${article.slug}`, sort: article.date }));
-    const profiles = storiesWithProfiles
-      .filter((story) => story.profile)
-      .filter((story) => {
-        const year = Number((story.timelineSort || '').slice(0, 4));
-        const hasSameYearArticle = historicalArticles.some((article) => article.storySlug === story.slug && article.date.slice(0, 4) === String(year));
-        return year >= region.start && year <= region.end && !hasSameYearArticle;
-      })
-      .map((story) => ({ date: story.timelineDate || 'Dates not established', title: story.title, href: `/history/${story.slug}`, sort: story.timelineSort || '9999-99-99' }));
-    return [...articles, ...profiles];
-  })() : [];
-
   function renderEvent(event: CalendarEvent) {
     const href = historyHref(event);
     if (href) {
@@ -275,6 +197,7 @@ export default function Home() {
             <button className="reminder-button" onClick={() => setShowReminderBuilder(true)}>Remember someone</button>
           </div>
         </div>
+        {connection==='error'&&<p role="status">Google Calendar is unavailable. Reload to try again.</p>}
         <div className="calendar-grid">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
             <div className="weekday" key={day}>{day}</div>
@@ -299,47 +222,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="timeline-section" aria-label="Historical timeline">
-        <h2>Timeline</h2>
-        {selectedRegion ? (
-          <div className="region-view" key={selectedRegion}>
-            <div className="region-view-heading">
-              <button className="timeline-back" onClick={() => setSelectedRegion(null)}>← All regions</button>
-              <span>{regions.find((region) => region.id === selectedRegion)?.dates}</span>
-              <h3>{regions.find((region) => region.id === selectedRegion)?.title}</h3>
-            </div>
-            <div className="region-event-track">
-              <div className="region-event-rail" aria-hidden="true" />
-              {selectedTimelineItems
-                .sort((a, b) => a.sort.localeCompare(b.sort)).map((event) => (
-                <a className="timeline-event-card" href={event.href} key={event.href}>
-                  <time>{event.date}</time>
-                  <strong>{event.title}</strong>
-                  <span aria-hidden="true">↗</span>
-                </a>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="region-track">
-            <div className="region-rail" aria-hidden="true" />
-            {regions.map((region) => (
-              <button className="region-card" key={region.id} onClick={() => setSelectedRegion(region.id)}>
-                <span className="region-date">{region.dates}</span>
-                <strong>{region.title}</strong>
-                <span className="region-open-label">View timeline <span aria-hidden="true">→</span></span>
-              </button>
-            ))}
-          </div>
-        )}
-      </section>
-
       {selectedEvent && (
         <dialog open className="tour-dialog" onClick={(event) => {
           if (event.target === event.currentTarget) setSelectedEvent(null);
         }}>
           <button className="dialog-close" aria-label="Close" onClick={() => setSelectedEvent(null)}>×</button>
-          <p className="tour-label">{selectedEvent.kind === 'tour' ? 'Fictional demonstration event' : selectedEvent.sourceLabel || 'South-View history'}</p>
+          <p className="tour-label">{selectedEvent.kind === 'tour' ? 'Calendar event' : selectedEvent.sourceLabel || 'South-View history'}</p>
           <h2>{selectedEvent.title}</h2>
           <p className="event-description">{selectedEvent.description}</p>
           {selectedEvent.dateNote && <p>{selectedEvent.dateNote}</p>}

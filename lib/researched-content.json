@@ -1,32 +1,5 @@
 {
   "events": {
-    "1987-01-03": {
-      "title": "John Lewis begins service in the U.S. House",
-      "paragraphs": [
-        "John Lewis began his first term representing Georgia’s Fifth District on January 3, 1987. By then he had spent decades organizing for civil rights: he joined the Nashville sit-ins and Freedom Rides, chaired the Student Nonviolent Coordinating Committee, and was beaten on the Edmund Pettus Bridge during the 1965 Selma march.",
-        "Congress followed Lewis’s service on Atlanta’s city council and his work with the national voter education effort. In the House he became a long-serving advocate for voting rights, drawing on the movement’s direct-action tradition and repeatedly bringing colleagues to Selma to remember the struggle behind federal protections."
-      ],
-      "sources": [
-        {
-          "label": "U.S. House of Representatives, History, Art & Archives",
-          "url": "https://history.house.gov/Oral-History/People/Representative-Lewis/"
-        },
-        {
-          "label": "National Archives: John Lewis",
-          "url": "https://www.archives.gov/research/african-americans/individuals/john-lewis"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": "/images/john-lewis.jpg",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Johnlewis.jpg",
-        "creator": "U.S. House of Representatives",
-        "rights": "Public domain, official U.S. government portrait; retain attribution.",
-        "alt": "Official portrait of Congressman John Lewis",
-        "status": "cleared"
-      },
-      "legacySlugs": []
-    },
     "1969-01-06": {
       "title": "Ludie Clay Andrews dies after a life in nursing",
       "paragraphs": [
@@ -50,120 +23,6 @@
       },
       "legacySlugs": [
         "1969-01-06-ludie-clay-andrews-dies"
-      ]
-    },
-    "1994-01-10": {
-      "title": "Atlanta renames Houston Street for John Wesley Dobbs",
-      "paragraphs": [
-        "On January 10, 1994, Atlanta renamed Houston Street John Wesley Dobbs Avenue. Mayor Maynard Jackson, Dobbs’s grandson, led the tribute to a civic organizer remembered as the “unofficial mayor” of Auburn Avenue, the commercial and cultural heart of Black Atlanta.",
-        "Dobbs had spent years building Black political power under segregation. With attorney A. T. Walden, he helped organize the Atlanta Negro Voters League, a bipartisan coalition that registered voters, screened candidates, and carried neighborhood demands to City Hall. The avenue name joined a public map to the organizing history that made Black votes harder for local politicians to ignore."
-      ],
-      "sources": [
-        {
-          "label": "New Georgia Encyclopedia: John Wesley Dobbs",
-          "url": "https://www.georgiaencyclopedia.org/articles/history-archaeology/john-wesley-dobbs-1882-1961/"
-        },
-        {
-          "label": "Atlanta History Center: Atlanta Negro Voters League",
-          "url": "https://www.atlantahistorycenter.com/exhibitions/atlanta-negro-voters-league-strength-in-unity/"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": null,
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:%22Through_His_Eyes%22_(Ralph_Helmick,_1996),_mask_of_John_Wesley_Dobbs_in_Sweet_Auburn,_Atlanta.jpg",
-        "creator": "Ralph Helmick (sculpture); Wikimedia Commons record",
-        "rights": "No verified portrait reuse license. Use only after confirming the Commons file’s current license; otherwise use an attributed Sweet Auburn streetscape with its own cleared license.",
-        "alt": "John Wesley Dobbs memorial sculpture in Sweet Auburn; portrait rights require verification",
-        "status": "permission-required"
-      },
-      "legacySlugs": [
-        "1994-01-10-john-wesley-dobbs-avenue-is-dedicated"
-      ]
-    },
-    "1929-01-15": {
-      "title": "Martin Luther King Jr. is born in Atlanta",
-      "paragraphs": [
-        "Martin Luther King Jr. was born on January 15, 1929, at 501 Auburn Avenue in Atlanta. His childhood unfolded in Sweet Auburn, a thriving Black neighborhood whose churches, businesses, and civic institutions stood within a city divided by segregation. At Ebenezer Baptist Church, his father and grandfather served as ministers, placing King in a family tradition of religious leadership.",
-        "King studied at Morehouse College, Crozer Theological Seminary, and Boston University before becoming pastor of Dexter Avenue Baptist Church in Montgomery. The bus boycott there made him a national civil-rights leader. He later helped build the Southern Christian Leadership Conference and connected campaigns against segregation with economic justice and peace."
-      ],
-      "sources": [
-        {
-          "label": "National Park Service: King’s Atlanta youth and leadership",
-          "url": "https://www.nps.gov/articles/featured_stories_malu.htm"
-        },
-        {
-          "label": "National Park Service: Martin Luther King Jr.",
-          "url": "https://home.nps.gov/people/martinlutherkingjr.htm"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": "/images/king.jpg",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Martin_Luther_King_Jr_NYWTS.jpg",
-        "creator": "New York World-Telegram and Sun staff photographer; Library of Congress collection",
-        "rights": "Public domain in the United States; work-for-hire image, LoC reports no known restrictions.",
-        "alt": "Portrait of Martin Luther King Jr.",
-        "status": "cleared"
-      },
-      "legacySlugs": []
-    },
-    "1969-01-15": {
-      "title": "Mourners gather at King’s South-View tomb on his birthday",
-      "paragraphs": [
-        "On January 15, 1969, Martin Luther King Jr.’s birthday, mourners gathered at his tomb at South-View Cemetery. A National Museum of African American History and Culture photograph records the gravesite with an eternal flame and a wreath from Alpha Phi Alpha, the fraternity King had joined as a Morehouse student. The photograph captures a new public place of mourning less than a year after his assassination.",
-        "King’s body remained at South-View until January 1970, when it was moved to the grounds near Ebenezer Baptist Church. The brief South-View burial belongs to the immediate aftermath of his death, before the King Center complex and its permanent memorial took shape."
-      ],
-      "sources": [
-        {
-          "label": "Smithsonian National Museum of African American History and Culture: South-View gravesite photograph",
-          "url": "https://www.si.edu/object/nmaahc_2011.94.43"
-        },
-        {
-          "label": "National Park Service: Martin Luther King Jr.",
-          "url": "https://home.nps.gov/people/martinlutherkingjr.htm"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": null,
-        "sourcePage": "https://nmaahc.si.edu/object/nmaahc_2011.94.41",
-        "creator": "Photographer unidentified; National Museum of African American History and Culture collection",
-        "rights": "Rights status not specified in the catalog; request permission. The catalog image depicts visitors at King’s original South-View gravesite and is a strong event-specific candidate.",
-        "alt": "Visitors at Martin Luther King Jr.’s original grave at South-View Cemetery",
-        "status": "permission-required"
-      },
-      "legacySlugs": [
-        "1969-01-15-south-view-holds-memorial-for-martin-luther-king-jr"
-      ]
-    },
-    "1983-01-15": {
-      "title": "Graham Jackson dies after a career in Atlanta music",
-      "paragraphs": [
-        "Graham Washington Jackson Sr. died on January 15, 1983, after a career that moved between jazz, church music, theaters, and public life. After coming to Atlanta in 1924, he formed the Seminole Syncopators and performed on WSB radio; in 1928 he became music director at Booker T. Washington High School, then Atlanta’s public high school for Black students.",
-        "Jackson was also known for performances for Franklin D. Roosevelt, whom he met through Atlanta patrons. When Roosevelt’s body left Warm Springs in 1945, Jackson played the president’s favorite “Goin’ Home” on accordion. Ed Clark’s photograph of Jackson weeping as he played became one of the era’s enduring images of public grief."
-      ],
-      "sources": [
-        {
-          "label": "New Georgia Encyclopedia: Graham Jackson Sr.",
-          "url": "https://www.georgiaencyclopedia.org/articles/arts-culture/graham-jackson-sr/"
-        },
-        {
-          "label": "University of Georgia Libraries: Graham Jackson",
-          "url": "https://digilab.libs.uga.edu/scl/exhibits/show/washington-park-neighborhood/residents/graham-jackson"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": null,
-        "sourcePage": "https://dlg.usg.edu/record/nge_ngen_graham-jackson-sr-002",
-        "creator": "Atlanta History Center / archival photographer; catalog record",
-        "rights": "No-cleared-portrait. Request permission from the holding archive; the famous Ed Clark funeral photograph is copyrighted and should not be reused without a license.",
-        "alt": "Graham W. Jackson Sr.; archival portrait permission required",
-        "status": "permission-required"
-      },
-      "legacySlugs": [
-        "1983-01-15-graham-w-jackson-sr-dies"
       ]
     },
     "1933-01-25": {
@@ -198,8 +57,8 @@
     "1992-02-08": {
       "title": "Bazoline E. Usher dies after decades in Atlanta education",
       "paragraphs": [
-        "Bazoline Estelle Usher died in Atlanta on February 8, 1992, aged 106. She had taught and led schools for decades, including fourteen years as principal of David T. Howard High School. She later supervised Atlanta’s Black schools while the city’s public education system remained segregated.",
-        "Usher also organized opportunities for Black girls outside school. In 1943 she recruited Black teachers and community volunteers to establish Girl Scout troops for African American girls in Atlanta. Her work linked classroom leadership to a wider effort to make civic, educational, and recreational programs accessible to Black children."
+        "Bazoline Estelle Usher died in Atlanta on February 8, 1992, aged 106. Born in Walton County on December 26, 1885, she graduated from Atlanta University in 1906, taught in Virginia, and returned to Atlanta in 1915. She served for fourteen years as principal of David T. Howard High School before supervising the city’s Black schools under segregation.",
+        "Usher worked to expand school facilities and educational opportunities for Black children. In 1943 she recruited teachers and community volunteers to establish Girl Scout troops for African American girls in Atlanta. Her work linked classroom leadership with a wider effort to open civic, educational, and recreational programs to children excluded by segregation."
       ],
       "sources": [
         {
@@ -213,9 +72,13 @@
         {
           "label": "Girl Scouts of Greater Atlanta: Black History Month",
           "url": "https://www.girlscoutsatl.org/en/sf-events-repository/2026/black-history-month.html"
+        },
+        {
+          "label": "Georgia Historic Preservation Division — Reflections, April 2016",
+          "url": "https://georgiawildlife.com/sites/default/files/hpd/pdf/AfricanAmericanHistoricPlaces/April%202016.pdf"
         }
       ],
-      "dateNote": "February 8 is repeated in biographical sources, while Georgia Women of Achievement confirms only the year.",
+      "dateNote": "1992-02-08: February 8 is repeated in biographical sources, while Georgia Women of Achievement confirms only the year.",
       "image": {
         "url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Bazoline_Estelle_Usher%2C_Atlanta_University_student%2C_half-length_portrait%2C_facing_front_LCCN98518739.jpg",
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Bazoline_Estelle_Usher,_Atlanta_University_student,_half-length_portrait,_facing_front_LCCN98518739.jpg",
@@ -225,138 +88,28 @@
         "status": "cleared"
       },
       "legacySlugs": [
+        "1885-12-26-atlanta-educator-bazoline-e-usher-is-born",
+        "1885-12-26-bazoline-e-usher-is-born",
         "1992-02-08-bazoline-e-usher-dies"
-      ]
-    },
-    "1886-02-20": {
-      "title": "Atlanta’s Black community moves to buy land for South-View",
-      "paragraphs": [
-        "On February 20, 1886, the Atlanta Constitution reported that Black Atlantans were buying a new cemetery. As reproduced and discussed in D. L. Henderson’s history, the group had paid $600 toward a 25-acre tract on McDonough Road, priced at $3,500. The plan was already a community investment before South-View received its charter.",
-        "The six men who applied for the charter—Jacob McKinley, George W. Graham, Robert Grant, Charles H. Morgan, Albert Watts, and John Render—were Black business and civic leaders. Their project answered the humiliating treatment Black families faced at segregated burial grounds by creating an institution that Black Atlantans could own and govern."
       ],
-      "sources": [
+      "calendarAliases": [
+        "Atlanta educator Bazoline E. Usher is born",
+        "Bazoline E. Usher",
+        "Bazoline E. Usher dies after decades in Atlanta education"
+      ],
+      "mergedEvents": [
         {
-          "label": "Zion Hill Baptist Church: Rev. Robert Grant and South-View’s founding",
-          "url": "https://www.zionhill.org/history/grant"
-        },
-        {
-          "label": "Georgia Historical Society: South-View Cemetery historical marker",
-          "url": "https://www.georgiahistory.com/ghmi_marker_updated/south-view-cemetery/"
-        },
-        {
-          "label": "D. L. Henderson, South-View: An African American City of the Dead (2018), catalog record",
-          "url": "https://search.worldcat.org/title/1048552699"
+          "date": "1885-12-26",
+          "title": "Atlanta educator Bazoline E. Usher is born"
         }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": null,
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
-        "creator": "Unidentified photographer; Library of Congress collection",
-        "rights": "Public domain in the United States; historic photograph published before 1931. It is an unidentified Georgia cemetery, not South-View; label as illustrative.",
-        "alt": "Unidentified historic Georgia cemetery, used as an illustrative image",
-        "status": "cleared"
-      },
-      "legacySlugs": [
-        "1886-02-20-atlanta-paper-reports-black-community-buying-a-cemetery"
-      ]
-    },
-    "1940-02-21": {
-      "title": "John Lewis is born near Troy, Alabama",
-      "paragraphs": [
-        "John Robert Lewis was born on February 21, 1940, near Troy, Alabama, to sharecroppers. As a young man he heard Martin Luther King Jr. on the radio and began looking for a way to challenge the segregation that shaped Black life in the South.",
-        "Lewis joined the Nashville sit-ins and Freedom Rides, helped found the Student Nonviolent Coordinating Committee, and chaired it from 1963 to 1966. At twenty-three he spoke at the 1963 March on Washington. He later moved the work of voter registration and equal political participation into Atlanta public service and the U.S. House."
-      ],
-      "sources": [
-        {
-          "label": "National Park Service: John R. Lewis",
-          "url": "https://www.nps.gov/people/john-r-lewis.htm"
-        },
-        {
-          "label": "U.S. House of Representatives, History, Art & Archives: John Lewis",
-          "url": "https://history.house.gov/Oral-History/People/Representative-Lewis/"
-        },
-        {
-          "label": "National Archives: John Lewis",
-          "url": "https://www.archives.gov/research/african-americans/individuals/john-lewis"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": "/images/john-lewis.jpg",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Johnlewis.jpg",
-        "creator": "U.S. House of Representatives",
-        "rights": "Public domain, official U.S. government portrait; retain attribution.",
-        "alt": "Official portrait of John Lewis",
-        "status": "cleared"
-      },
-      "legacySlugs": [
-        "1940-02-21-john-lewis-is-born"
-      ]
-    },
-    "1903-02-22": {
-      "title": "Graham W. Jackson is born in Portsmouth, Virginia",
-      "paragraphs": [
-        "Graham Washington Jackson was born in Portsmouth, Virginia, on February 22, 1903. He showed an early gift for piano and organ, then moved to Atlanta in 1924 to attend Morehouse College. Within months he had formed the Seminole Syncopators, an Atlanta jazz band that played on WSB radio and in local theaters.",
-        "Jackson built a career across Atlanta’s segregated musical world: he led music at Booker T. Washington High School, played church organ and the Fox Theatre’s Mighty Mo, and performed for presidents. His friendship with Franklin D. Roosevelt made Jackson’s 1945 accordion performance at Warm Springs an especially personal public tribute."
-      ],
-      "sources": [
-        {
-          "label": "New Georgia Encyclopedia: Graham Jackson Sr.",
-          "url": "https://www.georgiaencyclopedia.org/articles/arts-culture/graham-jackson-sr/"
-        },
-        {
-          "label": "University of Georgia Libraries: Graham Jackson",
-          "url": "https://digilab.libs.uga.edu/scl/exhibits/show/washington-park-neighborhood/residents/graham-jackson"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": null,
-        "sourcePage": "https://dlg.usg.edu/record/nge_ngen_graham-jackson-sr-002",
-        "creator": "Atlanta History Center / archival photographer; catalog record",
-        "rights": "No-cleared-portrait. Request archive permission; do not reuse Ed Clark’s famous copyrighted funeral image without a license.",
-        "alt": "Archival portrait of Graham W. Jackson Sr.; permission required",
-        "status": "permission-required"
-      },
-      "legacySlugs": [
-        "1903-02-22-graham-w-jackson-sr-is-born"
-      ]
-    },
-    "1908-02-22": {
-      "title": "Annie L. McPheeters is born in Floyd County",
-      "paragraphs": [
-        "Annie Lou Watters was born in Berwin, Floyd County, Georgia, on February 22, 1908. After college and library training, she joined Atlanta’s Auburn Avenue branch, where she built a collection of books by and about Black people at a time when public institutions often excluded Black readers and history from their shelves.",
-        "McPheeters expanded that work through exhibits, reading programs, and campaigns for library desegregation. In 1966 she became Georgia State College’s first Black reference librarian. The collection and institutional knowledge she developed at Auburn Avenue helped lay the groundwork for the Auburn Avenue Research Library, which opened shortly before her death in 1994."
-      ],
-      "sources": [
-        {
-          "label": "New Georgia Encyclopedia: Annie L. McPheeters",
-          "url": "https://www.georgiaencyclopedia.org/articles/education/annie-l-mcpheeters-1908-1994/"
-        },
-        {
-          "label": "Fulton County Library System: Auburn Avenue Research Library archival collections",
-          "url": "https://www.fulcolibrary.org/aarl/aarl-archival-collection/"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": null,
-        "sourcePage": "https://dlg.usg.edu/record/dlg_aaed_aarl90-005-010-134",
-        "creator": "Auburn Avenue Research Library / archival photographer",
-        "rights": "No-cleared-portrait. Archive record provides no explicit reuse license; request permission before publication.",
-        "alt": "Portrait of librarian Annie L. McPheeters; archive permission required",
-        "status": "permission-required"
-      },
-      "legacySlugs": [
-        "1908-02-22-annie-l-mcpheeters-is-born"
       ]
     },
     "1965-03-07": {
       "title": "Bloody Sunday: John Lewis and marchers are attacked in Selma",
       "paragraphs": [
-        "On March 7, 1965, John Lewis and Hosea Williams led hundreds of peaceful voting-rights marchers out of Selma toward Montgomery. At the Edmund Pettus Bridge, Alabama state troopers and deputized men ordered them to turn back, then struck the crowd with clubs and drove them with tear gas. Lewis suffered a fractured skull.",
-        "Television and newspaper coverage carried the violence far beyond Alabama. The marchers’ demand was the right to register and vote in a state where Black citizens faced systematic obstruction. Congress debated voting-rights legislation in the weeks that followed, and President Lyndon Johnson signed the Voting Rights Act on August 6, 1965."
+        "On March 7, 1965, John Lewis and Hosea Williams led hundreds of peaceful voting-rights marchers out of Selma toward Montgomery. At the Edmund Pettus Bridge, Alabama state troopers and deputized men ordered them to turn back, then attacked with clubs and tear gas. Lewis suffered a fractured skull. Images of the violence carried the marchers’ demand for voting rights to a national audience; President Lyndon Johnson signed the Voting Rights Act that August.",
+        "Born near Troy, Alabama, on February 21, 1940, to sharecroppers, Lewis had already joined Nashville’s sit-ins and the Freedom Rides. As chairman of the Student Nonviolent Coordinating Committee from 1963 to 1966, he helped direct voter-registration campaigns. He was the youngest principal speaker at the 1963 March on Washington, pressing the federal government to act against Jim Crow.",
+        "Lewis later served on Atlanta’s city council and began representing Georgia’s Fifth District in Congress on January 3, 1987. He brought colleagues back to Selma to remember the struggle behind federal voting protections and advocated for a national museum of African American history. He died in Atlanta on July 17, 2020, after living with pancreatic cancer, and was buried at South-View."
       ],
       "sources": [
         {
@@ -370,6 +123,22 @@
         {
           "label": "National Archives: Voting Rights Act of 1965",
           "url": "https://www.archives.gov/milestone-documents/voting-rights-act"
+        },
+        {
+          "label": "U.S. House of Representatives, History, Art & Archives",
+          "url": "https://history.house.gov/Oral-History/People/Representative-Lewis/"
+        },
+        {
+          "label": "National Archives: John Lewis",
+          "url": "https://www.archives.gov/research/african-americans/individuals/john-lewis"
+        },
+        {
+          "label": "National Park Service: John R. Lewis",
+          "url": "https://www.nps.gov/people/john-r-lewis.htm"
+        },
+        {
+          "label": "U.S. House of Representatives: John R. Lewis",
+          "url": "https://history.house.gov/People/Detail/16948"
         }
       ],
       "dateNote": "",
@@ -382,47 +151,47 @@
         "status": "public-domain"
       },
       "legacySlugs": [
-        "1965-03-07-bloody-sunday-in-selma"
-      ]
-    },
-    "1886-03-18": {
-      "title": "A neighbor’s legal challenge interrupts South-View’s early burials",
-      "paragraphs": [
-        "On March 18, 1886, the Atlanta Constitution reported that ten or twelve people had already been buried at the new South-View grounds. Adjoining landowner A. J. Harper sought to stop the burials, claiming they threatened health and property values. The newspaper’s report records a dispute in the cemetery’s first weeks; it does not establish the date of the first burial.",
-        "The court temporarily enjoined further burials while the complaint was heard. South-View’s organizers continued pursuing a state charter, which was approved on April 21. The conflict shows how the Black community’s effort to secure a dignified burial ground immediately met resistance from a nearby white landowner."
+        "1940-02-21-john-lewis-is-born",
+        "1940-02-21-john-lewis-is-born-near-troy-alabama",
+        "1963-08-28-john-lewis-calls-for-federal-action-at-the-march-on-washington",
+        "1963-08-28-john-lewis-speaks-at-the-march-on-washington",
+        "1965-03-07-bloody-sunday-in-selma",
+        "1987-01-03-john-lewis-begins-service-in-the-u-s-house",
+        "2020-07-17-john-lewis-dies",
+        "2020-07-17-john-lewis-dies-after-a-life-in-the-civil-rights-movement-and-congress"
       ],
-      "sources": [
+      "calendarAliases": [
+        "Bloody Sunday: John Lewis and marchers are attacked in Selma",
+        "John Lewis",
+        "John Lewis begins service in the U.S. House",
+        "John Lewis calls for federal action at the March on Washington",
+        "John Lewis dies after a life in the civil-rights movement and Congress",
+        "John Lewis is born near Troy, Alabama"
+      ],
+      "mergedEvents": [
         {
-          "label": "D. L. Henderson, South-View: An African American City of the Dead (2018), catalog record",
-          "url": "https://search.worldcat.org/title/1048552699"
+          "date": "1987-01-03",
+          "title": "John Lewis begins service in the U.S. House"
         },
         {
-          "label": "Georgia Tech Building Memories: South-View Cemetery",
-          "url": "https://leading-edge.iac.gatech.edu/building-memories/southview-cemetery/"
+          "date": "1940-02-21",
+          "title": "John Lewis is born near Troy, Alabama"
         },
         {
-          "label": "Georgia Historical Society: South-View Cemetery",
-          "url": "https://www.georgiahistory.com/ghmi_marker_updated/south-view-cemetery/"
+          "date": "2020-07-17",
+          "title": "John Lewis dies after a life in the civil-rights movement and Congress"
+        },
+        {
+          "date": "1963-08-28",
+          "title": "John Lewis calls for federal action at the March on Washington"
         }
-      ],
-      "dateNote": "The newspaper reports that ten or twelve people had already been buried, but it does not identify the first burial date.",
-      "image": {
-        "url": null,
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
-        "creator": "Unidentified photographer; Library of Congress collection",
-        "rights": "Public domain in the United States; historic photograph published before 1931. It is not verified as South-View; label as illustrative.",
-        "alt": "Unidentified historic Georgia cemetery, illustrative rather than a photograph of South-View",
-        "status": "cleared"
-      },
-      "legacySlugs": [
-        "1886-03-18-first-reported-burials-at-south-view"
       ]
     },
     "1904-03-31": {
-      "title": "Harriet Graham’s death prompts a reopened coroner’s inquiry",
+      "title": "Harriet Graham dies and is buried at South-View",
       "paragraphs": [
-        "Harriet Graham, widow of South-View founder George Graham, was found dead at her Fraser Street home on March 31, 1904. A coroner’s jury initially attributed her death to heart disease. Then investigators learned that an anonymous miniature coffin containing a threatening message had been left at her door before she died.",
-        "The threat and Graham’s inheritance of property and cemetery shares prompted authorities to reopen the inquiry. The surviving account does not establish who sent the coffin or prove that Graham was murdered. Her death remains a suspicious episode in South-View’s early history, not a solved homicide."
+        "Harriet Graham, widow of South-View founder George Graham and a shareholder in the cemetery herself, was found dead at her Fraser Street home on March 31, 1904. A coroner’s jury initially attributed her death to heart disease. Investigators then learned that an anonymous miniature coffin containing a threatening message had been left at her door.",
+        "The threat and Graham’s inheritance of property and cemetery shares prompted authorities to reopen the inquiry. The surviving account does not establish who sent the coffin or prove that she was murdered. She was buried at South-View on Easter Sunday, April 3, three days after her death, while those questions remained unresolved."
       ],
       "sources": [
         {
@@ -440,66 +209,26 @@
         "status": "cleared"
       },
       "legacySlugs": [
-        "1904-03-31-harriet-graham-dies-prompting-a-suspicious-death-inquiry"
-      ]
-    },
-    "1904-04-03": {
-      "title": "Harriet Graham is buried at South-View",
-      "paragraphs": [
-        "Harriet Graham was buried at South-View on Easter Sunday, April 3, 1904, three days after her death. She was the widow of George Graham, one of the cemetery’s founders, and had held shares in the association herself.",
-        "Her funeral followed a coroner’s inquiry that had been reopened after a threatening miniature coffin was reported at her home. The initial finding was heart disease; suspicion lingered, but no evidence in the surviving account identified a killer or proved murder. The burial took place while those questions remained unresolved."
+        "1904-03-31-harriet-graham-dies-prompting-a-suspicious-death-inquiry",
+        "1904-03-31-harriet-graham-s-death-prompts-a-reopened-coroner-s-inquiry",
+        "1904-04-03-harriet-graham-is-buried-at-south-view"
       ],
-      "sources": [
+      "calendarAliases": [
+        "Harriet Graham is buried at South-View",
+        "Harriet Graham’s death prompts a reopened coroner’s inquiry"
+      ],
+      "mergedEvents": [
         {
-          "label": "D. L. Henderson, South-View: An African American City of the Dead (2018), pp. 159–160; catalog record",
-          "url": "https://search.worldcat.org/title/1048552699"
+          "date": "1904-04-03",
+          "title": "Harriet Graham is buried at South-View"
         }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": null,
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
-        "creator": "Unidentified photographer; Library of Congress collection",
-        "rights": "Public domain in the United States; not a verified image of South-View. Label as illustrative.",
-        "alt": "Unidentified historic Georgia cemetery, used as an illustrative image",
-        "status": "cleared"
-      },
-      "legacySlugs": []
-    },
-    "1968-04-04": {
-      "title": "Martin Luther King Jr. is assassinated in Memphis",
-      "paragraphs": [
-        "Martin Luther King Jr. was shot on the balcony of the Lorraine Motel in Memphis on April 4, 1968. He had returned to support the city’s Black sanitation workers, whose strike protested low wages, unsafe work, and the indignity of having to carry their own trash in leaking containers. King was pronounced dead at St. Joseph’s Hospital that evening.",
-        "The strike campaign showed how King’s civil-rights work had broadened into a fight over economic justice and labor. Coretta Scott King and other leaders marched with the sanitation workers on April 8. After funeral services in Atlanta the next day, King was buried at South-View; his body was moved to the King Center grounds in 1970."
-      ],
-      "sources": [
-        {
-          "label": "Stanford King Institute: Assassination of Martin Luther King Jr.",
-          "url": "https://kinginstitute.stanford.edu/assassination-martin-luther-king-jr"
-        },
-        {
-          "label": "National Park Service: Martin Luther King Jr.",
-          "url": "https://home.nps.gov/people/martinlutherkingjr.htm"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": "/images/king.jpg",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Martin_Luther_King_Jr_NYWTS.jpg",
-        "creator": "New York World-Telegram and Sun staff photographer; Library of Congress collection",
-        "rights": "Public domain in the United States; work-for-hire image, LoC reports no known restrictions.",
-        "alt": "Portrait of Martin Luther King Jr.",
-        "status": "cleared"
-      },
-      "legacySlugs": [
-        "1968-04-04-martin-luther-king-jr-is-assassinated"
       ]
     },
     "1945-04-13": {
       "title": "Graham Jackson plays as Roosevelt’s body leaves Warm Springs",
       "paragraphs": [
-        "On April 13, 1945, Graham Jackson played “Goin’ Home” on accordion as Franklin D. Roosevelt’s body was carried from the Little White House toward the train at Warm Springs. Jackson had performed for Roosevelt many times, and his playing turned the departure into a personal farewell as well as a public ceremony.",
-        "Life photographer Ed Clark captured Jackson in tears beside the procession. The image traveled nationally and became one of the best-known photographs of Roosevelt’s death. It records the president’s departure from Georgia; the funeral service followed in Washington and burial at Hyde Park, New York."
+        "On April 13, 1945, Graham Jackson played “Goin’ Home” on accordion as Franklin D. Roosevelt’s body was carried from the Little White House toward the train at Warm Springs. Jackson had performed for Roosevelt many times. Life photographer Ed Clark captured him weeping beside the procession, creating one of the best-known photographs of the president’s death.",
+        "Born in Portsmouth, Virginia, on February 22, 1903, Jackson moved to Atlanta in 1924 and formed the Seminole Syncopators, a jazz band that played on WSB radio and in local theaters. He became music director at Booker T. Washington High School in 1928 and performed across Atlanta’s church, theater, and civic life. He died on January 15, 1983, after a career spanning piano, organ, accordion, and choral music."
       ],
       "sources": [
         {
@@ -525,14 +254,35 @@
         "status": "permission-required"
       },
       "legacySlugs": [
-        "1945-04-13-graham-w-jackson-performs-at-fdrs-funeral-procession"
+        "1903-02-22-graham-w-jackson-is-born-in-portsmouth-virginia",
+        "1903-02-22-graham-w-jackson-sr-is-born",
+        "1945-04-13-graham-w-jackson-performs-at-fdrs-funeral-procession",
+        "1983-01-15-graham-jackson-dies-after-a-career-in-atlanta-music",
+        "1983-01-15-graham-w-jackson-sr-dies"
+      ],
+      "calendarAliases": [
+        "Graham Jackson dies after a career in Atlanta music",
+        "Graham Jackson plays as Roosevelt’s body leaves Warm Springs",
+        "Graham W. Jackson Sr.",
+        "Graham W. Jackson is born in Portsmouth, Virginia"
+      ],
+      "mergedEvents": [
+        {
+          "date": "1983-01-15",
+          "title": "Graham Jackson dies after a career in Atlanta music"
+        },
+        {
+          "date": "1903-02-22",
+          "title": "Graham W. Jackson is born in Portsmouth, Virginia"
+        }
       ]
     },
     "1886-04-21": {
-      "title": "Georgia grants South-View its charter after a burial dispute",
+      "title": "South-View Cemetery receives its charter",
       "paragraphs": [
-        "Georgia approved the South-View Cemetery Association’s charter on April 21, 1886. Six Black Atlanta businessmen had applied to create a cemetery association and acquire land for burial. Among them was Robert Grant, a blacksmith and drayman who had helped establish Zion Hill Baptist Church and later served as its founding pastor.",
-        "The charter came after a neighboring landowner challenged burials already taking place on the grounds. It gave the organizers a legal structure for the cemetery they were building in response to segregation and unequal treatment at Atlanta burial grounds. South-View grew from the original tract into a lasting Black-owned institution."
+        "Georgia approved the South-View Cemetery Association’s charter on April 21, 1886. Six Black Atlanta businessmen and civic leaders—Jacob McKinley, George W. Graham, Robert Grant, Charles H. Morgan, Albert Watts, and John Render—had applied to create a burial ground that Black Atlantans could own and govern. Grant, a blacksmith and drayman, had also helped establish Zion Hill Baptist Church and served as its founding pastor.",
+        "The organizers were already buying land before the charter was granted. A February 20 newspaper report described a $600 payment toward a twenty-five-acre tract priced at $3,500. In March, neighboring landowner A. J. Harper challenged burials on the grounds, claiming they threatened health and property values; a court temporarily halted further burials. The dispute showed the resistance the new institution faced even as it sought legal recognition.",
+        "On May 22, 1888, the founders and a representative of Charles Morgan’s estate transferred the original tract to the association for $1,250. The purchase, legal challenge, charter, and later transfer were stages of the same founding effort: building a durable community institution in response to segregation and unequal treatment at Atlanta’s burial grounds."
       ],
       "sources": [
         {
@@ -546,9 +296,13 @@
         {
           "label": "Georgia Historical Society: South-View Cemetery",
           "url": "https://www.georgiahistory.com/ghmi_marker_updated/south-view-cemetery/"
+        },
+        {
+          "label": "D. L. Henderson, South-View: An African American City of the Dead (2018), catalog record",
+          "url": "https://search.worldcat.org/title/1048552699"
         }
       ],
-      "dateNote": "",
+      "dateNote": "1886-03-18: The newspaper reports that ten or twelve people had already been buried, but it does not identify the first burial date.",
       "image": {
         "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
@@ -558,7 +312,34 @@
         "status": "cleared"
       },
       "legacySlugs": [
-        "1886-04-21-south-view-cemetery-charter-approved"
+        "1886-02-20-atlanta-paper-reports-black-community-buying-a-cemetery",
+        "1886-02-20-atlanta-s-black-community-moves-to-buy-land-for-south-view",
+        "1886-03-18-a-neighbor-s-legal-challenge-interrupts-south-view-s-early-burials",
+        "1886-03-18-first-reported-burials-at-south-view",
+        "1886-04-21-georgia-grants-south-view-its-charter-after-a-burial-dispute",
+        "1886-04-21-south-view-cemetery-charter-approved",
+        "1888-05-22-founders-transfer-cemetery-land-to-the-association",
+        "1888-05-22-south-view-s-founders-transfer-25-acres-to-the-association"
+      ],
+      "calendarAliases": [
+        "A neighbor’s legal challenge interrupts South-View’s early burials",
+        "Atlanta’s Black community moves to buy land for South-View",
+        "Georgia grants South-View its charter after a burial dispute",
+        "South-View’s founders transfer 25 acres to the association"
+      ],
+      "mergedEvents": [
+        {
+          "date": "1886-02-20",
+          "title": "Atlanta’s Black community moves to buy land for South-View"
+        },
+        {
+          "date": "1886-03-18",
+          "title": "A neighbor’s legal challenge interrupts South-View’s early burials"
+        },
+        {
+          "date": "1888-05-22",
+          "title": "South-View’s founders transfer 25 acres to the association"
+        }
       ]
     },
     "1900-05-06": {
@@ -689,72 +470,6 @@
         "1915-05-19-bishop-henry-mcneal-turner-is-buried-at-south-view"
       ]
     },
-    "1888-05-22": {
-      "title": "South-View’s founders transfer 25 acres to the association",
-      "paragraphs": [
-        "On May 22, 1888, five South-View founders transferred about twenty-five acres to the cemetery association for $1,250. J. C. Huggins signed on behalf of Charles Morgan’s estate; Jacob McKinley, George W. Graham, Robert Grant, and Albert Watts joined the transaction. The sale put the cemetery’s original grounds under the association’s ownership and gave the new institution a formal basis for managing and expanding the burial ground.",
-        "The association had been chartered in 1886 by Black Atlantans who wanted a cemetery where their families could bury their dead with dignity. The 1888 transfer was a practical step in turning that community effort into a durable institution: a tract of land, held by an organization formed to serve Black Atlanta."
-      ],
-      "sources": [
-        {
-          "label": "Georgia Historical Society: South-View Cemetery",
-          "url": "https://www.georgiahistory.com/ghmi_marker_updated/south-view-cemetery/",
-          "note": "Confirms the 1886 founding, original 25 acres, and founding context."
-        },
-        {
-          "label": "D. L. Henderson, South-View: An African American City of the Dead",
-          "url": "https://search.worldcat.org/title/1048552699",
-          "note": "Printed p. 38 records the May 22 deed, sellers, acreage, and price; the exact transaction is not independently corroborated by the online sources located for this review."
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": null,
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
-        "creator": "Unidentified photographer; Library of Congress collection",
-        "rights": "Public domain in the United States; not verified as South-View. Label as illustrative.",
-        "alt": "Unidentified historic Georgia cemetery, illustrative view",
-        "status": "cleared"
-      },
-      "legacySlugs": [
-        "1888-05-22-founders-transfer-cemetery-land-to-the-association"
-      ]
-    },
-    "1963-06-12": {
-      "title": "Prince Hall Masons dedicate John Wesley Dobbs’s broken-column memorial",
-      "paragraphs": [
-        "On June 12, 1963, Georgia Prince Hall Masons and Eastern Stars gathered at John Wesley Dobbs’s South-View grave to dedicate a broken-column monument. The column marked the death of a grand master and symbolized unfinished work. The ritual was led by Rev. Xenophon Lamar Neal, Dobbs’s successor; the monument was made by Turner Memorial Enterprises, a Black-owned Atlanta monument company.",
-        "Dobbs had led Georgia’s Prince Hall Grand Lodge from 1932 until his death in 1961. He also organized the Atlanta Civic and Political League and helped establish the Atlanta Negro Voters League with A. T. Walden. The memorial joined the Masonic institution he led with his campaign to make Black voter registration a source of political power in Atlanta."
-      ],
-      "sources": [
-        {
-          "label": "D. L. Henderson, South-View: An African American City of the Dead",
-          "url": "https://search.worldcat.org/title/1048552699",
-          "note": "Chapter 10 gives the dedication date, participants, maker, and monument symbolism."
-        },
-        {
-          "label": "Martin Luther King, Jr. Research and Education Institute: John Wesley Dobbs",
-          "url": "https://kinginstitute.stanford.edu/dobbs-john-wesley"
-        },
-        {
-          "label": "Georgia Department of Natural Resources: African American historic places",
-          "url": "https://gadnr.org/sites/default/files/hpd/pdf/AfricanAmericanHistoricPlaces/December%202011.pdf",
-          "note": "Identifies the broken-column grave monument and its Masonic symbolism."
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": null,
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:%22Through_His_Eyes%22_(Ralph_Helmick,_1996),_mask_of_John_Wesley_Dobbs_in_Sweet_Auburn,_Atlanta.jpg",
-        "creator": "Ralph Helmick (sculpture); Wikimedia Commons record",
-        "rights": "No verified portrait or monument reuse license. Confirm the current file license before reuse; otherwise commission a new photo of the South-View monument with cemetery permission.",
-        "alt": "John Wesley Dobbs memorial; confirm photo reuse rights before publication",
-        "status": "permission-required"
-      },
-      "legacySlugs": [
-        "1963-06-12-john-wesley-dobbs-monument-dedicated-at-south-view"
-      ]
-    },
     "1992-06-17": {
       "title": "Grace Towns Hamilton dies after a career in Georgia politics",
       "paragraphs": [
@@ -782,68 +497,6 @@
       },
       "legacySlugs": [
         "1992-06-17-grace-towns-hamilton-dies"
-      ]
-    },
-    "1858-06-26": {
-      "title": "Alonzo Herndon is born enslaved in Walton County",
-      "paragraphs": [
-        "Alonzo Franklin Herndon was born enslaved in Walton County, Georgia, on June 26, 1858. His mother, Sophenie, was enslaved by Frank Herndon, his white father. After emancipation, the family was forced off the farm and struggled to survive. As a young man Alonzo labored and peddled goods, then left home with eleven dollars saved and learned the barber’s trade.",
-        "Herndon opened a shop in Jonesboro and reached Atlanta in 1883. His three barbershops served elite white customers, and he invested the proceeds in real estate. In 1905 he bought a small mutual-aid association and built it into Atlanta Mutual, reorganized as Atlanta Life Insurance Company in 1922. Born with no legal claim to his father’s wealth, he became one of Atlanta’s leading Black business owners and supported schools, churches, and civic organizations."
-      ],
-      "sources": [
-        {
-          "label": "New Georgia Encyclopedia: Alonzo Herndon",
-          "url": "https://www.georgiaencyclopedia.org/articles/business-economy/alonzo-herndon-1858-1927/"
-        },
-        {
-          "label": "Library of Congress: Alonzo Herndon, Founder of Atlanta Life Born",
-          "url": "https://guides.loc.gov/this-month-in-business-history/june/alonzo-herndon"
-        },
-        {
-          "label": "Today in Georgia History: Alonzo Herndon",
-          "url": "https://www.todayingeorgiahistory.org/tih-georgia-day/alonzo-herndon/"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": "/images/alonzo-herndon.jpg",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Alonzo_herndon.jpg",
-        "creator": "Sweet Auburn collection / Wikimedia Commons file record",
-        "rights": "Public domain in the United States according to the Wikimedia Commons file record; the original photographer is unidentified. Source credit: Sweet Auburn / Atlanta Life.",
-        "alt": "Portrait of Atlanta entrepreneur Alonzo Herndon",
-        "status": "cleared"
-      },
-      "legacySlugs": [
-        "1858-06-26-alonzo-herndon-is-born"
-      ]
-    },
-    "1933-07-01": {
-      "title": "Jean Childs Young is born in Marion, Alabama",
-      "paragraphs": [
-        "Jean Childs was born in Marion, Alabama, on July 1, 1933, the youngest of five children. She wanted to study law but found narrow options for Black women and chose teaching. At Manchester College in Indiana, she became the first African American elected May Queen in 1953 and graduated in elementary education the following year.",
-        "Young taught in Georgia and Connecticut, trained teachers for low-income schools, and worked on literacy and citizenship education. She helped develop citizenship-school curriculum for the Southern Christian Leadership Conference and participated in voting-rights demonstrations. President Jimmy Carter appointed her to chair the U.S. effort for the 1979 International Year of the Child, a role that broadened her work from classrooms to children’s rights internationally."
-      ],
-      "sources": [
-        {
-          "label": "New Georgia Encyclopedia: Jean Childs Young",
-          "url": "https://www.georgiaencyclopedia.org/articles/history-archaeology/jean-childs-young-1933-1994/"
-        },
-        {
-          "label": "National Park Service: Jean Childs Young",
-          "url": "https://www.nps.gov/features/malu/feat0002/wof/Jean_Young.htm"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": null,
-        "sourcePage": "https://www.nps.gov/features/malu/feat0002/wof/Jean_Young.htm",
-        "creator": "National Park Service (page image attribution not stated)",
-        "rights": "NPS page is an official government resource; image-specific photographer/rights not stated. Verify before reuse.",
-        "alt": "Jean Childs Young, educator, civil-rights participant, and advocate for children.",
-        "status": "verify-rights"
-      },
-      "legacySlugs": [
-        "1933-07-01-jean-childs-young-is-born"
       ]
     },
     "1983-07-06": {
@@ -876,44 +529,11 @@
         "1983-07-06-atlanta-declares-t-j-flanagan-day"
       ]
     },
-    "2020-07-17": {
-      "title": "John Lewis dies after a life in the civil-rights movement and Congress",
-      "paragraphs": [
-        "John Lewis died in Atlanta on July 17, 2020, after living with pancreatic cancer. As a young organizer, he joined Nashville’s sit-ins and the Freedom Rides, chaired the Student Nonviolent Coordinating Committee, and was beaten by state troopers during the 1965 Selma-to-Montgomery march. He had been one of the principal speakers at the 1963 March on Washington, where he called for federal civil-rights legislation and continued nonviolent protest.",
-        "Lewis brought the movement’s demand for voting rights into public office. He served on Atlanta’s city council before representing Georgia’s Fifth District in Congress from 1987 until his death. A long-time advocate for a national museum of African American history, he lay in state in the Capitol Rotunda before his funeral and burial at South-View."
-      ],
-      "sources": [
-        {
-          "label": "U.S. House of Representatives: John R. Lewis",
-          "url": "https://history.house.gov/People/Detail/16948"
-        },
-        {
-          "label": "National Archives: John Lewis",
-          "url": "https://www.archives.gov/research/african-americans/individuals/john-lewis"
-        },
-        {
-          "label": "U.S. House of Representatives: John Lewis keynote at the March on Washington",
-          "url": "https://history.house.gov/People/Detail/16948"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/2/20/John_Lewis_official_portrait_2003.jpg",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:John_Lewis_official_portrait_2003.jpg",
-        "creator": "U.S. House of Representatives",
-        "rights": "Public domain, U.S. government work.",
-        "alt": "John Lewis in his official 2003 congressional portrait.",
-        "status": "cleared"
-      },
-      "legacySlugs": [
-        "2020-07-17-john-lewis-dies"
-      ]
-    },
     "1927-07-21": {
       "title": "Alonzo Herndon dies, leaving Atlanta Life to the next generation",
       "paragraphs": [
-        "Alonzo Herndon died in Atlanta on July 21, 1927, a few weeks after his sixty-ninth birthday. Born enslaved, he had built a business spanning barbering, real estate, and insurance. In 1905 he bought a struggling mutual-aid association; by 1922 it had become Atlanta Life Insurance Company, one of a small number of Black-owned insurers to achieve legal-reserve status and expand across the South.",
-        "Herndon also gave money and leadership to Atlanta University, the YMCA, orphanages, churches, and South-View Cemetery Association. His son Norris succeeded him as Atlanta Life’s president, while his widow Jessie remained a major owner and officer. The company’s survival after Herndon’s death carried forward a business he had built into a source of Black employment, insurance, and capital."
+        "Alonzo Herndon died in Atlanta on July 21, 1927, after building a business spanning barbering, real estate, and insurance. Born enslaved in Walton County on June 26, 1858, he learned the barber’s trade and reached Atlanta in 1883. His barbershops served elite white customers, and he invested the proceeds in property and new businesses.",
+        "In 1905 Herndon bought a struggling mutual-aid association. By 1922 it had become Atlanta Life Insurance Company, a Black-owned insurer that expanded across the South. He supported Atlanta University, the YMCA, orphanages, churches, and South-View Cemetery Association. His son Norris succeeded him as Atlanta Life’s president, while his widow Jessie remained a major owner and officer, carrying forward a source of Black employment, insurance, and capital."
       ],
       "sources": [
         {
@@ -923,6 +543,10 @@
         {
           "label": "Today in Georgia History: Alonzo Herndon",
           "url": "https://www.todayingeorgiahistory.org/tih-georgia-day/alonzo-herndon/"
+        },
+        {
+          "label": "Library of Congress: Alonzo Herndon, Founder of Atlanta Life Born",
+          "url": "https://guides.loc.gov/this-month-in-business-history/june/alonzo-herndon"
         }
       ],
       "dateNote": "",
@@ -935,7 +559,20 @@
         "status": "cleared"
       },
       "legacySlugs": [
+        "1858-06-26-alonzo-herndon-is-born",
+        "1858-06-26-alonzo-herndon-is-born-enslaved-in-walton-county",
         "1927-07-21-alonzo-herndon-dies"
+      ],
+      "calendarAliases": [
+        "Alonzo Herndon",
+        "Alonzo Herndon dies, leaving Atlanta Life to the next generation",
+        "Alonzo Herndon is born enslaved in Walton County"
+      ],
+      "mergedEvents": [
+        {
+          "date": "1858-06-26",
+          "title": "Alonzo Herndon is born enslaved in Walton County"
+        }
       ]
     },
     "1887-07-26": {
@@ -1023,40 +660,12 @@
         "1893-08-07-south-view-trustees-seek-relief-from-city-license-fee"
       ]
     },
-    "1963-08-28": {
-      "title": "John Lewis calls for federal action at the March on Washington",
-      "paragraphs": [
-        "On August 28, 1963, twenty-three-year-old John Lewis addressed the March on Washington for Jobs and Freedom as chairman of the Student Nonviolent Coordinating Committee. He represented a younger generation facing arrests and violence in sit-ins, Freedom Rides, and voter-registration campaigns. His prepared remarks demanded effective federal civil-rights legislation and proposed a continuing campaign of nonviolent protest across the South.",
-        "Lewis spoke from the Lincoln Memorial beside labor, religious, and civil-rights leaders in a coalition of more than 200,000 people. He was the youngest principal speaker. Organizers negotiated changes to his draft before the march, but his address still pressed the national audience to move beyond promises and act against Jim Crow."
-      ],
-      "sources": [
-        {
-          "label": "U.S. House of Representatives: John R. Lewis",
-          "url": "https://history.house.gov/People/Detail/16948"
-        },
-        {
-          "label": "National Archives: John Lewis",
-          "url": "https://www.archives.gov/research/african-americans/individuals/john-lewis"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/2/20/John_Lewis_official_portrait_2003.jpg",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:John_Lewis_official_portrait_2003.jpg",
-        "creator": "U.S. House of Representatives",
-        "rights": "Public domain, U.S. government work.",
-        "alt": "John Lewis in his official 2003 congressional portrait.",
-        "status": "cleared"
-      },
-      "legacySlugs": [
-        "1963-08-28-john-lewis-speaks-at-the-march-on-washington"
-      ]
-    },
     "1961-08-30": {
       "title": "John Wesley Dobbs dies as Atlanta schools desegregate",
       "paragraphs": [
-        "John Wesley Dobbs died on August 30, 1961, as Atlanta’s public schools began admitting their first Black students. A railway mail clerk for thirty-two years, he also led Georgia’s Prince Hall Masons and organized civic groups that pressed for Black political influence. In 1946 he and attorney A. T. Walden helped form the Atlanta Negro Voters League, coordinating voter registration and political action.",
-        "Dobbs had encouraged Martin Luther King Jr. from his youth and later testified in King’s defense after a 1960 sit-in arrest. At Dobbs’s funeral at Big Bethel AME Church on September 2, King delivered the invocation, thanking God for the life Dobbs had given Atlanta, Georgia, and the nation."
+        "John Wesley Dobbs died on August 30, 1961, as Atlanta’s public schools began admitting their first Black students. A railway mail clerk for thirty-two years and leader of Georgia’s Prince Hall Masons, he built civic organizations that pressed for Black political influence. In 1946 he and attorney A. T. Walden helped form the Atlanta Negro Voters League to coordinate voter registration and political action.",
+        "Dobbs encouraged Martin Luther King Jr. from his youth and later testified in his defense after a 1960 sit-in arrest. King delivered the invocation at Dobbs’s funeral at Big Bethel AME Church on September 2. Prince Hall Masons and Eastern Stars dedicated a broken-column monument at his South-View grave on June 12, 1963, symbolizing a leader’s unfinished work.",
+        "On January 10, 1994, Atlanta renamed Houston Street John Wesley Dobbs Avenue. Mayor Maynard Jackson, Dobbs’s grandson, led the tribute. The avenue and the cemetery monument commemorate the same organizing career: turning Black voter registration into influence over the future of Atlanta."
       ],
       "sources": [
         {
@@ -1070,6 +679,24 @@
         {
           "label": "Atlanta Office of Cultural Affairs: John Wesley Dobbs local history",
           "url": "https://ctycms.com/ga-arts-atlanta/docs/cap-localstories-jwdobbs-final.pdf"
+        },
+        {
+          "label": "New Georgia Encyclopedia: John Wesley Dobbs",
+          "url": "https://www.georgiaencyclopedia.org/articles/history-archaeology/john-wesley-dobbs-1882-1961/"
+        },
+        {
+          "label": "Atlanta History Center: Atlanta Negro Voters League",
+          "url": "https://www.atlantahistorycenter.com/exhibitions/atlanta-negro-voters-league-strength-in-unity/"
+        },
+        {
+          "label": "D. L. Henderson, South-View: An African American City of the Dead",
+          "url": "https://search.worldcat.org/title/1048552699",
+          "note": "Chapter 10 gives the dedication date, participants, maker, and monument symbolism."
+        },
+        {
+          "label": "Georgia Department of Natural Resources: African American historic places",
+          "url": "https://gadnr.org/sites/default/files/hpd/pdf/AfricanAmericanHistoricPlaces/December%202011.pdf",
+          "note": "Identifies the broken-column grave monument and its Masonic symbolism."
         }
       ],
       "dateNote": "",
@@ -1082,14 +709,34 @@
         "status": "permission-required"
       },
       "legacySlugs": [
-        "1961-08-30-john-wesley-dobbs-dies"
+        "1961-08-30-john-wesley-dobbs-dies",
+        "1963-06-12-john-wesley-dobbs-monument-dedicated-at-south-view",
+        "1963-06-12-prince-hall-masons-dedicate-john-wesley-dobbs-s-broken-column-memorial",
+        "1994-01-10-atlanta-renames-houston-street-for-john-wesley-dobbs",
+        "1994-01-10-john-wesley-dobbs-avenue-is-dedicated"
+      ],
+      "calendarAliases": [
+        "Atlanta renames Houston Street for John Wesley Dobbs",
+        "John W. Dobbs",
+        "John Wesley Dobbs dies as Atlanta schools desegregate",
+        "Prince Hall Masons dedicate John Wesley Dobbs’s broken-column memorial"
+      ],
+      "mergedEvents": [
+        {
+          "date": "1994-01-10",
+          "title": "Atlanta renames Houston Street for John Wesley Dobbs"
+        },
+        {
+          "date": "1963-06-12",
+          "title": "Prince Hall Masons dedicate John Wesley Dobbs’s broken-column memorial"
+        }
       ]
     },
     "1994-09-16": {
       "title": "Jean Childs Young dies after decades of education and children’s advocacy",
       "paragraphs": [
-        "Jean Childs Young died of cancer in Atlanta on September 16, 1994. She had taught elementary school, prepared teachers for low-income communities, and worked on literacy and citizenship education. During the civil-rights movement she joined demonstrations and helped develop lessons for the Southern Christian Leadership Conference’s citizenship schools, which prepared adults to participate in civic life.",
-        "President Jimmy Carter appointed Young to chair the U.S. effort for the 1979 International Year of the Child. During Andrew Young’s mayoralty, she chaired Atlanta’s Mayor’s Task Force on Public Education and helped establish programs including Dream Jamboree, a college fair for teenagers. In 1995, Southwest High School was renamed the Jean Childs Young Middle School."
+        "Jean Childs Young died of cancer in Atlanta on September 16, 1994. Born in Marion, Alabama, on July 1, 1933, she studied elementary education at Manchester College and became a teacher. She worked in Georgia and Connecticut, trained teachers for low-income communities, and helped develop lessons for the Southern Christian Leadership Conference’s citizenship schools, which prepared adults for civic participation.",
+        "Young joined civil-rights demonstrations and broadened her educational work into children’s advocacy. President Jimmy Carter appointed her to chair the U.S. effort for the 1979 International Year of the Child. During Andrew Young’s mayoralty she chaired Atlanta’s Mayor’s Task Force on Public Education and helped establish Dream Jamboree, a college fair for teenagers. Her name was given to Jean Childs Young Middle School in 1995."
       ],
       "sources": [
         {
@@ -1111,7 +758,20 @@
         "status": "verify-rights"
       },
       "legacySlugs": [
+        "1933-07-01-jean-childs-young-is-born",
+        "1933-07-01-jean-childs-young-is-born-in-marion-alabama",
         "1994-09-16-jean-childs-young-dies"
+      ],
+      "calendarAliases": [
+        "Jean Childs Young",
+        "Jean Childs Young dies after decades of education and children’s advocacy",
+        "Jean Childs Young is born in Marion, Alabama"
+      ],
+      "mergedEvents": [
+        {
+          "date": "1933-07-01",
+          "title": "Jean Childs Young is born in Marion, Alabama"
+        }
       ]
     },
     "1980-09-26": {
@@ -1168,6 +828,10 @@
       },
       "legacySlugs": [
         "1967-10-07-ruby-doris-smith-robinson-dies"
+      ],
+      "calendarAliases": [
+        "Remembering Ruby Doris Smith Robinson",
+        "Remembering Ruby Doris"
       ]
     },
     "1905-10-10": {
@@ -1270,10 +934,11 @@
       ]
     },
     "1964-10-14": {
-      "title": "Coretta Scott King brings Martin Luther King Jr. news of the Nobel Prize",
+      "title": "Martin Luther King Jr. is awarded the Nobel Peace Prize",
       "paragraphs": [
-        "On October 14, 1964, Coretta Scott King telephoned her husband in an Atlanta hospital with news that he had been awarded the Nobel Peace Prize. At thirty-five, Martin Luther King Jr. was the youngest man to receive the award at that time. The Nobel Committee recognized his leadership in the nonviolent campaign against racial injustice.",
-        "The announcement followed the Montgomery bus boycott, the Birmingham campaign and the March on Washington, but came while organizers still faced violence and barriers to voting. King said the honor belonged to the wider movement, and he later shared the prize money among civil-rights organizations. He traveled to Oslo to receive it in December."
+        "On October 14, 1964, Coretta Scott King telephoned her husband in an Atlanta hospital with news that he had been awarded the Nobel Peace Prize. At thirty-five, Martin Luther King Jr. was the youngest man to receive the award at that time. He accepted it in Oslo on December 10, dedicating it to the people risking their safety to challenge segregation, and shared the prize money among civil-rights organizations.",
+        "Born on Auburn Avenue in Atlanta on January 15, 1929, King grew up in the religious life of Ebenezer Baptist Church. The Montgomery bus boycott brought him to national attention, and he helped build the Southern Christian Leadership Conference. Birmingham’s campaign and the March on Washington made nonviolent protest visible around the world, even while organizers continued to face violence and barriers to voting.",
+        "King was assassinated at Memphis’s Lorraine Motel on April 4, 1968, while supporting striking sanitation workers. After his funeral in Atlanta he was buried at South-View. Mourners gathered at his tomb on his birthday in January 1969; his remains were moved near Ebenezer Baptist Church in January 1970. South-View was part of the first public mourning that preceded the permanent King Center memorial."
       ],
       "sources": [
         {
@@ -1283,6 +948,26 @@
         {
           "label": "Nobel Prize — 1964 Peace Prize",
           "url": "https://www.nobelprize.org/prizes/peace/1964/summary/"
+        },
+        {
+          "label": "National Park Service: King’s Atlanta youth and leadership",
+          "url": "https://www.nps.gov/articles/featured_stories_malu.htm"
+        },
+        {
+          "label": "National Park Service: Martin Luther King Jr.",
+          "url": "https://home.nps.gov/people/martinlutherkingjr.htm"
+        },
+        {
+          "label": "Smithsonian National Museum of African American History and Culture: South-View gravesite photograph",
+          "url": "https://www.si.edu/object/nmaahc_2011.94.43"
+        },
+        {
+          "label": "Stanford King Institute: Assassination of Martin Luther King Jr.",
+          "url": "https://kinginstitute.stanford.edu/assassination-martin-luther-king-jr"
+        },
+        {
+          "label": "Nobel Prize — Martin Luther King Jr.’s acceptance speech, December 10, 1964",
+          "url": "https://www.nobelprize.org/prizes/peace/1964/king/acceptance-speech/"
         }
       ],
       "dateNote": "",
@@ -1295,7 +980,47 @@
         "status": "cleared"
       },
       "legacySlugs": [
-        "1964-10-14-martin-luther-king-jr-is-announced-as-nobel-peace-prize-laureate"
+        "1929-01-15-martin-luther-king-jr-is-born-in-atlanta",
+        "1964-10-14-coretta-scott-king-brings-martin-luther-king-jr-news-of-the-nobel-prize",
+        "1964-10-14-martin-luther-king-jr-is-announced-as-nobel-peace-prize-laureate",
+        "1964-12-10-martin-luther-king-jr-accepts-the-nobel-peace-prize-in-oslo",
+        "1964-12-10-martin-luther-king-jr-receives-the-nobel-peace-prize",
+        "1968-04-04-martin-luther-king-jr-is-assassinated",
+        "1968-04-04-martin-luther-king-jr-is-assassinated-in-memphis",
+        "1969-01-15-mourners-gather-at-king-s-south-view-tomb-on-his-birthday",
+        "1969-01-15-south-view-holds-memorial-for-martin-luther-king-jr"
+      ],
+      "calendarAliases": [
+        "Coretta Scott King brings Martin Luther King Jr. news of the Nobel Prize",
+        "Martin Luther King Jr.",
+        "Martin Luther King Jr. accepts the Nobel Peace Prize in Oslo",
+        "Martin Luther King Jr. is assassinated in Memphis",
+        "Martin Luther King Jr. is born in Atlanta",
+        "Mourners gather at King’s South-View tomb on his birthday",
+        "King’s Nobel Peace Prize announcement",
+        "King’s Nobel announcement",
+        "A Nobel Prize for nonviolence"
+      ],
+      "mergedEvents": [
+        {
+          "date": "1929-01-15",
+          "title": "Martin Luther King Jr. is born in Atlanta"
+        },
+        {
+          "date": "1969-01-15",
+          "title": "Mourners gather at King’s South-View tomb on his birthday"
+        },
+        {
+          "date": "1968-04-04",
+          "title": "Martin Luther King Jr. is assassinated in Memphis"
+        },
+        {
+          "date": "1964-12-10",
+          "title": "Martin Luther King Jr. accepts the Nobel Peace Prize in Oslo"
+        }
+      ],
+      "storyAliases": [
+        "a-nobel-prize-for-nonviolence"
       ]
     },
     "1895-10-21": {
@@ -1358,42 +1083,18 @@
       },
       "legacySlugs": [
         "1885-10-26-sterling-watts-is-buried-in-segregated-rest-haven"
-      ]
-    },
-    "1904-11-08": {
-      "title": "Horace Mann Bond is born in Nashville",
-      "paragraphs": [
-        "Horace Mann Bond was born in Nashville, Tennessee, on November 8, 1904, into a family of educators and ministers. He entered Lincoln University at fourteen, graduated in 1923 and earned a doctorate at the University of Chicago. His scholarship examined how poverty and unequal schools shaped Black children’s educational opportunities.",
-        "Bond led Fort Valley State College from 1939 to 1945, expanding its resources and strengthening its curriculum, then became Lincoln University’s first Black president. In 1953 he joined historians John Hope Franklin and C. Vann Woodward in research for the NAACP Legal Defense Fund that contributed to the arguments in Brown v. Board of Education."
       ],
-      "sources": [
-        {
-          "label": "New Georgia Encyclopedia — Horace Mann Bond",
-          "url": "https://www.georgiaencyclopedia.org/articles/education/horace-mann-bond-1904-1972/"
-        },
-        {
-          "label": "Lincoln University — About Horace Mann Bond",
-          "url": "https://www.lincoln.edu/academics/honors-program/about-horace-mann-bond.html"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": null,
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Horace_Mann_Bond.jpg",
-        "creator": "Unconfirmed; Wikimedia Commons file entry requires review",
-        "rights": "Rights are disputed / deletion nomination reported in existing research; do not reuse until status is resolved.",
-        "alt": "Horace Mann Bond, educator and sociologist.",
-        "status": "do-not-publish-pending-rights"
-      },
-      "legacySlugs": [
-        "1904-11-08-horace-mann-bond-is-born"
+      "calendarAliases": [
+        "Sterling Watts’s burial and South-View’s origins",
+        "Sterling Watts’s burial",
+        "A cemetery of their own"
       ]
     },
     "1898-11-09": {
-      "title": "Nineteen-year-old Wade Hampton is executed at Atlanta’s Tower jail",
+      "title": "Wade Hampton is executed and buried at South-View",
       "paragraphs": [
-        "Wade Hampton was nineteen when he was hanged at Atlanta’s new Fulton County jail, known as the Tower, on November 9, 1898. He had first been imprisoned as a child for burglary and leased to work at the Chattahoochee Brick Company; an explosion there cost him a leg. He was later convicted of killing another young prisoner and sentenced to death.",
-        "Hampton asked to hear the Methodist hymn “Am I Born to Die?” before the execution. The account of his final hours records that the drop failed to break his neck and he died by strangulation. His life shows how Georgia’s convict-leasing system subjected children as well as adults to forced labor and physical danger."
+        "Wade Hampton was nineteen when he was hanged at Atlanta’s Fulton County jail, known as the Tower, on November 9, 1898. Imprisoned as a child for burglary, he had been leased to work at the Chattahoochee Brick Company, where an explosion cost him a leg. He was later convicted of killing another young prisoner and sentenced to death.",
+        "Hampton asked to hear the Methodist hymn “Am I Born to Die?” before the execution. The account of his final hours records that the drop failed to break his neck and he died by strangulation. Undertaker L. L. Lee removed his body, and Hampton was buried at South-View on November 10. His life records the forced labor and physical danger that Georgia’s convict-leasing system imposed on children as well as adults."
       ],
       "sources": [
         {
@@ -1405,7 +1106,7 @@
           "url": "https://etd.ohiolink.edu/acprod/odb_etd/ws/send_file/send?accession=osu1486653137101178&disposition=inline"
         }
       ],
-      "dateNote": "The execution date and details are drawn from D. L. Henderson’s cemetery history; an independent case record was not located online.",
+      "dateNote": "1898-11-09: The execution date and details are drawn from D. L. Henderson’s cemetery history; an independent case record was not located online.\n1898-11-10: The burial date and undertaker detail are drawn from D. L. Henderson’s cemetery history; an independent burial record was not located online.",
       "image": {
         "url": null,
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
@@ -1415,36 +1116,20 @@
         "status": "cleared-context-only"
       },
       "legacySlugs": [
-        "1898-11-09-wade-hampton-is-executed-at-atlantas-new-county-prison"
-      ]
-    },
-    "1898-11-10": {
-      "title": "Wade Hampton is buried at South-View after his execution",
-      "paragraphs": [
-        "Wade Hampton was buried at South-View on November 10, 1898, the day after he was executed at Fulton County’s Tower jail. Undertaker L. L. Lee removed the body from the jail. Hampton was nineteen.",
-        "As a child, Hampton had been imprisoned for burglary and sent to labor at the Chattahoochee Brick Company under Georgia’s convict-lease system, where an explosion cost him a leg. In 1898 he was executed after being convicted of killing another prisoner. His burial followed a life shaped by a system that made Black people’s labor and bodies subject to private control."
+        "1898-11-09-nineteen-year-old-wade-hampton-is-executed-at-atlanta-s-tower-jail",
+        "1898-11-09-wade-hampton-is-executed-at-atlantas-new-county-prison",
+        "1898-11-10-wade-hampton-is-buried-at-south-view",
+        "1898-11-10-wade-hampton-is-buried-at-south-view-after-his-execution"
       ],
-      "sources": [
+      "calendarAliases": [
+        "Nineteen-year-old Wade Hampton is executed at Atlanta’s Tower jail",
+        "Wade Hampton is buried at South-View after his execution"
+      ],
+      "mergedEvents": [
         {
-          "label": "D. L. Henderson, South-View: An African American City of the Dead (2018), ch. 12, pp. 120–121; catalog record",
-          "url": "https://search.worldcat.org/title/1048552699"
-        },
-        {
-          "label": "Ohio State University — study citing Wade Hampton’s 1893 Fulton County conviction and lost leg",
-          "url": "https://etd.ohiolink.edu/acprod/odb_etd/ws/send_file/send?accession=osu1486653137101178&disposition=inline"
+          "date": "1898-11-10",
+          "title": "Wade Hampton is buried at South-View after his execution"
         }
-      ],
-      "dateNote": "The burial date and undertaker detail are drawn from D. L. Henderson’s cemetery history; an independent burial record was not located online.",
-      "image": {
-        "url": null,
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
-        "creator": "Library of Congress, Prints and Photographs Division",
-        "rights": "Public domain in the United States (published before 1931); image depicts an unidentified Georgia cemetery, not South-View.",
-        "alt": "An unidentified historic cemetery in Georgia; used only as a contextual illustration.",
-        "status": "cleared-context-only"
-      },
-      "legacySlugs": [
-        "1898-11-10-wade-hampton-is-buried-at-south-view"
       ]
     },
     "1927-11-17": {
@@ -1505,68 +1190,6 @@
         "1955-12-05-montgomery-bus-boycott-begins"
       ]
     },
-    "1886-12-06": {
-      "title": "Charles H. Morgan buys the first recorded South-View shares",
-      "paragraphs": [
-        "On December 6, 1886, South-View Cemetery Association’s stock book recorded Charles H. Morgan buying its first three shares. A grocer and one of the men who petitioned for the cemetery’s charter, Morgan committed money to a new Black-led institution only months after its founding. Each share was valued at one hundred dollars.",
-        "Morgan’s investment came in the cemetery’s first year of operation, when Black Atlantans were building an organization that could provide burial on terms they controlled. He died less than two weeks later and was buried in a family lot at South-View on December 17."
-      ],
-      "sources": [
-        {
-          "label": "D. L. Henderson, South-View: An African American City of the Dead (2018), ch. 3; catalog record",
-          "url": "https://search.worldcat.org/title/1048552699"
-        },
-        {
-          "label": "Georgia Tech, Building Memories — South-View Cemetery",
-          "url": "https://leading-edge.iac.gatech.edu/building-memories/southview-cemetery/"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": null,
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Unidentified_cemetery_in_Georgia_LCCN99472251.jpg",
-        "creator": "Library of Congress, Prints and Photographs Division",
-        "rights": "Public domain in the United States (published before 1931); image depicts an unidentified Georgia cemetery, not South-View.",
-        "alt": "An unidentified historic cemetery in Georgia; used only as a contextual illustration.",
-        "status": "cleared-context-only"
-      },
-      "legacySlugs": [
-        "1886-12-06-charles-morgan-buys-first-south-view-association-shares"
-      ]
-    },
-    "1964-12-10": {
-      "title": "Martin Luther King Jr. accepts the Nobel Peace Prize in Oslo",
-      "paragraphs": [
-        "Martin Luther King Jr. accepted the Nobel Peace Prize in Oslo on December 10, 1964. He dedicated it to the civil-rights movement and the people risking their safety to challenge segregation. In his speech, he recalled the violence directed at Black children in Birmingham and at voting-rights workers in Mississippi, insisting that the struggle was still unfinished.",
-        "King described nonviolent protest as an active force for social change and framed the award as a trust held on behalf of the movement. At thirty-five, he was the youngest Nobel Peace laureate at the time. He shared the prize money with civil-rights organizations."
-      ],
-      "sources": [
-        {
-          "label": "Nobel Prize — Martin Luther King Jr.’s acceptance speech, December 10, 1964",
-          "url": "https://www.nobelprize.org/prizes/peace/1964/king/acceptance-speech/"
-        },
-        {
-          "label": "Nobel Prize — 1964 Peace Prize",
-          "url": "https://www.nobelprize.org/prizes/peace/1964/summary/"
-        },
-        {
-          "label": "Martin Luther King, Jr. Research and Education Institute, Stanford — Nobel Peace Prize",
-          "url": "https://kinginstitute.stanford.edu/nobel-peace-prize"
-        }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Martin_Luther_King_Jr_NYWTS.jpg",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Martin_Luther_King_Jr_NYWTS.jpg",
-        "creator": "New York World-Telegram and the Sun Newspaper photograph collection, Library of Congress",
-        "rights": "Public domain in the United States; work-for-hire photo in the Library of Congress collection.",
-        "alt": "Martin Luther King Jr. in a Library of Congress archival portrait.",
-        "status": "cleared"
-      },
-      "legacySlugs": [
-        "1964-12-10-martin-luther-king-jr-receives-the-nobel-peace-prize"
-      ]
-    },
     "1886-12-17": {
       "title": "South-View co-founder Charles H. Morgan is buried",
       "paragraphs": [
@@ -1593,14 +1216,26 @@
         "status": "cleared-context-only"
       },
       "legacySlugs": [
+        "1886-12-06-charles-h-morgan-buys-the-first-recorded-south-view-shares",
+        "1886-12-06-charles-morgan-buys-first-south-view-association-shares",
         "1886-12-17-south-view-founder-charles-morgan-is-buried"
+      ],
+      "calendarAliases": [
+        "Charles H. Morgan buys the first recorded South-View shares",
+        "South-View co-founder Charles H. Morgan is buried"
+      ],
+      "mergedEvents": [
+        {
+          "date": "1886-12-06",
+          "title": "Charles H. Morgan buys the first recorded South-View shares"
+        }
       ]
     },
     "1972-12-21": {
       "title": "Educator and scholar Horace Mann Bond dies",
       "paragraphs": [
-        "Horace Mann Bond died on December 21, 1972, after retiring the previous year from Atlanta University. He had led Fort Valley State College and Lincoln University, then returned to Atlanta as a dean and education researcher. At each institution he worked to strengthen Black higher education while studying the barriers segregation placed before Black students.",
-        "In 1953 Bond joined historians John Hope Franklin and C. Vann Woodward in research for the NAACP Legal Defense and Educational Fund. Their work contributed to the evidence and arguments presented in Brown v. Board of Education. Bond’s research connected the conditions Black children experienced in schools to the constitutional challenge to segregation."
+        "Horace Mann Bond died on December 21, 1972, after retiring the previous year from Atlanta University. Born in Nashville on November 8, 1904, into a family of educators and ministers, he entered Lincoln University at fourteen and later earned a doctorate at the University of Chicago. He led Fort Valley State College and became Lincoln University’s first Black president before returning to Atlanta as a dean and education researcher.",
+        "Bond studied how poverty and unequal schools shaped Black children’s opportunities. In 1953 he joined historians John Hope Franklin and C. Vann Woodward in research for the NAACP Legal Defense and Educational Fund that contributed to the arguments in Brown v. Board of Education. His scholarship connected the conditions students experienced in segregated schools to the constitutional challenge to segregation."
       ],
       "sources": [
         {
@@ -1622,19 +1257,36 @@
         "status": "do-not-publish-pending-rights"
       },
       "legacySlugs": [
+        "1904-11-08-horace-mann-bond-is-born",
+        "1904-11-08-horace-mann-bond-is-born-in-nashville",
         "1972-12-21-horace-mann-bond-dies"
+      ],
+      "calendarAliases": [
+        "Educator and scholar Horace Mann Bond dies",
+        "Horace Mann Bond",
+        "Horace Mann Bond is born in Nashville"
+      ],
+      "mergedEvents": [
+        {
+          "date": "1904-11-08",
+          "title": "Horace Mann Bond is born in Nashville"
+        }
       ]
     },
     "1994-12-23": {
       "title": "Librarian Annie L. McPheeters dies after building Atlanta’s Black history collection",
       "paragraphs": [
-        "Annie L. McPheeters died on December 23, 1994, at eighty-six, months after the Auburn Avenue Research Library opened in Atlanta. She had joined the Auburn Branch as an assistant librarian in 1934 and developed its Negro History Collection, bringing together books and resources about people of African descent. That collection became a foundation for the research library that opened decades later.",
-        "McPheeters helped expand library service for Black Atlantans and worked with advocates who won desegregation of the city’s public libraries in 1959. In 1966 she became Georgia State College’s first Black reference librarian. Her career connected everyday public access to books with the preservation of Black history for future researchers."
+        "Annie L. McPheeters died on December 23, 1994, at eighty-six, months after the Auburn Avenue Research Library opened in Atlanta. Born Annie Lou Watters in Floyd County on February 22, 1908, she joined the Auburn Branch as an assistant librarian in 1934. She developed its Negro History Collection, gathering books and resources about people of African descent that became a foundation for the later research library.",
+        "McPheeters expanded library service for Black Atlantans through reading programs, exhibits, and public advocacy. She worked with people who won desegregation of Atlanta’s public libraries in 1959 and became Georgia State College’s first Black reference librarian in 1966. Her career joined everyday access to books with the preservation of Black history for future researchers."
       ],
       "sources": [
         {
           "label": "New Georgia Encyclopedia — Annie L. McPheeters",
           "url": "https://www.georgiaencyclopedia.org/articles/education/annie-l-mcpheeters-1908-1994/"
+        },
+        {
+          "label": "Fulton County Library System: Auburn Avenue Research Library archival collections",
+          "url": "https://www.fulcolibrary.org/aarl/aarl-archival-collection/"
         }
       ],
       "dateNote": "",
@@ -1647,36 +1299,20 @@
         "status": "permission-required"
       },
       "legacySlugs": [
+        "1908-02-22-annie-l-mcpheeters-is-born",
+        "1908-02-22-annie-l-mcpheeters-is-born-in-floyd-county",
         "1994-12-23-annie-l-mcpheeters-dies"
-      ]
-    },
-    "1885-12-26": {
-      "title": "Atlanta educator Bazoline E. Usher is born",
-      "paragraphs": [
-        "Bazoline Estelle Usher was born in Walton County, Georgia, on December 26, 1885. She studied at Atlanta University and graduated in 1906, then taught in Virginia before returning to Atlanta in 1915. Over the next decades she became a teacher, principal and leader in the city’s public education system.",
-        "Usher supervised Atlanta’s African American schools and helped expand their facilities, including the opening of seven elementary schools. In 1943 she also helped organize Girl Scout troops for Black girls, creating space for leadership and outdoor activities in a segregated city. Her work joined the struggle for quality Black education with opportunities for girls beyond the classroom."
       ],
-      "sources": [
+      "calendarAliases": [
+        "Annie L. McPheeters",
+        "Annie L. McPheeters is born in Floyd County",
+        "Librarian Annie L. McPheeters dies after building Atlanta’s Black history collection"
+      ],
+      "mergedEvents": [
         {
-          "label": "Atlanta History Center — Bazoline Usher visual arts materials",
-          "url": "https://album.atlantahistorycenter.com/digital/collection/p17222coll54"
-        },
-        {
-          "label": "Georgia Historic Preservation Division — Reflections, April 2016",
-          "url": "https://georgiawildlife.com/sites/default/files/hpd/pdf/AfricanAmericanHistoricPlaces/April%202016.pdf"
+          "date": "1908-02-22",
+          "title": "Annie L. McPheeters is born in Floyd County"
         }
-      ],
-      "dateNote": "",
-      "image": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Bazoline_Estelle_Usher%2C_Atlanta_University_student%2C_half-length_portrait%2C_facing_front_LCCN98518739.jpg",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Bazoline_Estelle_Usher,_Atlanta_University_student,_half-length_portrait,_facing_front_LCCN98518739.jpg",
-        "creator": "Library of Congress, Prints and Photographs Division",
-        "rights": "Public domain in the United States; published before 1931.",
-        "alt": "Young Bazoline E. Usher in an Atlanta University student portrait.",
-        "status": "cleared"
-      },
-      "legacySlugs": [
-        "1885-12-26-bazoline-e-usher-is-born"
       ]
     },
     "2012-12-31": {

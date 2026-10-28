@@ -1,15 +1,16 @@
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
-import { historicalArticles, storiesWithProfiles } from '@/lib/events';
+import { resolveHistoricalArticle, storiesWithProfiles } from '@/lib/events';
+import { readCalendarSnapshot } from '@/lib/google-calendar';
+
+export const dynamic = 'force-dynamic';
 
 export default async function StoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const legacyArticles: Record<string, string> = {
-    'a-cemetery-of-their-own': '1885-10-26-sterling-watts-is-buried-in-segregated-rest-haven',
-    'a-nobel-prize-for-nonviolence': '1964-10-14-martin-luther-king-jr-is-announced-as-nobel-peace-prize-laureate',
-    'remembering-ruby-doris': '1967-10-07-ruby-doris-smith-robinson-dies',
-  };
-  if (legacyArticles[slug] && historicalArticles.some((article) => article.slug === legacyArticles[slug])) redirect(`/events/${legacyArticles[slug]}`);
+  const snapshot = await readCalendarSnapshot(new Date().getFullYear());
+  const canonicalArticle = resolveHistoricalArticle(slug,snapshot.articles);
+  if (canonicalArticle) redirect(`/events/${canonicalArticle.slug}`);
+  if (resolveHistoricalArticle(slug)) notFound();
   const story = storiesWithProfiles.find((item) => item.slug === slug);
   if (!story) notFound();
 

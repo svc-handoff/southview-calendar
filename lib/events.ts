@@ -1,7 +1,13 @@
-import research from './research-data.json';
-import researched from './researched-content.json';
+import research from './research-data.json' with { type: 'json' };
+import researched from './researched-content.json' with { type: 'json' };
 
 export type SourceRef = {label:string;url:string|null;note?:string};
+type ArticleImage = {url:string|null;alt:string;creator:string;rights:string;sourcePage:string|null};
+type ArticleContent = {paragraphs:string[];sources:SourceRef[];image:ArticleImage;dateNote?:string;legacySlugs?:string[];calendarAliases?:string[];storyAliases?:string[]};
+const eventContent:Record<string,ArticleContent> = researched.events;
+const profileContent:Record<string,ArticleContent> = researched.profiles;
+type ResearchEvent = {date:string;title:string;description:string;source:string;sourceLabel:string;dateNote?:string;storySlug?:string;subjectId:string};
+const researchEvents:ResearchEvent[] = research.events;
 export type Story = {slug:string; title:string; shortTitle:string; date:string; label:string; category:string; summary:string; paragraphs:string[]; image:string; alt:string; credit:string; imageSource:string; source:string; sourceLabel:string; book:string; sources?:SourceRef[]; profile?:boolean; timelineDate?:string; timelineSort?:string};
 export const stories: Story[] = [
  {slug:'a-cemetery-of-their-own',title:'A cemetery of their own',shortTitle:'Sterling Watts’s burial',date:'1885-10-26',label:'October 26, 1885',category:'Origins',summary:'A burial under segregation frames the story of South-View’s founding.',paragraphs:[
@@ -30,17 +36,17 @@ export const profiles: Story[] = research.profiles.map((person) => ({
   date: '2000-01-01',
   label: person.name,
   category: 'South-View history',
-  summary: researched.profiles[person.slug]?.paragraphs?.[0] || person.blurb,
-  paragraphs: researched.profiles[person.slug]?.paragraphs || [person.blurb],
-  image: researched.profiles[person.slug]?.image?.url?.startsWith('/images/') ? researched.profiles[person.slug].image.url : '',
-  alt: researched.profiles[person.slug]?.image?.url?.startsWith('/images/') ? researched.profiles[person.slug].image.alt : '',
-  credit: researched.profiles[person.slug]?.image?.url?.startsWith('/images/')
-    ? imageCaption(researched.profiles[person.slug].image)
+  summary: profileContent[person.slug]?.paragraphs?.[0] || person.blurb,
+  paragraphs: profileContent[person.slug]?.paragraphs || [person.blurb],
+  image: profileContent[person.slug]?.image?.url?.startsWith('/images/') ? profileContent[person.slug].image.url! : '',
+  alt: profileContent[person.slug]?.image?.url?.startsWith('/images/') ? profileContent[person.slug].image.alt : '',
+  credit: profileContent[person.slug]?.image?.url?.startsWith('/images/')
+    ? imageCaption(profileContent[person.slug].image)
     : '',
-  imageSource: researched.profiles[person.slug]?.image?.url?.startsWith('/images/') ? researched.profiles[person.slug].image.sourcePage : '',
+  imageSource: profileContent[person.slug]?.image?.url?.startsWith('/images/') ? profileContent[person.slug].image.sourcePage || '' : '',
   source: person.imageSource,
   sourceLabel: person.credit,
-  sources: researched.profiles[person.slug]?.sources || [],
+  sources: profileContent[person.slug]?.sources || [],
   book: '',
   profile: true,
   timelineDate: person.timelineDate,
@@ -52,10 +58,10 @@ function eventSlug(date: string, title: string) {
   const titlePart = title.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   return date + "-" + titlePart;
 }
-export const historicalArticles = research.events.map((event, index) => {
+export const historicalArticles = researchEvents.map((event) => {
   const slug = eventSlug(event.date, event.title);
-  const content = researched.events[event.date];
-  const relatedProfile = event.storySlug ? researched.profiles[event.storySlug] : undefined;
+  const content = eventContent[event.date];
+  const relatedProfile = event.storySlug ? profileContent[event.storySlug] : undefined;
   const candidate = content.image;
   const genericCemetery = /unidentified (historic )?(georgia )?cemetery/i.test(candidate.alt);
   const mismatched1906Image = event.date === '1902-05-17' && /1906/.test(candidate.alt);
@@ -68,12 +74,15 @@ export const historicalArticles = research.events.map((event, index) => {
     imageCredit: chosenImage
       ? imageCaption(chosenImage)
       : '',
-    imageSource: chosenImage?.url ? chosenImage.sourcePage : '',
+    imageSource: chosenImage?.url ? chosenImage.sourcePage || '' : '',
   };
   return {
-    id: `${event.date}-${index}`,
+    id: slug,
     slug,
     legacySlugs: content.legacySlugs || [],
+    storyAliases: content.storyAliases || [],
+    calendarAliases: [event.title, ...(content.calendarAliases || [])],
+    subjectId: event.subjectId,
     title: event.title,
     date: event.date,
     description: event.description,
@@ -93,16 +102,85 @@ export function displayHistoricalDate(date: string) {
 }
 
 export function anniversaries(year:number):CalendarEvent[]{
-  return research.events.map((event, index) => ({
-    id: `${event.date}-${index}`,
-    title: event.title,
-    date: `${year}${event.date.slice(4)}`,
-    description: event.description,
-    source: event.source,
-    sourceLabel: event.sourceLabel,
-    dateNote: event.dateNote,
-    storySlug: event.storySlug,
-    articleSlug: eventSlug(event.date, event.title),
+  return historicalArticles.map((article) => ({
+    id: article.id,
+    title: article.title,
+    date: `${year}${article.date.slice(4)}`,
+    description: article.description,
+    source: article.source,
+    sourceLabel: article.sourceLabel,
+    dateNote: article.dateNote,
+    storySlug: article.storySlug,
+    articleSlug: article.slug,
     kind: 'history',
   }));
+}
+
+export type HistoricalArticle = typeof historicalArticles[number];
+
+export function resolveHistoricalArticle(reference?:string,articles:HistoricalArticle[]=historicalArticles){
+  if(!reference)return undefined;
+  let key=reference;
+  if(/^https?:\/\//.test(key)){
+    try{key=new URL(key).pathname;}catch{return undefined;}
+  }
+  key=key.replace(/^\/?(?:history|events)\//,'').replace(/^\/+|\/+$/g,'');
+  return articles.find(article=>[article.slug,article.storySlug,...article.legacySlugs,...article.storyAliases].includes(key));
+}
+
+function calendarTitle(value:string){
+  return value.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
+    .replace(/^(?:(?:historical\s+)?anniversary|birthday|remembering)\s*[:\-–—]?\s*/,'')
+    .replace(/[^a-z0-9]+/g,' ').trim();
+}
+export function dedupeCalendarEvents(events:CalendarEvent[],articles:HistoricalArticle[]=historicalArticles):CalendarEvent[]{
+  const historicalTitles=new Map(articles.flatMap(article=>article.calendarAliases.map(title=>[calendarTitle(title),article] as const)));
+  const linkedArticle=(event:CalendarEvent)=>{
+    if(event.kind==='history'){
+      const references=[event.articleSlug,event.storySlug,event.url,
+        ...(event.description?.match(/https?:\/\/[^\s<>]+\/(?:history|events)\/[a-z0-9-]+/gi)||[])];
+      for(const reference of references){const article=resolveHistoricalArticle(reference,articles);if(article)return article;}
+    }
+    return event.kind==='history'||!event.time?historicalTitles.get(calendarTitle(event.title)):undefined;
+  };
+  const preferred=new Map<string,CalendarEvent>();
+  for(const event of events){
+    const article=linkedArticle(event);
+    if(!article)continue;
+    const previous=preferred.get(article.subjectId);
+    if(!previous||(previous.articleSlug!==article.slug&&event.articleSlug===article.slug))preferred.set(article.subjectId,event);
+  }
+  const result:CalendarEvent[]=[];
+  const seenIds=new Set<string>();
+  const seenContents=new Set<string>();
+  for(const event of events){
+    // Resolve editorial aliases before comparing dates: a merged birthday or
+    // funeral must not reappear from an older Calendar entry in another month.
+    const article=linkedArticle(event);
+    if(article&&preferred.get(article.subjectId)!==event)continue;
+    const idKey=`${event.id}:${event.date}:${event.time||''}`;
+    const contentKey=`${event.kind}:${event.date}:${event.time||''}:${calendarTitle(event.title)}`;
+    if(seenIds.has(idKey)||seenContents.has(contentKey))continue;
+    seenIds.add(idKey);
+    seenContents.add(contentKey);
+    result.push(article?{...event,title:article.title,articleSlug:article.slug,storySlug:article.storySlug,kind:'history'}:event);
+  }
+  return result;
+}
+
+export function calendarEventsForMonth(year:number,month:number,events:CalendarEvent[]=[],articles:HistoricalArticle[]=historicalArticles):CalendarEvent[]{
+  const prefix=`${year}-${String(month).padStart(2,'0')}-`;
+  return dedupeCalendarEvents(events,articles).filter(event=>event.date.startsWith(prefix));
+}
+
+export function timelineEntries(startYear:number,endYear:number){
+  const articles=historicalArticles.filter(article=>{
+    const year=Number(article.date.slice(0,4));
+    return year>=startYear&&year<=endYear;
+  }).map(article=>({date:displayHistoricalDate(article.date),title:article.title,href:`/events/${article.slug}`,sort:article.date,subjectId:article.subjectId}));
+  const biographies=profiles.filter(profile=>!resolveHistoricalArticle(profile.slug)).filter(profile=>{
+    const year=Number((profile.timelineSort||'').slice(0,4));
+    return year>=startYear&&year<=endYear;
+  }).map(profile=>({date:profile.timelineDate||'Dates not established',title:profile.title,href:`/history/${profile.slug}`,sort:profile.timelineSort||'9999-99-99',subjectId:profile.slug}));
+  return [...articles,...biographies].sort((left,right)=>left.sort.localeCompare(right.sort));
 }

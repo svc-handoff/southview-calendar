@@ -9,13 +9,17 @@ A minimal calendar and historical timeline for South-View Cemetery in Atlanta. T
 - Run `npm run dev` to start the local development server.
 - Run `npm run build` to create a production build.
 
-Historical events and article copy live in `lib/research-data.json` and `lib/researched-content.json`. Update both when adding or revising an event: the first file drives calendar and timeline entries, while the second supplies article paragraphs, citations, and image credits. Keep citation links and uncertainty notes close to the claims they support.
+Google Calendar’s **South-View History — Demo** calendar is the source for the website’s event entries and historical articles. The 33 consolidated historical entries repeat annually; the original historical dates, sources, image links and credits are stored in their descriptions.
 
-The demo tour calendar is read from the public iCalendar feed in `app/api/calendar/route.ts`. The tour is fictional and labeled as a demo in the interface.
+To edit an article, edit the event’s title and the opening paragraphs in its Google Calendar description. Keep the bracketed `[southview-event]` details intact: they hold the historical date, permanent article address, aliases for merged stories, citations and image credits. Date and time changes in Calendar drive the website’s calendar directly. Reload the website to fetch changes; article edits do not need a redeploy. The calendar must share all event details publicly.
+
+`lib/google-calendar.ts` reads that public feed. The API and article pages use the same parsed records and deduplicate by subject, permanent article identity and former article addresses. The JSON files in `lib/` retain the researched migration source and standalone biographies; they do not add a second set of events to the website.
+
+The historical collection was consolidated from 56 to 33 entries. Birth, death, burial and memorial notices for the same person are folded into the featured article. The tour and other independently created Calendar entries are retained. Original Google Calendar snapshots from the migration are saved outside the source checkout in the task’s `work/` directory.
 
 ## Project structure
 
-- `app/page.tsx` renders the scrollable calendar and horizontal timeline.
+- `app/page.tsx` renders the scrollable calendar and reminder search.
 - `app/events/[slug]/page.tsx` renders event articles.
 - `app/history/[slug]/page.tsx` renders people pages.
 - `public/images/` contains local images used by the site.

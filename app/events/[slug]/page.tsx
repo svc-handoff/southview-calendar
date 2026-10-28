@@ -1,11 +1,16 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
-import { displayHistoricalDate, historicalArticles } from '@/lib/events';
+import { displayHistoricalDate, resolveHistoricalArticle } from '@/lib/events';
+import { readCalendarSnapshot } from '@/lib/google-calendar';
+
+export const dynamic = 'force-dynamic';
 
 export default async function EventPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const article = historicalArticles.find((item) => item.slug === slug || item.legacySlugs?.includes(slug));
+  const snapshot = await readCalendarSnapshot(new Date().getFullYear());
+  const article = resolveHistoricalArticle(slug,snapshot.articles);
   if (!article) notFound();
+  if (slug !== article.slug) redirect(`/events/${article.slug}`);
 
   return (
     <main className="event-page">
