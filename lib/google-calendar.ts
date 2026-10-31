@@ -19,6 +19,37 @@ export function calendarArticleDescription(article:HistoricalArticle){
  return `${article.paragraphs.join('\n\n')}\n\n[southview-event]\n${JSON.stringify(metadata,null,2)}\n[/southview-event]`;
 }
 
+function readableParagraphs(description:string){
+ return description.split(/\n\s*\n|\n/).map(paragraph=>paragraph.trim()).filter(Boolean);
+}
+
+function imageFromSource(source:string){
+ try{
+  const url=new URL(source);
+  const commonsFile=url.hostname==='commons.wikimedia.org'&&url.pathname.startsWith('/wiki/File:')
+   ? decodeURIComponent(url.pathname.slice('/wiki/File:'.length)) : '';
+  if(commonsFile)return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(commonsFile)}`;
+  if(/\.(?:avif|gif|jpe?g|png|webp|svg)(?:$|[?#])/i.test(url.href))return url.href;
+ }catch{/* Invalid or non-image links remain ordinary article text. */}
+ return '';
+}
+
+function simpleArticle(description:string,title:string,historicalDate:string,slug:string,subjectId:string):HistoricalArticle{
+ const parts=readableParagraphs(description);
+ let imageSource='';
+ if(parts[0]&&/^https?:\/\//i.test(parts[0])){
+  const resolved=imageFromSource(parts[0]);
+  if(resolved){imageSource=parts.shift()!;}
+ }
+ const image=imageFromSource(imageSource);
+ const sources=Array.from(new Set(parts.join('\n').match(/https?:\/\/[^\s<>\])}]+/g)||[]))
+  .map(url=>({label:(()=>{try{return new URL(url).hostname.replace(/^www\./,'')}catch{return url}})(),url}));
+ const paragraphs=parts;
+ return {id:slug,slug,subjectId,title,date:historicalDate,description:paragraphs[0]||'',paragraphs,sources,
+  source:sources[0]?.url||'',sourceLabel:sources[0]?.label||'',legacySlugs:[],storyAliases:[],calendarAliases:[title],storySlug:undefined,
+  dateNote:'',image,alt:title,imageCredit:imageSource?'Image source: Wikimedia Commons':'',imageSource};
+}
+
 function readArticle(description:string,title:string):HistoricalArticle|undefined{
  const match=/\[southview-event\]\s*([\s\S]*?)\s*\[\/southview-event\]/.exec(description);
  if(!match)return undefined;
@@ -102,16 +133,22 @@ export function parseCalendarFeed(ics:string, year:number){
   const originalDate=start?dateFormatter.format(start):`${raw.slice(0,4)}-${raw.slice(4,6)}-${raw.slice(6,8)}`;
   const date=e.RRULE?.includes('FREQ=YEARLY')?`${year}-${originalDate.slice(5)}`:originalDate;
   const rawDescription=plainDescription(e.DESCRIPTION||'');
-  const history=readArticle(rawDescription,unescapeIcs(e.SUMMARY||'Untitled event'));
-  const description=history?.paragraphs.join('\n\n')||rawDescription;
+  const title=unescapeIcs(e.SUMMARY||'Untitled event');
+  const history=readArticle(rawDescription,title);
+  const location=unescapeIcs(e.LOCATION||'').trim();
+  const historicalDate=history?.date||originalDate;
+  const generatedSlug=historicalDate+'-'+title.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const article=history||(!start&&!location?simpleArticle(rawDescription,title,historicalDate,generatedSlug,e.UID||generatedSlug):undefined);
+  const description=article?.paragraphs.join('\n\n')||rawDescription;
   const slug=history?.storySlug||storySlug(description);
-  if(history){
-   const previous=articles.get(history.slug);
+  if(article){
+   const previous=articles.get(article.slug);
    const modified=e['LAST-MODIFIED']||e.DTSTAMP||'';
-   if(!previous||modified>previous.modified)articles.set(history.slug,{article:history,modified});
+   if(!previous||modified>previous.modified)articles.set(article.slug,{article,modified});
   }
   const time=start?`${end?timeFormatter.formatRange(start,end):timeFormatter.format(start)} ET`:undefined;
-  return [{id:e.UID||`ics-${index}`,title:unescapeIcs(e.SUMMARY||'Untitled event'),date,description,time,storySlug:slug,articleSlug:history?.slug,kind:history||slug?'history' as const:'tour' as const,url:e.URL}];
+  return [{id:e.UID||`ics-${index}`,title,date,historicalDate,description,image:article?.image,imageSource:article?.imageSource,sources:history?.sources,
+   time,location,storySlug:slug,articleSlug:article?.slug,kind:!time&&!location?'history' as const:'tour' as const,url:e.URL}];
  });
  const canonicalArticles=[...articles.values()].map(value=>value.article);
  return {events:dedupeCalendarEvents(events,canonicalArticles),articles:canonicalArticles};

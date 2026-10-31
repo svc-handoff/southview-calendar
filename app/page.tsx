@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { calendarEventsForMonth, type CalendarEvent, type HistoricalArticle } from '@/lib/events';
-import { loadGoogleCalendar, authorizeGoogleCalendar, addGoogleBirthdays, type BirthdayReminder } from '@/lib/google-reminders';
+import { birthdayDates, googleBirthdayLink } from '@/lib/google-reminders';
 
 const months = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -36,10 +36,7 @@ function foldIcsLine(line: string) {
 
 function makeIcsCalendar(name: string, reminders: { title: string; date: string; id: string }[]) {
   const events = reminders.map((reminder) => {
-    const [year, month, day] = reminder.date.split('-');
-    const start = `${year}${month}${day}`;
-    const nextDate = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day) + 1));
-    const end = `${nextDate.getUTCFullYear()}${String(nextDate.getUTCMonth() + 1).padStart(2, '0')}${String(nextDate.getUTCDate()).padStart(2, '0')}`;
+    const { start, end } = birthdayDates(reminder.date);
     return [
       'BEGIN:VEVENT',
       `UID:${reminder.id}@southview-calendar`,
@@ -69,9 +66,25 @@ function makeIcsCalendar(name: string, reminders: { title: string; date: string;
   ].map(foldIcsLine).join('\r\n');
 }
 
-function historyHref(event: CalendarEvent) {
-  if (event.articleSlug) return `/events/${event.articleSlug}`;
-  return null;
+function linkedParagraph(text: string, key: string) {
+  const links = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)|(https?:\/\/[^\s<>]+)/g;
+  const result: ReactNode[] = [];
+  let cursor = 0;
+  let match: RegExpExecArray | null;
+  let index = 0;
+  while ((match = links.exec(text))) {
+    result.push(text.slice(cursor, match.index));
+    if (match[2]) result.push(<a key={`${key}-${index++}`} href={match[2]} target="_blank" rel="noreferrer">{match[1]}</a>);
+    else {
+      const raw = match[3];
+      const url = raw.replace(/[.,;:!?)]*$/, '');
+      const punctuation = raw.slice(url.length);
+      result.push(<span key={`${key}-${index++}`}><a href={url} target="_blank" rel="noreferrer">{url}</a>{punctuation}</span>);
+    }
+    cursor = links.lastIndex;
+  }
+  result.push(text.slice(cursor));
+  return result;
 }
 
 export default function Home() {
@@ -83,25 +96,11 @@ export default function Home() {
   const [showReminderBuilder, setShowReminderBuilder] = useState(false);
   const [lookupName, setLookupName] = useState('');
   const [matches, setMatches] = useState<MemorialMatch[]>([]);
-  const [reminderSelections, setReminderSelections] = useState<Record<string, boolean>>({});
+  const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
   const [lookupError, setLookupError] = useState('');
   const [lookupLoading, setLookupLoading] = useState(false);
   const [matchType, setMatchType] = useState<MemorialSearchType>('name');
   const [fuzzyMatches, setFuzzyMatches] = useState(false);
-  const [googleReady, setGoogleReady] = useState(false);
-  const [googleLoadError, setGoogleLoadError] = useState('');
-  const [googleAdding, setGoogleAdding] = useState(false);
-  const [googleMessage, setGoogleMessage] = useState('');
-  const [googleProgress, setGoogleProgress] = useState('');
-  const [googleCalendarUrl, setGoogleCalendarUrl] = useState('');
-  useEffect(() => {
-    if (!showReminderBuilder) return;
-    let active = true;
-    loadGoogleCalendar().then(() => { if (active) { setGoogleReady(true); setGoogleLoadError(''); } }).catch((error: unknown) => {
-      if (active) setGoogleLoadError(error instanceof Error ? error.message : 'Google sign-in could not load. Please reload.');
-    });
-    return () => { active = false; };
-  }, [showReminderBuilder]);
   useEffect(() => {
     const controller = new AbortController();
     fetch(`/api/calendar?year=${date.year}&month=${date.month + 1}`, { signal: controller.signal })
@@ -117,6 +116,15 @@ export default function Home() {
       });
     return () => controller.abort();
   }, [date]);
+
+  useEffect(() => {
+    if (!selectedEvent) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setSelectedEvent(null);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [selectedEvent]);
 
   const events = calendarEventsForMonth(date.year,date.month+1,live,calendarArticles);
   const offset = new Date(date.year, date.month, 1).getDay();
@@ -140,9 +148,7 @@ export default function Home() {
   async function searchMemorial() {
     setLookupError('');
     setMatches([]);
-    setReminderSelections({});
-    setGoogleMessage('');
-    setGoogleCalendarUrl('');
+    setSelectedPersonId(null);
     setLookupLoading(true);
     try {
       const response = await fetch(`/api/memorials?name=${encodeURIComponent(lookupName)}`, { cache: 'no-store' });
@@ -152,7 +158,7 @@ export default function Home() {
       setMatches(found);
       setMatchType(data.matchType || 'name');
       setFuzzyMatches(Boolean(data.fuzzy));
-      setReminderSelections(Object.fromEntries(found.map((match) => [match.id, false])));
+
       if (!found.length) setLookupError('No close matches were found. Try a longer name or a different spelling.');
     } catch (error) {
       setLookupError(error instanceof Error ? error.message : 'Search could not be completed.');
@@ -161,79 +167,35 @@ export default function Home() {
     }
   }
 
-  function selectAllReminders(selected: boolean) {
-    setReminderSelections(Object.fromEntries(matches.map((match) => [match.id, selected && Boolean(match.birthDate)])));
-  }
-
-  const selectedReminderCount = matches.filter((match) => reminderSelections[match.id] && match.birthDate).length;
-
-  function selectedBirthdays(): BirthdayReminder[] {
-    return matches.flatMap((match) => {
-      if (!reminderSelections[match.id] || !match.birthDate) return [];
-      return [{ title: `Birthday: ${match.name}`, date: match.birthDate, id: `${match.id}-birth` }];
-    });
-  }
-
-  async function addToGoogleCalendar() {
-    const reminders = selectedBirthdays();
-    if (!reminders.length || googleAdding || !googleReady) return;
-    setGoogleAdding(true);
-    setGoogleMessage('');
-    setGoogleCalendarUrl('');
-    setGoogleProgress('Sign in to Google…');
-    try {
-      const token = await authorizeGoogleCalendar();
-      setGoogleProgress(`Adding 0 of ${reminders.length}…`);
-      const result = await addGoogleBirthdays(token, reminders, ({ added, existing, total }) => {
-        setGoogleProgress(`Adding ${added + existing} of ${total}…`);
-      });
-      const added = `${result.added} birthday${result.added === 1 ? '' : 's'} added`;
-      const existing = result.existing ? `; ${result.existing} already in your calendar` : '';
-      setGoogleMessage(`${added}${existing}. Yearly reminders are in your South-View birthdays calendar.`);
-      setGoogleCalendarUrl(result.calendarUrl);
-    } catch (error) {
-      setGoogleMessage(error instanceof Error ? error.message : 'Could not add birthdays. Please try again.');
-    } finally {
-      setGoogleAdding(false);
-      setGoogleProgress('');
-    }
-  }
+  const selectedPerson = matches.find((match) => match.id === selectedPersonId && match.birthDate);
+  const selectedBirthday = selectedPerson?.birthDate
+    ? { title: `Birthday: ${selectedPerson.name}`, date: selectedPerson.birthDate, id: `${selectedPerson.id}-birth` }
+    : null;
 
   function downloadReminders() {
-    const reminders = selectedBirthdays();
-    if (!reminders.length) return;
-    const searchLabel = lookupName.trim();
-    const blob = new Blob([makeIcsCalendar(`${searchLabel} — South-View Reminders`, reminders)], { type: 'text/calendar;charset=utf-8' });
+    if (!selectedBirthday || !selectedPerson) return;
+    const blob = new Blob([makeIcsCalendar(`${selectedPerson.name} — South-View Birthday`, [selectedBirthday])], { type: 'text/calendar;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `south-view-reminders-${searchLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}.ics`;
+    link.download = `south-view-birthday-${selectedPerson.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}.ics`;
     link.click();
     URL.revokeObjectURL(url);
   }
 
-  function renderReminderActions(announce = false) {
+  function renderReminderActions() {
     return <div className="reminder-export-section">
-      <div className="reminder-export-actions" aria-label="Export selected birthdays">
-        <button type="button" className="download-reminders" onClick={downloadReminders} disabled={!selectedReminderCount || googleAdding}>Download {selectedReminderCount} selected birthday{selectedReminderCount === 1 ? '' : 's'} (.ics)</button>
-        <button type="button" className="google-reminders" onClick={addToGoogleCalendar} disabled={!selectedReminderCount || googleAdding || !googleReady}>{googleAdding ? googleProgress : 'Add to Google Calendar'}</button>
+      <div className="reminder-export-actions" aria-label="Export selected birthday">
+        <button type="button" className="download-reminders" onClick={downloadReminders} disabled={!selectedBirthday}>Download birthday (.ics)</button>
+        {selectedBirthday
+          ? <a className="google-reminders" href={googleBirthdayLink(selectedBirthday)} target="_blank" rel="noopener noreferrer">Add to Google Calendar ↗</a>
+          : <button type="button" className="google-reminders" disabled>Add to Google Calendar ↗</button>}
       </div>
-      {(googleProgress || googleMessage || googleLoadError) && <p className="reminder-export-status" role={announce ? 'status' : undefined}>
-        {googleAdding ? googleProgress : googleMessage || googleLoadError}{!googleAdding && googleCalendarUrl && <> <a href={googleCalendarUrl} target="_blank" rel="noreferrer">Open Google Calendar ↗</a></>}
-      </p>}
+      {selectedPerson && <p className="reminder-export-status">Birthday for {selectedPerson.name}</p>}
     </div>;
   }
 
   function renderEvent(event: CalendarEvent) {
-    const href = historyHref(event);
-    if (href) {
-      return (
-        <a className="calendar-event history-event" href={href} key={event.id}>
-          <span className="event-dot" aria-hidden="true" />
-          <span>{event.title}</span>
-        </a>
-      );
-    }
     return (
       <button className={`calendar-event ${event.kind === 'tour' ? 'tour-event' : 'history-event'}`} key={event.id} onClick={() => setSelectedEvent(event)}>
         <span className="event-dot" aria-hidden="true" />
@@ -281,17 +243,27 @@ export default function Home() {
       </section>
 
       {selectedEvent && (
-        <dialog open className="tour-dialog" onClick={(event) => {
+        <div className="event-modal-backdrop" role="presentation" onClick={(event) => {
           if (event.target === event.currentTarget) setSelectedEvent(null);
         }}>
-          <button className="dialog-close" aria-label="Close" onClick={() => setSelectedEvent(null)}>×</button>
-          <p className="tour-label">{selectedEvent.kind === 'tour' ? 'Calendar event' : selectedEvent.sourceLabel || 'South-View history'}</p>
-          <h2>{selectedEvent.title}</h2>
-          <p className="event-description">{selectedEvent.description}</p>
-          {selectedEvent.dateNote && <p>{selectedEvent.dateNote}</p>}
-          {selectedEvent.source?.startsWith('http') && <p><a href={selectedEvent.source} target="_blank" rel="noreferrer">Source ↗</a></p>}
-          {selectedEvent.kind === 'tour' && <p>{selectedEvent.time || 'All day'} · {formatDate(selectedEvent.date)}</p>}
-        </dialog>
+          <section className="event-modal" role="dialog" aria-modal="true" aria-labelledby="selected-event-title">
+            <button className="dialog-close" aria-label="Close" onClick={() => setSelectedEvent(null)}>×</button>
+            <p className="tour-label">{selectedEvent.kind === 'tour' ? 'Current event' : 'Historical event'}</p>
+            <h2 id="selected-event-title">{selectedEvent.title}</h2>
+            {selectedEvent.image && <figure className="modal-image">
+              <img src={selectedEvent.image} alt={selectedEvent.title} />
+              {selectedEvent.imageSource && <figcaption>Image source: <a href={selectedEvent.imageSource} target="_blank" rel="noreferrer">view source ↗</a></figcaption>}
+            </figure>}
+            <div className="modal-copy">
+              {(selectedEvent.description || '').split(/\n\s*\n|\n/).map((paragraph, index) => paragraph.trim() && <p key={index}>{linkedParagraph(paragraph.trim(), `event-${index}`)}</p>)}
+            </div>
+            {selectedEvent.sources?.length ? <ul className="modal-sources">{selectedEvent.sources.map((source, index) => <li key={`${source.url || source.label}-${index}`}>
+              {source.url ? <a href={source.url} target="_blank" rel="noreferrer">{source.label || source.url} ↗</a> : `${source.label}: ${source.note || ''}`}
+            </li>)}</ul> : null}
+            <p className="event-modal-date">{selectedEvent.time ? `${selectedEvent.time} · ` : ''}{formatDate(selectedEvent.kind === 'history' ? selectedEvent.historicalDate || selectedEvent.date : selectedEvent.date)}</p>
+            {selectedEvent.location && <p className="event-modal-location">{selectedEvent.location}</p>}
+          </section>
+        </div>
       )}
 
       {showReminderBuilder && (
@@ -301,12 +273,12 @@ export default function Home() {
           <button className="dialog-close" aria-label="Close" onClick={() => setShowReminderBuilder(false)}>×</button>
           <p className="tour-label">South-View reminders</p>
           <h2 id="reminder-title">Remember someone</h2>
-            <p className="reminder-intro">Search a last name to gather a family group, or enter a full name to find one person. Partial names and small spelling differences are matched by closeness. Select people to add their birthdays to Google Calendar or download a calendar file.</p>
+            <p className="reminder-intro">Search a name, then select one person to add their birthday to Google Calendar or download a calendar file. Partial names and small spelling differences are matched by closeness.</p>
           <form className="reminder-search" onSubmit={(event) => { event.preventDefault(); void searchMemorial(); }}>
             <label htmlFor="memorial-name">Last name or full name</label>
             <div className="reminder-search-row">
-                <input id="memorial-name" value={lookupName} onChange={(event) => setLookupName(event.target.value)} autoComplete="off" required minLength={3} maxLength={100} disabled={googleAdding} />
-              <button type="submit" disabled={lookupLoading || googleAdding}>{lookupLoading ? 'Searching…' : 'Search'}</button>
+                <input id="memorial-name" value={lookupName} onChange={(event) => setLookupName(event.target.value)} autoComplete="off" required minLength={3} maxLength={100} />
+              <button type="submit" disabled={lookupLoading}>{lookupLoading ? 'Searching…' : 'Search'}</button>
             </div>
           </form>
           {lookupError && <p className="reminder-message" role="status">{lookupError}</p>}
@@ -314,27 +286,23 @@ export default function Home() {
             <div className="reminder-results" aria-label="Matching cemetery records">
               <div className="reminder-results-heading">
                 <p className="reminder-message">{fuzzyMatches ? `Closest ${matchType === 'surname' ? 'last-name' : 'name'} matches for “${lookupName.trim()}” · ${matches.length} records` : matchType === 'surname' ? `${matches.length} people with last name ${lookupName.trim()}.` : `${matches.length} matching record${matches.length === 1 ? '' : 's'}.`}</p>
-                <div className="reminder-bulk-actions">
-                  <button type="button" onClick={() => selectAllReminders(true)} disabled={googleAdding}>Add all</button>
-                  <button type="button" onClick={() => selectAllReminders(false)} disabled={googleAdding}>Clear</button>
-                </div>
               </div>
-              {renderReminderActions(true)}
-              {matches.length > 1 && <p className="reminder-message">{fuzzyMatches ? 'Results are ranked by name similarity; review them before using Add all.' : 'Select a person by clicking anywhere on their card, or use Add all to select everyone with a recorded birth date.'}</p>}
+              {renderReminderActions()}
+              {matches.length > 1 && <p className="reminder-message">Select one person by clicking their card. Selecting another person replaces your selection.</p>}
               {matches.map((match) => (
                 <button
-                  className={`reminder-match${reminderSelections[match.id] ? ' selected' : ''}`}
+                  className={`reminder-match${selectedPersonId === match.id ? ' selected' : ''}`}
                   key={match.id}
                   type="button"
-                  aria-pressed={Boolean(reminderSelections[match.id])}
-                  disabled={!match.birthDate || googleAdding}
-                  onClick={() => setReminderSelections((current) => ({ ...current, [match.id]: !current[match.id] }))}
+                  aria-pressed={selectedPersonId === match.id}
+                  disabled={!match.birthDate}
+                  onClick={() => setSelectedPersonId(match.id)}
                 >
                   <strong>{match.name}</strong>
                   <span>{match.birthDate ? `Birthday · ${formatDate(match.birthDate)}` : 'Birth date not recorded'}</span>
                 </button>
               ))}
-              <p className="reminder-footnote">Birthdays repeat yearly with a reminder the day before. Google Calendar asks you to sign in and approve access; it is currently available to approved demo accounts. You can also download the calendar file for other apps.</p>
+              <p className="reminder-footnote">Google Calendar opens a prefilled yearly birthday; review it and click Save. Check its notification settings before saving. The ICS file includes yearly repetition and a reminder the day before.</p>
               {renderReminderActions()}
             </div>
           )}

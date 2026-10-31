@@ -69,6 +69,19 @@ a:focus-visible, button:focus-visible { outline: 2px solid #275b42; outline-offs
 .timeline-event-card strong { font-size: 13px; font-weight: 500; line-height: 1.45; }
 .timeline-event-card > span { justify-self: end; color: var(--green); font-size: 13px; }
 
+.event-modal-backdrop { position: fixed; z-index: 50; inset: 0; display: grid; place-items: center; padding: 18px; background: #20252255; }
+.event-modal { position: relative; width: min(620px, 100%); max-height: min(86vh, 780px); overflow-y: auto; padding: 28px; border: 1px solid var(--line); border-radius: 8px; background: #fff; box-shadow: 0 12px 48px #0002; }
+.event-modal h2 { margin: 0 32px 16px 0; font-size: 22px; font-weight: 500; line-height: 1.3; }
+.event-modal .dialog-close { position: absolute; top: 8px; right: 12px; }
+.modal-image { margin: 0 0 18px; }
+.modal-image img { display: block; width: 100%; max-height: 360px; object-fit: contain; background: #f7f8f6; }
+.modal-image figcaption { padding-top: 7px; color: var(--muted); font-size: 10px; }
+.modal-image a, .modal-copy a { text-decoration: underline; text-underline-offset: 2px; }
+.modal-copy { display: grid; gap: 12px; }
+.modal-copy p { margin: 0; color: #515853; font-family: Georgia, serif; font-size: 16px; line-height: 1.65; overflow-wrap: anywhere; }
+.modal-sources { display: grid; gap: 5px; margin: 12px 0 0; padding-left: 18px; color: var(--muted); font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; }
+.modal-sources a { text-decoration: underline; text-underline-offset: 2px; }
+.event-modal-date, .event-modal-location { margin: 18px 0 0; color: var(--muted); font-size: 12px; }
 .tour-dialog { position: fixed; inset: 50% auto auto 50%; width: min(420px, calc(100% - 32px)); transform: translate(-50%, -50%); margin: 0; padding: 28px; border: 1px solid var(--line); border-radius: 8px; background: #fff; box-shadow: 0 12px 48px #0002; }
 .tour-dialog::backdrop { background: #20252255; }
 .dialog-close { position: absolute; top: 8px; right: 12px; border: 0; background: transparent; color: var(--muted); font-size: 24px; }
@@ -105,8 +118,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid #275b42; outline-offs
 .reminder-footnote { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
 .download-reminders { justify-self: start; }
 .reminder-export-actions { display: flex; flex-wrap: wrap; gap: 8px; }
-.reminder-export-actions button { flex: 1 1 180px; padding: 8px 12px; }
-.google-reminders { min-height: 38px; border: 1px solid #356b50; border-radius: 4px; background: #fff; color: #214e35; font-size: 12px; }
+.reminder-export-actions button, .reminder-export-actions a { flex: 1 1 180px; padding: 8px 12px; }
+.google-reminders { display: flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; min-height: 38px; border: 1px solid #356b50; border-radius: 4px; background: #fff; color: #214e35; font-size: 12px; }
 .google-reminders:hover { background: var(--green-pale); }
 .google-reminders:disabled { cursor: not-allowed; opacity: .5; }
 .reminder-export-status { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
@@ -146,6 +159,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid #275b42; outline-offs
   .month-buttons button { min-width: 32px; height: 32px; padding: 0 8px; }
   .month-buttons .reminder-button { font-size: 10px; }
   .reminder-dialog { padding: 22px 18px; }
+  .event-modal { max-height: 90vh; padding: 24px 19px; }
+  .modal-copy p { font-size: 15px; }
   .reminder-results-heading { align-items: flex-start; flex-direction: column; }
   .weekday { min-height: 31px; padding: 9px 2px; font-size: 10px; }
   .calendar-day { min-height: 84px; padding: 4px 2px; }

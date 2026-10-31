@@ -24,7 +24,7 @@ export const stories: Story[] = [
  ],image:'',alt:'',credit:'',imageSource:'',source:'https://snccdigital.org/people/ruby-doris-smith-robinson/',sourceLabel:'SNCC Digital Gateway',book:'City of the Dead, p. 238'}
 ];
 export const demoTour = {id:'demo-tour',title:'South-View walking tour',date:'2026-10-24',time:'10:00–11:30 a.m. ET',description:'An imagined guided walk through South-View’s history, with stops exploring the cemetery’s origins and its connections to the civil rights movement. Meet at the main entrance, 1990 Jonesboro Road SE, Atlanta. This is a fictional event for demonstration; no tour is scheduled.'};
-export type CalendarEvent = {id:string; title:string; date:string; endDate?:string; time?:string; description?:string; url?:string; storySlug?:string; articleSlug?:string; source?:string; sourceLabel?:string; dateNote?:string; kind:'history'|'tour'};
+export type CalendarEvent = {id:string; title:string; date:string; historicalDate?:string; endDate?:string; time?:string; location?:string; description?:string; image?:string; imageSource?:string; sources?:SourceRef[]; url?:string; storySlug?:string; articleSlug?:string; source?:string; sourceLabel?:string; dateNote?:string; kind:'history'|'tour'};
 
 function imageCaption(image: { creator?: string; rights?: string }) {
   return `${image.creator || 'Creator not identified'}. ${image.rights || 'Rights status unavailable.'}`;
