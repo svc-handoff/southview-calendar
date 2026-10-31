@@ -1,18 +1,11 @@
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-type PersonRow = {
-  DateOfBirth: string;
-  DateOfDeath: string;
-  FirstName: string;
-  LastName: string;
-  MiddleName: string;
-};
-
-// Local-only sanitized data is generated under .local-data (git-ignored).
-// The lookup data is imported into this server route and never sent wholesale to the browser.
-const dataFiles = import.meta.glob('../../../.local-data/*.json', { eager: true, import: 'default' }) as Record<string, PersonRow[]>;
-const localRows = Object.values(dataFiles)[0] || [];
+// Public calendar dedicated to the Remember Someone search. Keep entries simple:
+// the event title is the person's name, DTSTART is their death anniversary,
+// and the event repeats yearly. No description is needed.
+const rememberSomeoneCalendarId = '03519069ae99223ac389a67ed584f1f22752a602f6f9b8cb830b60a97576311b@group.calendar.google.com';
+type Memorial = { id: string; name: string; deathDate: string };
 
 function normalized(value: string) {
   return value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
@@ -25,11 +18,7 @@ function editDistance(left: string, right: string) {
     previous[0] = row;
     for (let column = 1; column <= right.length; column++) {
       const above = previous[column];
-      previous[column] = Math.min(
-        previous[column] + 1,
-        previous[column - 1] + 1,
-        diagonal + Number(left[row - 1] !== right[column - 1]),
-      );
+      previous[column] = Math.min(previous[column] + 1, previous[column - 1] + 1, diagonal + Number(left[row - 1] !== right[column - 1]));
       diagonal = above;
     }
   }
@@ -38,9 +27,7 @@ function editDistance(left: string, right: string) {
 
 function wordScore(query: string, candidate: string) {
   if (query === candidate) return 1;
-  if (query.length < 3 || candidate.length < 3) {
-    return candidate.startsWith(query) || query.startsWith(candidate) ? 0.88 : 0;
-  }
+  if (query.length < 3 || candidate.length < 3) return candidate.startsWith(query) || query.startsWith(candidate) ? 0.88 : 0;
   if (candidate.startsWith(query) || query.startsWith(candidate)) return 0.91 + 0.08 * Math.min(query.length, candidate.length) / Math.max(query.length, candidate.length);
   if (candidate.includes(query) || query.includes(candidate)) return 0.85;
   return 1 - editDistance(query, candidate) / Math.max(query.length, candidate.length);
@@ -54,17 +41,44 @@ function fuzzyNameScore(query: string, candidateWords: string[]) {
   return scores.reduce((total, score) => total + score, 0) / scores.length;
 }
 
-function parseDate(value: string, minYear: number, maxYear: number) {
-  const normalizedValue = value.trim();
-  const isoMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(normalizedValue);
-  const usMatch = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(normalizedValue);
-  if (!isoMatch && !usMatch) return null;
-  const year = Number(isoMatch ? isoMatch[1] : usMatch?.[3]);
-  const month = Number(isoMatch ? isoMatch[2] : usMatch?.[1]);
-  const day = Number(isoMatch ? isoMatch[3] : usMatch?.[2]);
-  const date = new Date(Date.UTC(year, month - 1, day));
-  if (year < minYear || year > maxYear || date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) return null;
-  return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+function unescapeIcs(value: string) {
+  return value.replace(/\\([nN,;\\])/g, (_, character: string) => /[nN]/.test(character) ? ' ' : character).trim();
+}
+
+function parseRememberSomeoneEvents(ics: string): Memorial[] {
+  const lines = ics.replace(/\r?\n[ \t]/g, '').split(/\r?\n/);
+  const events: Record<string, string>[] = [];
+  let event: Record<string, string> | undefined;
+  for (const line of lines) {
+    if (line === 'BEGIN:VEVENT') { event = {}; continue; }
+    if (line === 'END:VEVENT') { if (event) events.push(event); event = undefined; continue; }
+    if (!event) continue;
+    const colon = line.indexOf(':');
+    if (colon < 0) continue;
+    const property = line.slice(0, colon).split(';', 1)[0];
+    event[property] = line.slice(colon + 1);
+  }
+
+  const unique = new Map<string, Memorial>();
+  for (const item of events) {
+    const rawDate = item.DTSTART || '';
+    const name = unescapeIcs(item.SUMMARY || '');
+    // This calendar is an index of all-day yearly death anniversaries.
+    if (!/^\d{8}$/.test(rawDate) || !item.RRULE?.includes('FREQ=YEARLY') || !name) continue;
+    const date = `${rawDate.slice(0, 4)}-${rawDate.slice(4, 6)}-${rawDate.slice(6, 8)}`;
+    const key = `${normalized(name)}-${date.slice(5)}`;
+    unique.set(key, { id: key, name, deathDate: date });
+  }
+  return [...unique.values()];
+}
+
+async function getCalendarMemorials(): Promise<Memorial[]> {
+  const url = `https://calendar.google.com/calendar/ical/${encodeURIComponent(rememberSomeoneCalendarId)}/public/basic.ics`;
+  const response = await fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(12000), headers: { Accept: 'text/calendar', 'Cache-Control': 'no-cache' } });
+  if (!response.ok) throw new Error('Remember Someone calendar is unavailable.');
+  const ics = await response.text();
+  if (!ics.includes('BEGIN:VCALENDAR')) throw new Error('Remember Someone calendar feed is invalid.');
+  return parseRememberSomeoneEvents(ics);
 }
 
 export async function GET(request: Request) {
@@ -72,42 +86,24 @@ export async function GET(request: Request) {
   const query = (searchParams.get('name') || '').trim();
   if (query.length < 3 || query.length > 100) return Response.json({ matches: [], error: 'Enter at least 3 characters.' }, { status: 400 });
 
-  const queryKey = normalized(query);
-  const surnameSearch = !queryKey.includes(' ');
-  const currentYear = new Date().getFullYear();
-  if (!localRows.length) return Response.json({ matches: [], error: 'The local reminder dataset has not been prepared.' }, { status: 503 });
-
   try {
-    const unique = new Map<string, { id: string; name: string; birthDate: string | null; deathDate: string; score: number; exact: boolean }>();
-    for (const row of localRows) {
-      const firstName = row.FirstName.trim();
-      const lastName = row.LastName.trim();
-      const middleName = row.MiddleName.trim();
-      const displayName = [firstName, middleName, lastName].filter(Boolean).join(' ');
-      const firstNameCore = firstName.replace(/\s+[A-Z]\.?(?=\s|$)/g, '').trim();
-      const keys = new Set([
-        normalized(displayName),
-        normalized([firstName, lastName].filter(Boolean).join(' ')),
-        normalized([firstNameCore, lastName].filter(Boolean).join(' ')),
-      ]);
-      const surnameKey = normalized(lastName);
-      const exact = surnameSearch ? surnameKey === queryKey : keys.has(queryKey);
-      const candidateWords = normalized([firstName, middleName, lastName].filter(Boolean).join(' ')).split(' ');
-      const score = exact ? 1 : surnameSearch ? wordScore(queryKey, surnameKey) : fuzzyNameScore(queryKey, candidateWords);
-      if (!exact && (surnameSearch ? score < 0.70 : score < 0.74)) continue;
-      const deathDate = parseDate(row.DateOfDeath, 1800, currentYear);
-      if (!deathDate) continue;
-      const birthDate = parseDate(row.DateOfBirth, 1700, currentYear);
-      const id = `${normalized(displayName)}-${birthDate || 'unknown'}-${deathDate}`;
-      unique.set(id, { id, name: displayName, birthDate, deathDate, score, exact });
-    }
-    const allMatches = [...unique.values()];
-    const exactMatches = allMatches.filter((match) => match.exact);
-    const matches = (exactMatches.length ? exactMatches : allMatches)
+    const queryKey = normalized(query);
+    const surnameSearch = !queryKey.includes(' ');
+    const memorials = await getCalendarMemorials();
+    const matches = memorials.flatMap((memorial) => {
+      const nameKey = normalized(memorial.name);
+      const words = nameKey.split(' ');
+      const exact = surnameSearch ? words.at(-1) === queryKey : nameKey === queryKey;
+      const score = exact ? 1 : surnameSearch ? wordScore(queryKey, words.at(-1) || '') : fuzzyNameScore(queryKey, words);
+      if (!exact && score < (surnameSearch ? 0.70 : 0.74)) return [];
+      return [{ ...memorial, score, exact }];
+    });
+    const exactMatches = matches.filter((match) => match.exact);
+    const results = (exactMatches.length ? exactMatches : matches)
       .sort((left, right) => right.score - left.score || normalized(right.name).length - normalized(left.name).length || left.name.localeCompare(right.name))
-      .map((match) => ({ id: match.id, name: match.name, birthDate: match.birthDate, deathDate: match.deathDate }));
-    return Response.json({ matches, matchType: surnameSearch ? 'surname' : 'name', fuzzy: !exactMatches.length && matches.length > 0, query }, { headers: { 'Cache-Control': 'no-store' } });
+      .map(({ score: _score, exact: _exact, ...match }) => match);
+    return Response.json({ matches: results, matchType: surnameSearch ? 'surname' : 'name', fuzzy: !exactMatches.length && results.length > 0, query }, { headers: { 'Cache-Control': 'no-store' } });
   } catch {
-    return Response.json({ matches: [], error: 'The cemetery records are unavailable right now.' }, { status: 500 });
+    return Response.json({ matches: [], error: 'The Remember Someone calendar is unavailable right now.' }, { status: 503 });
   }
 }

@@ -2,14 +2,14 @@
 
 import { useEffect, useState, type ReactNode } from 'react';
 import { calendarEventsForMonth, type CalendarEvent, type HistoricalArticle } from '@/lib/events';
-import { birthdayDates, googleBirthdayLink } from '@/lib/google-reminders';
+import { memorialDates, googleMemorialLink } from '@/lib/google-reminders';
 
 const months = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
-type MemorialMatch = { id: string; name: string; birthDate: string | null; deathDate: string };
+type MemorialMatch = { id: string; name: string; deathDate: string };
 type MemorialSearchType = 'surname' | 'name';
 function formatDate(date: string) {
   const [year, month, day] = date.split('-').map(Number);
@@ -36,7 +36,7 @@ function foldIcsLine(line: string) {
 
 function makeIcsCalendar(name: string, reminders: { title: string; date: string; id: string }[]) {
   const events = reminders.map((reminder) => {
-    const { start, end } = birthdayDates(reminder.date);
+    const { start, end } = memorialDates(reminder.date);
     return [
       'BEGIN:VEVENT',
       `UID:${reminder.id}@southview-calendar`,
@@ -45,10 +45,9 @@ function makeIcsCalendar(name: string, reminders: { title: string; date: string;
       `DTEND;VALUE=DATE:${end}`,
       'RRULE:FREQ=YEARLY',
       `SUMMARY:${icsEscape(reminder.title)}`,
-      'DESCRIPTION:Birth date anniversary from South-View cemetery records. Check family records for date accuracy.',
       'BEGIN:VALARM',
       'ACTION:DISPLAY',
-      'DESCRIPTION:Birthday reminder for tomorrow',
+      'DESCRIPTION:Remember this person tomorrow',
       'TRIGGER:-P1D',
       'END:VALARM',
       'END:VEVENT',
@@ -164,31 +163,31 @@ export default function Home() {
     }
   }
 
-  const selectedPerson = matches.find((match) => match.id === selectedPersonId && match.birthDate);
-  const selectedBirthday = selectedPerson?.birthDate
-    ? { title: `Birthday: ${selectedPerson.name}`, date: selectedPerson.birthDate, id: `${selectedPerson.id}-birth` }
+  const selectedPerson = matches.find((match) => match.id === selectedPersonId);
+  const selectedAnniversary = selectedPerson
+    ? { title: selectedPerson.name, date: selectedPerson.deathDate, id: `${selectedPerson.id}-death` }
     : null;
 
   function downloadReminders() {
-    if (!selectedBirthday || !selectedPerson) return;
-    const blob = new Blob([makeIcsCalendar(`${selectedPerson.name} — South-View Birthday`, [selectedBirthday])], { type: 'text/calendar;charset=utf-8' });
+    if (!selectedAnniversary || !selectedPerson) return;
+    const blob = new Blob([makeIcsCalendar('South-View Remember Someone', [selectedAnniversary])], { type: 'text/calendar;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `south-view-birthday-${selectedPerson.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}.ics`;
+    link.download = `south-view-remember-${selectedPerson.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}.ics`;
     link.click();
     URL.revokeObjectURL(url);
   }
 
   function renderReminderActions() {
     return <div className="reminder-export-section">
-      <div className="reminder-export-actions" aria-label="Export selected birthday">
-        <button type="button" className="download-reminders" onClick={downloadReminders} disabled={!selectedBirthday}>Download birthday (.ics)</button>
-        {selectedBirthday
-          ? <a className="google-reminders" href={googleBirthdayLink(selectedBirthday)} target="_blank" rel="noopener noreferrer">Add to Google Calendar ↗</a>
+      <div className="reminder-export-actions" aria-label="Export selected memorial reminder">
+        <button type="button" className="download-reminders" onClick={downloadReminders} disabled={!selectedAnniversary}>Download reminder (.ics)</button>
+        {selectedAnniversary
+          ? <a className="google-reminders" href={googleMemorialLink(selectedAnniversary)} target="_blank" rel="noopener noreferrer">Add to Google Calendar ↗</a>
           : <button type="button" className="google-reminders" disabled>Add to Google Calendar ↗</button>}
       </div>
-      {selectedPerson && <p className="reminder-export-status">Birthday for {selectedPerson.name}</p>}
+      {selectedPerson && <p className="reminder-export-status">Death anniversary for {selectedPerson.name}</p>}
     </div>;
   }
 
@@ -267,7 +266,7 @@ export default function Home() {
           <button className="dialog-close" aria-label="Close" onClick={() => setShowReminderBuilder(false)}>×</button>
           <p className="tour-label">South-View reminders</p>
           <h2 id="reminder-title">Remember someone</h2>
-            <p className="reminder-intro">Search a name, then select one person to add their birthday to Google Calendar or download a calendar file. Partial names and small spelling differences are matched by closeness.</p>
+            <p className="reminder-intro">Search a name, then select a person to add their death anniversary to Google Calendar or download a calendar file. Partial names and small spelling differences are matched by closeness.</p>
           <form className="reminder-search" onSubmit={(event) => { event.preventDefault(); void searchMemorial(); }}>
             <label htmlFor="memorial-name">Last name or full name</label>
             <div className="reminder-search-row">
@@ -289,14 +288,13 @@ export default function Home() {
                   key={match.id}
                   type="button"
                   aria-pressed={selectedPersonId === match.id}
-                  disabled={!match.birthDate}
                   onClick={() => setSelectedPersonId(match.id)}
                 >
                   <strong>{match.name}</strong>
-                  <span>{match.birthDate ? `Birthday · ${formatDate(match.birthDate)}` : 'Birth date not recorded'}</span>
+                  <span>Death anniversary · {formatDate(match.deathDate)}</span>
                 </button>
               ))}
-              <p className="reminder-footnote">Google Calendar opens a prefilled yearly birthday; review it and click Save. Check its notification settings before saving. The ICS file includes yearly repetition and a reminder the day before.</p>
+              <p className="reminder-footnote">Google Calendar opens a prefilled yearly reminder; review it and click Save. The ICS file repeats every year and includes a reminder the day before.</p>
               {renderReminderActions()}
             </div>
           )}

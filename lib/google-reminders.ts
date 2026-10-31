@@ -1,10 +1,9 @@
-export type BirthdayReminder = { id: string; title: string; date: string };
+export type MemorialReminder = { id: string; title: string; date: string };
 
-// Both export formats start with the next birthday, including the next valid
-// leap year for February 29. End dates for all-day events are exclusive.
-export function birthdayDates(birthDate: string, now = new Date()) {
+// Pick the next occurrence of the death anniversary; all-day DTEND is exclusive.
+export function memorialDates(deathDate: string, now = new Date()) {
   const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit' }).format(now);
-  const [, month, day] = birthDate.split('-').map(Number);
+  const [, month, day] = deathDate.split('-').map(Number);
   const currentYear = Number(today.slice(0, 4));
   for (let year = currentYear; year <= currentYear + 8; year++) {
     const date = new Date(Date.UTC(year, month - 1, day));
@@ -14,17 +13,16 @@ export function birthdayDates(birthDate: string, now = new Date()) {
     date.setUTCDate(date.getUTCDate() + 1);
     return { start, end: date.toISOString().slice(0, 10).replaceAll('-', '') };
   }
-  throw new Error('Invalid birthday date.');
+  throw new Error('Invalid death date.');
 }
 
-export function googleBirthdayLink(reminder: BirthdayReminder, now = new Date()) {
-  const { start, end } = birthdayDates(reminder.date, now);
+export function googleMemorialLink(reminder: MemorialReminder, now = new Date()) {
+  const { start, end } = memorialDates(reminder.date, now);
   const params = new URLSearchParams({
     action: 'TEMPLATE',
     text: reminder.title,
     dates: `${start}/${end}`,
     recur: 'RRULE:FREQ=YEARLY',
-    details: `Birth date anniversary from South-View cemetery records. Birth date: ${reminder.date}. Check family records for date accuracy.`,
   });
   return `https://calendar.google.com/calendar/render?${params}`;
 }

@@ -17,6 +17,8 @@ Edits to Calendar appear on the site after reload and do not need a redeploy. Th
 
 `lib/google-calendar.ts` reads that public feed. The API and article pages use the same parsed records. Deduplication compares the permanent article identity, calendar date and time. Different milestones for the same person remain separate, including historical events from different years that share an anniversary day. The JSON files in `lib/` retain the researched migration source and standalone biographies; they do not add a second set of events to the website.
 
+The **South-View Remember Someone** calendar separately powers name search and reminder export. Add one all-day event per person, use only the person's name as the title, set the event to repeat annually on the death anniversary, and leave the description blank. The calendar's public iCal feed is used by the site; search ignores any description if one is added. Search matches event titles, and visitors can add a yearly death-anniversary reminder to Google Calendar or download an `.ics` file.
+
 The historical collection has 54 entries from the original 56. Only Harriet Graham’s nearby death/burial notices and Wade Hampton’s execution/burial notices are combined. Birthdays, later achievements, deaths, memorials and founding milestones on separate dates retain their own entries. The tour and other independently created Calendar entries are retained. Original Google Calendar snapshots from the migration are saved outside the source checkout in the task’s `work/` directory.
 
 ## Project structure
