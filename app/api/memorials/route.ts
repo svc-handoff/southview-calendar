@@ -66,7 +66,7 @@ function parseRememberSomeoneEvents(ics: string): Memorial[] {
     // This calendar is an index of all-day yearly death anniversaries.
     if (!/^\d{8}$/.test(rawDate) || !item.RRULE?.includes('FREQ=YEARLY') || !name) continue;
     const date = `${rawDate.slice(0, 4)}-${rawDate.slice(4, 6)}-${rawDate.slice(6, 8)}`;
-    const key = `${normalized(name)}-${date.slice(5)}`;
+    const key = `${normalized(name)}-${date}`;
     unique.set(key, { id: key, name, deathDate: date });
   }
   return [...unique.values()];
