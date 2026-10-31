@@ -66,21 +66,18 @@ function makeIcsCalendar(name: string, reminders: { title: string; date: string;
   ].map(foldIcsLine).join('\r\n');
 }
 
-function linkedParagraph(text: string, key: string) {
-  const links = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)|(https?:\/\/[^\s<>]+)/g;
+function linkifyPlainText(text: string, key: string) {
+  const links = /(https?:\/\/[^\s<>]+)/g;
   const result: ReactNode[] = [];
   let cursor = 0;
   let match: RegExpExecArray | null;
   let index = 0;
   while ((match = links.exec(text))) {
     result.push(text.slice(cursor, match.index));
-    if (match[2]) result.push(<a key={`${key}-${index++}`} href={match[2]} target="_blank" rel="noreferrer">{match[1]}</a>);
-    else {
-      const raw = match[3];
-      const url = raw.replace(/[.,;:!?)]*$/, '');
-      const punctuation = raw.slice(url.length);
-      result.push(<span key={`${key}-${index++}`}><a href={url} target="_blank" rel="noreferrer">{url}</a>{punctuation}</span>);
-    }
+    const raw = match[1];
+    const url = raw.replace(/[.,;:!?)]*$/, '');
+    const punctuation = raw.slice(url.length);
+    result.push(<span key={`${key}-${index++}`}><a href={url} target="_blank" rel="noreferrer">{url}</a>{punctuation}</span>);
     cursor = links.lastIndex;
   }
   result.push(text.slice(cursor));
@@ -255,11 +252,8 @@ export default function Home() {
               {selectedEvent.imageSource && <figcaption>Image source: <a href={selectedEvent.imageSource} target="_blank" rel="noreferrer">view source ↗</a></figcaption>}
             </figure>}
             <div className="modal-copy">
-              {(selectedEvent.description || '').split(/\n\s*\n|\n/).map((paragraph, index) => paragraph.trim() && <p key={index}>{linkedParagraph(paragraph.trim(), `event-${index}`)}</p>)}
+              {(selectedEvent.description || '').split(/\n\s*\n|\n/).map((paragraph, index) => paragraph.trim() && <p key={index}>{linkifyPlainText(paragraph.trim(), `event-${index}`)}</p>)}
             </div>
-            {selectedEvent.sources?.length ? <ul className="modal-sources">{selectedEvent.sources.map((source, index) => <li key={`${source.url || source.label}-${index}`}>
-              {source.url ? <a href={source.url} target="_blank" rel="noreferrer">{source.label || source.url} ↗</a> : `${source.label}: ${source.note || ''}`}
-            </li>)}</ul> : null}
             <p className="event-modal-date">{selectedEvent.time ? `${selectedEvent.time} · ` : ''}{formatDate(selectedEvent.kind === 'history' ? selectedEvent.historicalDate || selectedEvent.date : selectedEvent.date)}</p>
             {selectedEvent.location && <p className="event-modal-location">{selectedEvent.location}</p>}
           </section>

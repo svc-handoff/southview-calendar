@@ -42,11 +42,9 @@ function simpleArticle(description:string,title:string,historicalDate:string,slu
   if(resolved){imageSource=parts.shift()!;}
  }
  const image=imageFromSource(imageSource);
- const sources=Array.from(new Set(parts.join('\n').match(/https?:\/\/[^\s<>\])}]+/g)||[]))
-  .map(url=>({label:(()=>{try{return new URL(url).hostname.replace(/^www\./,'')}catch{return url}})(),url}));
  const paragraphs=parts;
- return {id:slug,slug,subjectId,title,date:historicalDate,description:paragraphs[0]||'',paragraphs,sources,
-  source:sources[0]?.url||'',sourceLabel:sources[0]?.label||'',legacySlugs:[],storyAliases:[],calendarAliases:[title],storySlug:undefined,
+ return {id:slug,slug,subjectId,title,date:historicalDate,description:paragraphs[0]||'',paragraphs,sources:[],
+  source:'',sourceLabel:'',legacySlugs:[],storyAliases:[],calendarAliases:[title],storySlug:undefined,
   dateNote:'',image,alt:title,imageCredit:imageSource?'Image source: Wikimedia Commons':'',imageSource};
 }
 
@@ -58,8 +56,9 @@ function readArticle(description:string,title:string):HistoricalArticle|undefine
   if(metadata.version!==1||typeof metadata.slug!=='string'||!/^[a-z0-9-]+$/.test(metadata.slug)||
     typeof metadata.subjectId!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(metadata.historicalDate))return undefined;
   const stringList=(value:unknown):string[]=>Array.isArray(value)?value.filter(item=>typeof item==='string'):[];
-  const sources=Array.isArray(metadata.sources)?metadata.sources.filter((source:{label?:unknown;url?:unknown})=>
-    typeof source.label==='string'&&(source.url===null||typeof source.url==='string'&&/^https?:\/\//.test(source.url))):[];
+  // Sources stay exactly as the writer placed them in the description. Do not
+  // extract or reformat the legacy metadata field into a separate source list.
+  const sources:HistoricalArticle['sources']=[];
   // Calendar's rich-text editor may collapse a blank line to one newline.
   const paragraphs=description.slice(0,match.index).trim().split(/\n+/).map(paragraph=>paragraph.trim()).filter(Boolean);
   let image='';
@@ -68,7 +67,7 @@ function readArticle(description:string,title:string):HistoricalArticle|undefine
    if(imageUrl.origin===siteOrigin&&imageUrl.pathname.startsWith('/images/'))image=imageUrl.pathname;
   }
   return {id:metadata.slug,slug:metadata.slug,subjectId:metadata.subjectId,title,date:metadata.historicalDate,
-   description:paragraphs[0]||'',paragraphs,sources,source:sources[0]?.url||'',sourceLabel:sources[0]?.label||'',
+   description:paragraphs[0]||'',paragraphs,sources,source:'',sourceLabel:'',
    legacySlugs:stringList(metadata.legacySlugs),storyAliases:stringList(metadata.storyAliases),
    calendarAliases:[title,...stringList(metadata.calendarAliases)],storySlug:typeof metadata.storySlug==='string'?metadata.storySlug:undefined,
    dateNote:typeof metadata.dateNote==='string'?metadata.dateNote:'',image,
@@ -108,6 +107,13 @@ function plainDescription(value:string) {
   .replace(/\n[ \t]*\n+/g,'\n\n').trim();
 }
 
+function removeGoogleMeetDetails(value:string){
+ return value
+  .replace(/(?:^|\n)\s*(?:Join with Google Meet|Join a video meeting|Video call link\s*:|Meeting ID\s*:|Join by phone|More phone numbers)[\s\S]*$/i,'')
+  .replace(/https?:\/\/meet\.google\.com\/[a-z0-9-]+(?:\?[^\s]*)?/gi,'')
+  .replace(/\n[ \t]*\n{2,}/g,'\n\n').trim();
+}
+
 export function parseCalendarFeed(ics:string, year:number){
  const lines=ics.replace(/\r?\n[ \t]/g,'').split(/\r?\n/);
  const calendarTimeZone=lines.find(line=>line.startsWith('X-WR-TIMEZONE:'))?.slice('X-WR-TIMEZONE:'.length)||displayTimeZone;
@@ -132,7 +138,7 @@ export function parseCalendarFeed(ics:string, year:number){
   if(!allDay&&!start)return [];
   const originalDate=start?dateFormatter.format(start):`${raw.slice(0,4)}-${raw.slice(4,6)}-${raw.slice(6,8)}`;
   const date=e.RRULE?.includes('FREQ=YEARLY')?`${year}-${originalDate.slice(5)}`:originalDate;
-  const rawDescription=plainDescription(e.DESCRIPTION||'');
+  const rawDescription=removeGoogleMeetDetails(plainDescription(e.DESCRIPTION||''));
   const title=unescapeIcs(e.SUMMARY||'Untitled event');
   const history=readArticle(rawDescription,title);
   const location=unescapeIcs(e.LOCATION||'').trim();
