@@ -1,6 +1,5 @@
-// Temporary demo presentation only. Original articles stay in Google Calendar
-// and the research/profile source files. Set false to show them again.
-export const demoArticleText = true;
+// Human-edited articles are now live in Google Calendar.
+export const demoArticleText = false;
 
 const placeholderParagraphs = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',

@@ -20,10 +20,6 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
         <h1>{article.title}</h1>
         {article.image && <figure>
           <img src={article.image} alt={article.alt} />
-          <figcaption>
-            {article.imageSource && <>Image record: <a href={article.imageSource} target="_blank" rel="noreferrer">view source ↗</a>. </>}
-            {article.imageCredit}
-          </figcaption>
         </figure>}
         <div className="event-copy">
           {displayedArticleParagraphs(article.paragraphs).map((paragraph, index) => <p key={index}>{paragraph}</p>)}

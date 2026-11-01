@@ -248,10 +248,9 @@ export default function Home() {
             <h2 id="selected-event-title">{selectedEvent.title}</h2>
             {selectedEvent.image && <figure className="modal-image">
               <img src={selectedEvent.image} alt={selectedEvent.title} />
-              {selectedEvent.imageSource && <figcaption>Image source: <a href={selectedEvent.imageSource} target="_blank" rel="noreferrer">view source ↗</a></figcaption>}
             </figure>}
             <div className="modal-copy">
-              {(selectedEvent.description || '').split(/\n\s*\n|\n/).map((paragraph, index) => paragraph.trim() && <p key={index}>{linkifyPlainText(paragraph.trim(), `event-${index}`)}</p>)}
+              {(selectedEvent.description || '').split(/\n\s*\n/).map((paragraph, index) => paragraph.trim() && <p style={{whiteSpace:'pre-wrap'}} key={index}>{linkifyPlainText(paragraph, `event-${index}`)}</p>)}
             </div>
             <p className="event-modal-date">{selectedEvent.time ? `${selectedEvent.time} · ` : ''}{formatDate(selectedEvent.kind === 'history' ? selectedEvent.historicalDate || selectedEvent.date : selectedEvent.date)}</p>
             {selectedEvent.location && <p className="event-modal-location">{selectedEvent.location}</p>}

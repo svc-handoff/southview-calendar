@@ -138,6 +138,39 @@ test('an empty Calendar does not bring back the retired local event overlay',()=
   assert.deepEqual(parseCalendarFeed(feed([]),2026),{events:[],articles:[]});
 });
 
+test('human-authored plaintext survives verbatim, with only the optional image line removed',()=>{
+  const body='First paragraph: Alexander & Company.  Two spaces stay.\n\nSecond paragraph with the writer’s punctuation. \n';
+  const sources="https://example.org/source\nD.L. Henderson's Book of the Dead";
+  const text=body+'\n\n'+sources;
+  const image='https://digitalcollections.library.gsu.edu/digital/api/collection/AFLCIO/id/115265/download';
+  const entry=description=>['UID:edited','SUMMARY:Edited title','DTSTART;VALUE=DATE:18560321','RRULE:FREQ=YEARLY',`DESCRIPTION:${escape(description)}`];
+  const withImage=parseCalendarFeed(feed([entry(image+'\n\n'+text)]),2027,'history');
+  assert.equal(withImage.events[0].description,text);
+  assert.match(withImage.events[0].image,/^\/images\/edited\/[^/]+\.jpg$/);
+  assert.equal(withImage.events[0].historicalDate,'1856-03-21');
+  assert.equal(withImage.events[0].date,'2027-03-21');
+  assert.equal(withImage.articles[0].imageCredit,'');
+  const withoutImage=parseCalendarFeed(feed([entry(text)]),2027,'history');
+  assert.equal(withoutImage.events[0].description,text);
+  assert.equal(withoutImage.events[0].image,'');
+});
+
+test('supplied image endpoints work without extensions and Wikimedia thumbnails use the canonical host',()=>{
+  for(const image of ['https://encrypted-tbn0.gstatic.com/images?q=provided', 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/image.jpg/500px-image.jpg']){
+    const parsed=parseCalendarFeed(feed([['UID:image','SUMMARY:Writer title','DTSTART;VALUE=DATE:19000101',`DESCRIPTION:${escape(image+'\n\nArticle.')}`]]),2027);
+    assert.equal(parsed.events[0].image,image.replace('thumb.wikimedia.org','upload.wikimedia.org'));
+    assert.equal(parsed.events[0].description,'Article.');
+  }
+});
+
+test('Google Calendar HTML entities display as apostrophes and ordinary punctuation',()=>{
+  const parsed=parseCalendarFeed(feed([['UID:entities','SUMMARY:Writer title','DTSTART;VALUE=DATE:19000101',
+    `DESCRIPTION:${escape('<p>McLendon&#x27;s hospital &amp; Jones&#39;s school.</p><p>&quot;Their work&quot; &mdash; preserved.</p>')}`]]),2027);
+  assert.match(parsed.events[0].description,/McLendon's hospital & Jones's school\./);
+  assert.ok(!parsed.events[0].description.includes('&#'));
+  assert.match(parsed.events[0].description,/"Their work" — preserved\./);
+});
+
 test('former story links and merged burial links all point to one article',()=>{
   for(const [alias,subject] of [
     ['a-nobel-prize-for-nonviolence','martin-luther-king-jr'],

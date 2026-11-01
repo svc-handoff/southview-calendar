@@ -1,4 +1,6 @@
 import { dedupeCalendarEvents, type CalendarEvent, type HistoricalArticle } from './events.ts';
+import articleAliases from './calendar-article-aliases.json' with { type: 'json' };
+import editedImages from './edited-image-assets.json' with { type: 'json' };
 
 // Public event feeds served by Google Calendar. The reminder directory has its
 // own separate feed and is read only by /api/memorials.
@@ -21,33 +23,43 @@ export function calendarArticleDescription(article:HistoricalArticle){
  return `${article.paragraphs.join('\n\n')}\n\n[southview-event]\n${JSON.stringify(metadata,null,2)}\n[/southview-event]`;
 }
 
-function readableParagraphs(description:string){
- return description.split(/\n\s*\n|\n/).map(paragraph=>paragraph.trim()).filter(Boolean);
-}
-
 function imageFromSource(source:string){
+ const cached=(editedImages as Record<string,string>)[source];
+ if(cached)return cached;
  try{
   const url=new URL(source);
   const commonsFile=url.hostname==='commons.wikimedia.org'&&url.pathname.startsWith('/wiki/File:')
    ? decodeURIComponent(url.pathname.slice('/wiki/File:'.length)) : '';
-  if(commonsFile)return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(commonsFile)}`;
-  if(/\.(?:avif|gif|jpe?g|png|webp|svg)(?:$|[?#])/i.test(url.href))return url.href;
+  const existingImages:Record<string,string>={
+   'Johnlewis.jpg':'/images/john-lewis.jpg',
+   'Martin_Luther_King_Jr_NYWTS.jpg':'/images/king.jpg',
+   'Alonzo_herndon.jpg':'/images/alonzo-herndon.jpg',
+   'Benjamin_Mays_portrait.jpg':'/images/benjamin-mays.jpg',
+   'Bazoline_Estelle_Usher,_Atlanta_University_student,_half-length_portrait,_facing_front_LCCN98518739.jpg':'/images/bazoline-usher.jpg',
+  };
+  if(commonsFile)return existingImages[commonsFile]||`https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(commonsFile)}`;
+  if(!['http:','https:'].includes(url.protocol))return '';
+  // The writer's first line may use an image endpoint without a file extension.
+  if(url.hostname==='thumb.wikimedia.org')url.hostname='upload.wikimedia.org';
+  const gsu=url.hostname==='digitalcollections.library.gsu.edu'&&url.pathname.match(/^\/digital\/api\/collection\/([^/]+)\/id\/([^/]+)\/download$/);
+  if(gsu)return `https://digitalcollections.library.gsu.edu/utils/getthumbnail/collection/${gsu[1]}/id/${gsu[2]}`;
+  return url.href;
  }catch{/* Invalid or non-image links remain ordinary article text. */}
  return '';
 }
 
 function simpleArticle(description:string,title:string,historicalDate:string,slug:string,subjectId:string):HistoricalArticle{
- const parts=readableParagraphs(description);
+ const parts=description.split('\n');
  let imageSource='';
  if(parts[0]&&/^https?:\/\//i.test(parts[0])){
   const resolved=imageFromSource(parts[0]);
   if(resolved){imageSource=parts.shift()!;}
  }
  const image=imageFromSource(imageSource);
- const paragraphs=parts;
+ const paragraphs=parts.join('\n').replace(/^\n/,'').split(/\n[ \t]*\n/).filter(paragraph=>paragraph.trim());
  return {id:slug,slug,subjectId,title,date:historicalDate,description:paragraphs[0]||'',paragraphs,sources:[],
   source:'',sourceLabel:'',legacySlugs:[],storyAliases:[],calendarAliases:[title],storySlug:undefined,
-  dateNote:'',image,alt:title,imageCredit:imageSource?'Image source: Wikimedia Commons':'',imageSource};
+  dateNote:'',image,alt:title,imageCredit:'',imageSource};
 }
 
 function readArticle(description:string,title:string):HistoricalArticle|undefined{
@@ -100,20 +112,23 @@ function parseDateTime(value:string, timeZone:string) {
 }
 
 function plainDescription(value:string) {
- const entities:Record<string,string> = {nbsp:' ',amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",'#39':"'"};
+ const entities:Record<string,string> = {nbsp:' ',amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",'#39':"'",
+  mdash:'—',ndash:'–',hellip:'…',lsquo:'‘',rsquo:'’',ldquo:'“',rdquo:'”',bull:'•',copy:'©',reg:'®',trade:'™'};
  return unescapeIcs(value)
   .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi,'')
-  .replace(/<br\s*\/?\s*>|<\/(?:p|div|li|h[1-6])\s*>/gi,'\n')
+  .replace(/<br\s*\/?\s*>/gi,'\n')
+  .replace(/<\/(?:p|div|li|h[1-6])\s*>/gi,'\n\n')
   .replace(/<[^>]*>/g,'')
-  .replace(/&(nbsp|amp|lt|gt|quot|apos|#39);/gi,(_,entity:string)=>entities[entity.toLowerCase()])
-  .replace(/\n[ \t]*\n+/g,'\n\n').trim();
+  .replace(/&([a-z]+|#39);/gi,(match,entity:string)=>entities[entity.toLowerCase()]??match)
+  .replace(/&#(x[0-9a-f]+|[0-9]+);/gi,(_,value:string)=>String.fromCodePoint(value[0].toLowerCase()==='x'?parseInt(value.slice(1),16):parseInt(value,10)))
+  ;
 }
 
 function removeGoogleMeetDetails(value:string){
  return value
   .replace(/(?:^|\n)\s*(?:Join with Google Meet|Join a video meeting|Video call link\s*:|Meeting ID\s*:|Join by phone|More phone numbers)[\s\S]*$/i,'')
   .replace(/https?:\/\/meet\.google\.com\/[a-z0-9-]+(?:\?[^\s]*)?/gi,'')
-  .replace(/\n[ \t]*\n{2,}/g,'\n\n').trim();
+  ;
 }
 
 export function parseCalendarFeed(ics:string, year:number, calendarKind?:CalendarEvent['kind']){
@@ -147,7 +162,12 @@ export function parseCalendarFeed(ics:string, year:number, calendarKind?:Calenda
   const historicalDate=history?.date||originalDate;
   const generatedSlug=historicalDate+'-'+title.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
   const article=history||(!start&&!location||calendarKind==='tour'?simpleArticle(rawDescription,title,historicalDate,generatedSlug,e.UID||generatedSlug):undefined);
-  const description=article?.paragraphs.join('\n\n')||rawDescription;
+  if(article&&!history){
+   const key=(e.UID||'').split('@')[0];
+   article.legacySlugs=(articleAliases as Record<string,string[]>)[key]||[];
+  }
+  const description=article?.imageSource?rawDescription.slice(rawDescription.indexOf('\n')+1).replace(/^\n/,''):
+   history?article?.paragraphs.join('\n\n')||rawDescription:rawDescription;
   const slug=history?.storySlug||storySlug(description);
   if(article&&calendarKind!=='tour'){
    const previous=articles.get(article.slug);
