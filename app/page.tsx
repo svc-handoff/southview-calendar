@@ -84,7 +84,10 @@ function linkifyPlainText(text: string, key: string) {
 }
 
 export default function Home() {
-  const [date, setDate] = useState({ year: 2026, month: 9 });
+  const [date, setDate] = useState(() => {
+    const today = new Date();
+    return { year: today.getFullYear(), month: today.getMonth() };
+  });
   const [live, setLive] = useState<CalendarEvent[]>([]);
   const [calendarArticles,setCalendarArticles] = useState<HistoricalArticle[]>([]);
   const [connection, setConnection] = useState('loading');
