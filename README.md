@@ -1,6 +1,6 @@
 # South-View calendar and timeline
 
-A minimal calendar and historical timeline for South-View Cemetery in Atlanta. The project includes historical event articles, short biographies, image credits, and a Google Calendar feed for the demo walking tour.
+A minimal calendar and historical timeline for South-View Cemetery in Atlanta. The project separates historical events, current events, and person reminders into three Google Calendars.
 
 ## Run locally
 
@@ -9,15 +9,15 @@ A minimal calendar and historical timeline for South-View Cemetery in Atlanta. T
 - Run `npm run dev` to start the local development server.
 - Run `npm run build` to create a production build.
 
-Google Calendar’s **South-View History — Demo** calendar is the source for website entries and article content. To add or edit an entry, edit its Google Calendar title, date, and description. For historical anniversaries, make the event all-day, choose **Does not repeat → Annually**, and leave the location blank. If an entry has a time or location, the site treats it as a current event; otherwise it treats it as historical.
+Google Calendar’s **South-View Past Events** and **Southview Cemetery Current Events** calendars are the source for entries shown on the website. The site combines their public feeds into one month-by-month calendar. Past-event entries belong in the past calendar; tours and other current activities belong in the current calendar. This keeps current entries out of the historical calendar even when an event is all-day.
 
 For an image, put its source URL on the first line of the description. Wikimedia Commons file pages and direct image URLs are supported; the modal shows the image and links to that source. Put the article text after a blank line, then add source URLs at the bottom as plain text. The site displays the description as written and makes raw URLs clickable; it does not extract or organize sources. The title in Calendar becomes the event title on the site. The modal opens directly from the calendar; no separate page is needed for a new entry.
 
-Edits to Calendar appear on the site after reload and do not need a redeploy. The calendar must share all event details publicly. Existing entries with `[southview-event]` metadata remain supported for legacy dates, images, and merged-story aliases; source links should be written in the description as plain text.
+Edits to either public event calendar appear on the site after reload and do not need a redeploy. Both event calendars share event details publicly. Existing entries with `[southview-event]` metadata remain supported for legacy dates, images, and merged-story aliases; source links should be written in the description as plain text.
 
 `lib/google-calendar.ts` reads that public feed. The API and article pages use the same parsed records. Deduplication compares the permanent article identity, calendar date and time. Different milestones for the same person remain separate, including historical events from different years that share an anniversary day. The JSON files in `lib/` retain the researched migration source and standalone biographies; they do not add a second set of events to the website.
 
-The **South-View Remember Someone** calendar separately powers name search and reminder export. Add one all-day event per person, use only the person's name as the title, set the event to repeat annually on the death anniversary, and leave the description blank. The calendar's public iCal feed is used by the site; search ignores any description if one is added. Search matches event titles, and visitors can add a yearly death-anniversary reminder to Google Calendar or download an `.ics` file.
+The **South-View Remember Someone** calendar separately powers name search and reminder export. It contains one all-day yearly event per cemetery record, titled with the person's name and dated on the death anniversary; descriptions stay blank. Its public iCal feed is polled by `/api/memorials` when a visitor searches. This calendar is not displayed in the month view. Visitors can add selected yearly reminders to Google Calendar or download an `.ics` file.
 
 The historical collection has 54 entries from the original 56. Only Harriet Graham’s nearby death/burial notices and Wade Hampton’s execution/burial notices are combined. Birthdays, later achievements, deaths, memorials and founding milestones on separate dates retain their own entries. The tour and other independently created Calendar entries are retained. Original Google Calendar snapshots from the migration are saved outside the source checkout in the task’s `work/` directory.
 

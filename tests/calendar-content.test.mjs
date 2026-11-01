@@ -34,14 +34,14 @@ test('distinct milestones remain separate, with usable articles and images',()=>
   }
 });
 
-test('all consolidated articles round-trip through folded Google Calendar descriptions',()=>{
+test('legacy article metadata still round-trips while sources stay writer-authored text',()=>{
   const parsed=parseCalendarFeed(feed(historicalArticles.map(article=>record(article))),2027);
   assert.equal(parsed.events.length,54);
   assert.equal(parsed.articles.length,54);
   for(const article of historicalArticles){
     const actual=parsed.articles.find(item=>item.slug===article.slug);
     assert.deepEqual(actual.paragraphs,article.paragraphs);
-    assert.deepEqual(actual.sources,article.sources);
+    assert.deepEqual(actual.sources,[]);
     assert.equal(actual.date,article.date);
     assert.equal(actual.image,article.image);
     assert.equal(actual.dateNote,article.dateNote||'');
@@ -120,6 +120,17 @@ test('separate tour times survive; copied scheduled events appear once',()=>{
   assert.match(parsed.events[0].time,/10:00.*10:30.*AM ET/);
   assert.match(parsed.events[1].time,/1:00.*1:30.*PM ET/);
   assert.equal(parsed.events[2].time,undefined);
+});
+
+test('all-day entries on the current calendar stay current even when their title matches a historical article',()=>{
+  const article=historicalArticles.find(item=>item.date==='1940-02-21');
+  const parsed=parseCalendarFeed(feed([[
+    'UID:current-all-day',`SUMMARY:${escape(article.title)}`,'DTSTART;VALUE=DATE:20261125',
+  ]]),2026,'tour');
+  const events=calendarEventsForMonth(2026,11,parsed.events,article?[article]:[]);
+  assert.equal(parsed.articles.length,0);
+  assert.equal(events.length,1);
+  assert.equal(events[0].kind,'tour');
 });
 
 test('an empty Calendar does not bring back the retired local event overlay',()=>{

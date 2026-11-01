@@ -142,15 +142,23 @@ export function dedupeCalendarEvents(events:CalendarEvent[],articles:HistoricalA
   const historicalTitles=new Map(articles.flatMap(article=>article.calendarAliases.map(title=>[calendarTitle(title),article] as const)));
   const linkedArticle=(event:CalendarEvent)=>{
     if(event.kind==='history'){
+      // A lightweight imported alias can carry an auto-generated slug of its
+      // own. Resolve its explicit person/date link before that generic slug.
+      const sameDay=articles.filter(article=>article.storySlug===event.storySlug&&article.date.slice(5)===event.date.slice(5));
+      if(event.storySlug&&sameDay.length===1){
+        const referenced=event.articleSlug?resolveHistoricalArticle(event.articleSlug,articles):undefined;
+        if(!referenced?.storySlug)return sameDay[0];
+      }
       const references=[event.articleSlug,event.url,
         ...(event.description?.match(/https?:\/\/[^\s<>]+\/(?:history|events)\/[a-z0-9-]+/gi)||[])];
       for(const reference of references){const article=resolveHistoricalArticle(reference,articles);if(article)return article;}
       const story=resolveHistoricalArticle(event.storySlug,articles);
       if(story)return story;
-      const sameDay=articles.filter(article=>article.storySlug===event.storySlug&&article.date.slice(5)===event.date.slice(5));
       if(event.storySlug&&sameDay.length===1)return sameDay[0];
     }
-    return event.kind==='history'||!event.time?historicalTitles.get(calendarTitle(event.title)):undefined;
+    // Calendar ownership determines whether a record is current or historical.
+    // In particular, an all-day event on the current calendar stays current.
+    return event.kind==='history'?historicalTitles.get(calendarTitle(event.title)):undefined;
   };
   const preferred=new Map<string,CalendarEvent>();
   const occurrenceKey=(article:HistoricalArticle,event:CalendarEvent)=>`${article.slug}:${event.date}:${event.time||''}`;

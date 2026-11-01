@@ -1,7 +1,9 @@
 import { dedupeCalendarEvents, type CalendarEvent, type HistoricalArticle } from './events.ts';
 
-// Dedicated demo calendar. The public iCalendar feed is served by Google Calendar.
+// Public event feeds served by Google Calendar. The reminder directory has its
+// own separate feed and is read only by /api/memorials.
 export const calendarId = '53e6a597d415c7a964dedab95a52b0b8459784d885669d4cc40032231e4dbab0@group.calendar.google.com';
+export const currentCalendarId = '4d7c56bc00683a9af3e12f28cb4df46e7e87c0278eb8889b70907704162dcf05@group.calendar.google.com';
 const subscribeUrl = 'https://calendar.google.com/calendar/r?cid=' + encodeURIComponent(calendarId);
 const manageUrl = 'https://calendar.google.com/calendar/u/0/r?cid=' + encodeURIComponent(calendarId);
 const storySlug = (description:string) => description.match(/\[southview-story:([a-z-]+)\]/)?.[1];
@@ -114,7 +116,7 @@ function removeGoogleMeetDetails(value:string){
   .replace(/\n[ \t]*\n{2,}/g,'\n\n').trim();
 }
 
-export function parseCalendarFeed(ics:string, year:number){
+export function parseCalendarFeed(ics:string, year:number, calendarKind?:CalendarEvent['kind']){
  const lines=ics.replace(/\r?\n[ \t]/g,'').split(/\r?\n/);
  const calendarTimeZone=lines.find(line=>line.startsWith('X-WR-TIMEZONE:'))?.slice('X-WR-TIMEZONE:'.length)||displayTimeZone;
  const entries:Record<string,string>[]=[];let item:Record<string,string>|null=null;
@@ -144,28 +146,37 @@ export function parseCalendarFeed(ics:string, year:number){
   const location=unescapeIcs(e.LOCATION||'').trim();
   const historicalDate=history?.date||originalDate;
   const generatedSlug=historicalDate+'-'+title.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-  const article=history||(!start&&!location?simpleArticle(rawDescription,title,historicalDate,generatedSlug,e.UID||generatedSlug):undefined);
+  const article=history||(!start&&!location||calendarKind==='tour'?simpleArticle(rawDescription,title,historicalDate,generatedSlug,e.UID||generatedSlug):undefined);
   const description=article?.paragraphs.join('\n\n')||rawDescription;
   const slug=history?.storySlug||storySlug(description);
-  if(article){
+  if(article&&calendarKind!=='tour'){
    const previous=articles.get(article.slug);
    const modified=e['LAST-MODIFIED']||e.DTSTAMP||'';
    if(!previous||modified>previous.modified)articles.set(article.slug,{article,modified});
   }
   const time=start?`${end?timeFormatter.formatRange(start,end):timeFormatter.format(start)} ET`:undefined;
   return [{id:e.UID||`ics-${index}`,title,date,historicalDate,description,image:article?.image,imageSource:article?.imageSource,sources:history?.sources,
-   time,location,storySlug:slug,articleSlug:article?.slug,kind:!time&&!location?'history' as const:'tour' as const,url:e.URL}];
+   time,location,storySlug:slug,articleSlug:article?.slug,kind:calendarKind||(!time&&!location?'history' as const:'tour' as const),url:e.URL}];
  });
  const canonicalArticles=[...articles.values()].map(value=>value.article);
  return {events:dedupeCalendarEvents(events,canonicalArticles),articles:canonicalArticles};
 }
 
-export async function readCalendarSnapshot(year:number){
- const response=await fetch(`https://calendar.google.com/calendar/ical/${encodeURIComponent(calendarId)}/public/basic.ics`,{
+async function publicCalendarFeed(id:string){
+ const response=await fetch(`https://calendar.google.com/calendar/ical/${encodeURIComponent(id)}/public/basic.ics`,{
   cache:'no-store',signal:AbortSignal.timeout(10000),headers:{Accept:'text/calendar','Cache-Control':'no-cache'}});
  if(!response.ok)throw new Error('Public calendar feed unavailable');
  const ics=await response.text();
  if(!ics.includes('BEGIN:VCALENDAR'))throw new Error('Invalid calendar feed');
- return {...parseCalendarFeed(ics,year),subscribeUrl,manageUrl};
+ return ics;
+}
+
+export async function readCalendarSnapshot(year:number){
+ const [pastFeed,currentFeed]=await Promise.all([publicCalendarFeed(calendarId),publicCalendarFeed(currentCalendarId)]);
+ const past=parseCalendarFeed(pastFeed,year,'history');
+ const current=parseCalendarFeed(currentFeed,year,'tour');
+ const articles=past.articles;
+ const events=dedupeCalendarEvents([...past.events,...current.events],articles);
+ return {events,articles,subscribeUrl,manageUrl};
 }
 
