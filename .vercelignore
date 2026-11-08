@@ -1,0 +1,17 @@
+node_modules
+.next
+dist
+.git
+.vercel
+.local-data
+data/private
+.env*
+.openai
+build
+scripts
+tests
+calendar-check.json
+reminders-check.json
+production-page.html
+production-calendar.json
+production-reminders.json

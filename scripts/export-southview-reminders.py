@@ -44,16 +44,16 @@ def fold(line: str) -> list[str]:
 records = json.loads(source.read_text(encoding="utf-8"))
 unique: dict[tuple[str, str], dict[str, str]] = {}
 for record in records:
-    death = record.get("DateOfDeath", "")
+    birth = record.get("DateOfBirth", "")
     try:
-        day = date.fromisoformat(death)
+        day = date.fromisoformat(birth)
     except ValueError:
         continue
     name = " ".join(part for part in (record.get("FirstName", ""), record.get("MiddleName", ""), record.get("LastName", "")) if part)
     name = re.sub(r"\s+", " ", name).strip()
-    key = (normalized(name), day.strftime("%m-%d"))
+    key = (normalized(name), birth)
     if name and key[0]:
-        unique.setdefault(key, {"name": name, "date": death})
+        unique.setdefault(key, {"name": name, "date": birth})
 
 rows = list(unique.values())
 if batch_size < 1:
@@ -66,14 +66,14 @@ for old in out.glob("remember-someone-*.ics"):
 for batch_number, start in enumerate(range(0, len(rows), batch_size), 1):
     lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//South-View Cemetery//Remember Someone//EN", "CALSCALE:GREGORIAN", "X-WR-CALNAME:South-View Remember Someone"]
     for record in rows[start:start + batch_size]:
-        name, death = record["name"], date.fromisoformat(record["date"])
-        next_day = death + timedelta(days=1)
-        fingerprint = hashlib.sha256(f"{normalized(name)}|{death.isoformat()}".encode()).hexdigest()
+        name, birth = record["name"], date.fromisoformat(record["date"])
+        next_day = birth + timedelta(days=1)
+        fingerprint = hashlib.sha256(f"birth|{normalized(name)}|{birth.isoformat()}".encode()).hexdigest()
         lines.extend([
             "BEGIN:VEVENT",
             f"UID:{fingerprint}@southview-reminders",
             f"DTSTAMP:{stamp}",
-            f"DTSTART;VALUE=DATE:{death:%Y%m%d}",
+            f"DTSTART;VALUE=DATE:{birth:%Y%m%d}",
             f"DTEND;VALUE=DATE:{next_day:%Y%m%d}",
             "RRULE:FREQ=YEARLY",
             f"SUMMARY:{escaped(name)}",

@@ -134,20 +134,26 @@ function removeGoogleMeetDetails(value:string){
 export function parseCalendarFeed(ics:string, year:number, calendarKind?:CalendarEvent['kind']){
  const lines=ics.replace(/\r?\n[ \t]/g,'').split(/\r?\n/);
  const calendarTimeZone=lines.find(line=>line.startsWith('X-WR-TIMEZONE:'))?.slice('X-WR-TIMEZONE:'.length)||displayTimeZone;
- const entries:Record<string,string>[]=[];let item:Record<string,string>|null=null;
+ type FeedEntry={properties:Record<string,string>;exclusions:{value:string;timeZone:string}[]};
+ const entries:FeedEntry[]=[];let item:FeedEntry|null=null;
  for(const line of lines){
-  if(line==='BEGIN:VEVENT'){item={};continue;}
+  if(line==='BEGIN:VEVENT'){item={properties:{},exclusions:[]};continue;}
   if(line==='END:VEVENT'){if(item)entries.push(item);item=null;continue;}
   if(!item)continue;
   const colon=line.indexOf(':');if(colon<0)continue;
   const [name,...parameters]=line.slice(0,colon).split(';');
-  item[name]=line.slice(colon+1);
   const timeZone=parameters.find(parameter=>parameter.startsWith('TZID='));
-  if(timeZone)item[`${name}_TZID`]=timeZone.slice(5).replace(/^"|"$/g,'');
+  const zone=timeZone?.slice(5).replace(/^"|"$/g,'')||calendarTimeZone;
+  if(name==='EXDATE'){
+   for(const value of line.slice(colon+1).split(','))item.exclusions.push({value,timeZone:zone});
+   continue;
+  }
+  item.properties[name]=line.slice(colon+1);
+  if(timeZone)item.properties[`${name}_TZID`]=zone;
  }
- entries.sort((left,right)=>(right['LAST-MODIFIED']||right.DTSTAMP||'').localeCompare(left['LAST-MODIFIED']||left.DTSTAMP||''));
+ entries.sort(({properties:left},{properties:right})=>(right['LAST-MODIFIED']||right.DTSTAMP||'').localeCompare(left['LAST-MODIFIED']||left.DTSTAMP||''));
  const articles=new Map<string,{article:HistoricalArticle;modified:string}>();
- const events:CalendarEvent[]=entries.flatMap((e,index)=>{
+ const events:CalendarEvent[]=entries.flatMap(({properties:e,exclusions},index)=>{
   if(!e.DTSTART||e.STATUS==='CANCELLED')return [];
   const raw=e.DTSTART,allDay=/^\d{8}$/.test(raw);
   const start=allDay?undefined:parseDateTime(raw,e.DTSTART_TZID||calendarTimeZone);
@@ -155,6 +161,18 @@ export function parseCalendarFeed(ics:string, year:number, calendarKind?:Calenda
   if(!allDay&&!start)return [];
   const originalDate=start?dateFormatter.format(start):`${raw.slice(0,4)}-${raw.slice(4,6)}-${raw.slice(6,8)}`;
   const date=e.RRULE?.includes('FREQ=YEARLY')?`${year}-${originalDate.slice(5)}`:originalDate;
+  // Google keeps the recurring series after "Delete this event" and lists the
+  // removed occurrence in EXDATE. Apply it before creating the event or article.
+  if(exclusions.some(({value,timeZone})=>{
+   if(allDay)return value===date.replaceAll('-','');
+   const excluded=parseDateTime(value,timeZone);
+   if(!excluded||dateFormatter.format(excluded)!==date)return false;
+   const clock=new Intl.DateTimeFormat('en-GB',{
+    timeZone:e.DTSTART_TZID||(raw.endsWith('Z')?'UTC':calendarTimeZone),
+    hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23',
+   });
+   return clock.format(excluded)===clock.format(start!);
+  }))return [];
   const rawDescription=removeGoogleMeetDetails(plainDescription(e.DESCRIPTION||''));
   const title=unescapeIcs(e.SUMMARY||'Untitled event');
   const history=readArticle(rawDescription,title);

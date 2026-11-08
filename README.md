@@ -2,7 +2,7 @@
 
 A minimal calendar and historical timeline for South-View Cemetery in Atlanta. The project separates historical events, current events, and person reminders into three Google Calendars.
 
-This branch (`main`) preserves the original Sites build. The [`vercel` branch](https://github.com/anantk2006/southview-calendar/tree/vercel) contains the current application deployed at https://southview-calendar.vercel.app/, including the calendar-only birthday search.
+This branch (`vercel`) contains the current application deployed at https://southview-calendar.vercel.app/. The [`main` branch](https://github.com/anantk2006/southview-calendar/tree/main) preserves the original Sites build.
 
 ## Run locally
 
@@ -19,15 +19,8 @@ Edits to either public event calendar appear on the site after reload and do not
 
 `lib/google-calendar.ts` reads that public feed. The API and article pages use the same parsed records. Deduplication compares the permanent article identity, calendar date and time. Different milestones for the same person remain separate, including historical events from different years that share an anniversary day. The JSON files in `lib/` retain the researched migration source and standalone biographies; they do not add a second set of events to the website.
 
-The **South-View Remember Someone** calendar separately powers name search and reminder export. It contains one all-day yearly event per cemetery record, titled with the person's name and dated on the death anniversary; descriptions stay blank. Its public iCal feed is polled by `/api/memorials` when a visitor searches. This calendar is not displayed in the month view. Visitors can add selected yearly reminders to Google Calendar or download an `.ics` file.
+Remember Someone reads only the private **South-View Remember Someone — Birthdays** calendar on each search. Create an all-day yearly event with the person's name and actual date of birth, including the original birth year. Calendar edits and deletions are reflected on subsequent searches. The CSV is an offline import source only; it is not bundled into the deployment or used as a fallback.
 
-The historical collection uses the human-edited articles from the editing sheet. Rows marked Remove have been retired, including the standalone profile pages. The article wording is copied exactly into Calendar; sources from the sheet remain plain text at the bottom. The tour and other independently created Calendar entries are retained. Original Google Calendar snapshots from the migration are saved outside the source checkout in the task’s `work/` directory.
+Imported reminders may start in the current year, with the original birthday recorded as `Born: YYYY-MM-DD` in the description. February 29 reminders start in a valid leap year. The search uses that original date when its month and day match the event date. `scripts/verify-birthday-migration.mjs` compares the private calendar against the offline source before the calendar-only release.
 
-## Project structure
-
-- `app/page.tsx` renders the scrollable calendar and reminder search.
-- `app/events/[slug]/page.tsx` keeps legacy article links working; calendar entries open in a modal.
-- `app/history/[slug]/page.tsx` redirects retained legacy links; removed profiles return 404.
-- `public/images/` contains local images used by the site.
-
-This project uses Vinext and can be published with the Sites workflow configured for this checkout.
+The server reads the private feed through `REMEMBER_BIRTHDAY_FEED_URL`, stored as a Vercel Secret and locally in ignored `.env.development.local`. Never expose it through a `NEXT_PUBLIC_` variable or return the feed to a browser. `/api/memorials` returns only matching names and birth dates. Each person card has its own Google Calendar and ICS buttons. The legacy death-anniversary calendar is retained but no longer searched.

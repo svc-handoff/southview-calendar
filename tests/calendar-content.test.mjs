@@ -138,6 +138,41 @@ test('an empty Calendar does not bring back the retired local event overlay',()=
   assert.deepEqual(parseCalendarFeed(feed([]),2026),{events:[],articles:[]});
 });
 
+test('a deleted yearly occurrence stays off the calendar and article list without deleting other years',()=>{
+  const calendar=feed([[
+    'UID:cancelled-template','SUMMARY:Event title in less than 10 words',
+    'DTSTART;VALUE=DATE:20261118','DTEND;VALUE=DATE:20261119',
+    'RRULE:FREQ=YEARLY','EXDATE;VALUE=DATE:20261118',
+    'DESCRIPTION:Description of historical event in 1-3 paragraphs',
+  ]]);
+  assert.deepEqual(parseCalendarFeed(calendar,2026,'history'),{events:[],articles:[]});
+  const nextYear=parseCalendarFeed(calendar,2027,'history');
+  assert.equal(nextYear.events.length,1);
+  assert.equal(nextYear.events[0].date,'2027-11-18');
+  assert.equal(nextYear.articles.length,1);
+});
+
+test('repeated and comma-separated exception dates are all respected',()=>{
+  const calendar=feed([[
+    'UID:multiple-exceptions','SUMMARY:Anniversary','DTSTART;VALUE=DATE:19001118',
+    'RRULE:FREQ=YEARLY','EXDATE;VALUE=DATE:20261118,20271118',
+    'EXDATE;VALUE=DATE:20281118',
+  ]]);
+  for(const year of [2026,2027,2028])assert.equal(parseCalendarFeed(calendar,year).events.length,0);
+  assert.equal(parseCalendarFeed(calendar,2029).events.length,1);
+});
+
+test('timed recurrence exceptions use the calendar timezone when the UTC date differs',()=>{
+  const calendar=feed([[
+    'UID:late-tour','SUMMARY:Evening tour','DTSTART;TZID=America/New_York:20251118T233000',
+    'RRULE:FREQ=YEARLY','EXDATE:20261119T043000Z',
+  ]]);
+  assert.equal(parseCalendarFeed(calendar,2026,'tour').events.length,0);
+  assert.equal(parseCalendarFeed(calendar,2027,'tour').events.length,1);
+  const differentTime=calendar.replace('EXDATE:20261119T043000Z','EXDATE:20261119T040000Z');
+  assert.equal(parseCalendarFeed(differentTime,2026,'tour').events.length,1);
+});
+
 test('human-authored plaintext survives verbatim, with only the optional image line removed',()=>{
   const body='First paragraph: Alexander & Company.  Two spaces stay.\n\nSecond paragraph with the writer’s punctuation. \n';
   const sources="https://example.org/source\nD.L. Henderson's Book of the Dead";

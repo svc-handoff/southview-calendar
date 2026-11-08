@@ -30,6 +30,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -56,3 +57,10 @@ next-env.d.ts
 /outputs/
 /work/
 /.local-data/
+/data/private/
+
+# Local verification responses and rendered deployment snapshots.
+/calendar-check.json
+/reminders-check.json
+/production-*.json
+/production-page.html

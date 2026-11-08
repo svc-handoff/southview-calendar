@@ -3,7 +3,7 @@ from __future__ import annotations
 """Create a minimized, local-only reminder lookup dataset from SouthViewData.csv.
 
 The output is git-ignored. It contains only names and validated dates for records
-with a valid past death date; it must not be published as a client-side asset.
+with valid birth and past death dates; it must not be published as a client-side asset.
 """
 import csv
 import json
@@ -21,7 +21,7 @@ def parse_date(value: str, min_year: int) -> str | None:
         parsed = datetime.strptime(value.strip(), "%m/%d/%Y").date()
     except (ValueError, AttributeError):
         return None
-    if parsed.year < min_year or parsed.year > today.year:
+    if parsed.year < min_year or parsed > today:
         return None
     return parsed.isoformat()
 
@@ -31,10 +31,11 @@ seen = set()
 with source.open(newline="", encoding="utf-8-sig") as handle:
     for row in csv.DictReader(handle):
         death = parse_date(row.get("DateOfDeath", ""), 1800)
-        if not death:
+        birth = parse_date(row.get("DateOfBirth", ""), 1700)
+        if not death or not birth or birth > death:
             continue
         record = {
-            "DateOfBirth": parse_date(row.get("DateOfBirth", ""), 1700) or "",
+            "DateOfBirth": birth,
             "DateOfDeath": death,
             "FirstName": (row.get("FirstName") or "").strip(),
             "LastName": (row.get("LastName") or "").strip(),

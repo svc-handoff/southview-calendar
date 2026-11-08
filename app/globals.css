@@ -108,11 +108,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid #275b42; outline-offs
 .reminder-bulk-actions { display: flex; flex: 0 0 auto; gap: 6px; }
 .reminder-bulk-actions button { min-height: 30px; padding: 0 9px; border: 1px solid var(--line); border-radius: 4px; background: #fff; color: #214e35; font-size: 11px; }
 .reminder-bulk-actions button:hover { background: var(--green-pale); }
-.reminder-match { display: grid; gap: 5px; width: 100%; margin: 0; padding: 12px; border: 1px solid var(--line); border-radius: 5px; background: #fff; color: inherit; font: inherit; text-align: left; cursor: pointer; }
-.reminder-match:hover { border-color: #789784; background: #f8faf8; }
-.reminder-match:focus-visible { outline: 2px solid #356b50; outline-offset: 2px; }
-.reminder-match.selected { border-color: #356b50; background: var(--green-pale); box-shadow: inset 3px 0 #356b50; }
-.reminder-match:disabled { cursor: not-allowed; opacity: .58; }
+.reminder-match { display: grid; gap: 5px; width: 100%; margin: 0; padding: 12px; border: 1px solid var(--line); border-radius: 5px; background: #fff; color: inherit; font: inherit; text-align: left; }
 .reminder-match strong { font-size: 13px; font-weight: 600; }
 .reminder-match span { color: #444b46; font-size: 12px; line-height: 1.4; }
 .reminder-footnote { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
