@@ -2,6 +2,8 @@
 
 A minimal calendar and historical timeline for South-View Cemetery in Atlanta. The project separates historical events, current events, and person reminders into three Google Calendars.
 
+This branch (`main`) preserves the original Sites build. The [`vercel` branch](https://github.com/anantk2006/southview-calendar/tree/vercel) contains the current application deployed at https://southview-calendar.vercel.app/, including the calendar-only birthday search.
+
 ## Run locally
 
 - Node.js `>=22.13.0`
