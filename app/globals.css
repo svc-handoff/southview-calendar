@@ -191,3 +191,46 @@ button { -webkit-tap-highlight-color: transparent; }
 }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Staff tools use a separate, sign-in-only page; the public calendar stays minimal. */
+.admin-page { width: min(860px, calc(100% - 40px)); margin: 40px auto 80px; font-size: 16px; line-height: 1.5; }
+.admin-heading { display:flex; justify-content:space-between; align-items:center; gap:20px; margin-bottom:24px; }
+.admin-heading h1 { margin:0; font-size:30px; font-weight:500; }
+.admin-eyebrow { margin:0 0 4px; font-size:12px; font-weight:500; color:var(--muted); letter-spacing:1px; }
+.admin-heading a,.admin-help a,.admin-text-button { color:var(--green); text-decoration:underline; text-underline-offset:3px; }
+.admin-card { padding:28px; margin:20px 0; border:1px solid var(--line); border-radius:16px; background:#fff; }
+.admin-card h2 { margin:0 0 12px; font-size:24px; font-weight:500; }
+.admin-card h3 { font-size:20px; font-weight:500; margin:18px 0 8px; }
+.admin-card p { color:var(--muted); }
+.admin-signin { max-width:460px; margin:40px auto; }
+.admin-signin form,.admin-options,.admin-column-picker { display:grid; gap:10px; }
+.admin-page input:not([type=file]),.admin-page select { width:100%; min-width:0; min-height:48px; padding:10px 12px; border:1px solid #747775; border-radius:8px; font:inherit; background:#fff; color:var(--ink); }
+.admin-page label { font-weight:500; }
+.admin-page input:focus-visible,.admin-page select:focus-visible { outline:2px solid var(--green); outline-offset:2px; }
+.admin-page button { min-height:44px; padding:10px 18px; border:1px solid var(--line); border-radius:24px; background:white; font-size:15px; font-weight:500; }
+.admin-page .admin-primary { background:var(--green); color:white; border-color:var(--green); margin-top:16px; }
+.admin-page button:disabled { opacity:.6; cursor:wait; }
+.admin-page button:hover:not(:disabled) { filter:brightness(.95); }
+.admin-file-label { display:block; margin:24px 0 10px; }
+.admin-page input[type=file] { width:100%; font:inherit; padding:16px; border:2px dashed #a8c7fa; border-radius:12px; background:#f8fafd; }
+.admin-page input::file-selector-button { font:inherit; padding:10px 14px; border:0; border-radius:8px; background:#d3e3fd; color:#041e49; margin-right:12px; cursor:pointer; }
+.admin-help { font-size:14px; }
+.admin-session { display:flex; justify-content:space-between; align-items:center; gap:12px; color:var(--muted); }
+.admin-options { margin-top:20px; }
+.admin-column-picker,.admin-preview { margin-top:24px; padding-top:16px; border-top:1px solid var(--line); }
+.admin-table-wrap { overflow-x:auto; margin-top:18px; }
+.admin-page table { width:100%; border-collapse:collapse; text-align:left; }
+.admin-page td,.admin-page th { padding:12px 10px; border-bottom:1px solid var(--line); }
+.admin-page th { background:#f0f4f9; font-weight:500; }
+.admin-page .admin-error { padding:14px; border-radius:8px; background:#fce8e6; color:#9c2019; }
+.admin-success { margin-top:24px; padding:4px 20px 12px; border-radius:12px; background:#e6f4ea; color:#0d652d; }
+.admin-success p { color:inherit; }
+.admin-actions { display:flex; align-items:baseline; flex-wrap:wrap; gap:12px; }
+.admin-page .admin-text-button { min-height:32px; padding:0; border:0; background:none; font:inherit; }
+.admin-imports { margin:0; padding:0; list-style:none; }
+.admin-imports li { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; padding:20px 0; border-bottom:1px solid var(--line); }
+.admin-imports strong { overflow-wrap:anywhere; }
+.admin-imports p { font-size:14px; margin:4px 0 0; }
+.admin-undo { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.admin-undo span { width:100%; }
+@media(max-width:640px) { .admin-page { width:calc(100% - 24px); margin-top:24px; } .admin-card { padding:20px 16px; } .admin-heading { align-items:flex-start; } .admin-heading h1 { font-size:25px; } .admin-heading a { font-size:14px; } .admin-page td,.admin-page th { padding:10px 6px; } }

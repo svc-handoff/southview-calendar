@@ -1,7 +1,7 @@
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-import { parseBirthdayEvents } from '@/lib/birthday-calendar';
+import { allPeople } from '@/lib/people-directory';
 import type { BirthdayPerson } from '@/lib/google-reminders';
 
 function normalized(value: string) {
@@ -38,16 +38,6 @@ function fuzzyNameScore(query: string, candidateWords: string[]) {
   return scores.reduce((total, score) => total + score, 0) / scores.length;
 }
 
-async function getCalendarMemorials(): Promise<BirthdayPerson[]> {
-  const url = process.env.REMEMBER_BIRTHDAY_FEED_URL;
-  if (!url) throw new Error('Birthday calendar is not configured.');
-  const response = await fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(25000), headers: { Accept: 'text/calendar', 'Cache-Control': 'no-cache' } });
-  if (!response.ok) throw new Error('Remember Someone calendar is unavailable.');
-  const ics = await response.text();
-  if (!ics.includes('BEGIN:VCALENDAR')) throw new Error('Remember Someone calendar feed is invalid.');
-  return parseBirthdayEvents(ics);
-}
-
 export async function GET(request: Request) {
   const searchParams = new URL(request.url).searchParams;
   const query = (searchParams.get('name') || '').trim();
@@ -56,7 +46,7 @@ export async function GET(request: Request) {
   try {
     const queryKey = normalized(query);
     const surnameSearch = !queryKey.includes(' ');
-    const memorials = await getCalendarMemorials();
+    const memorials = await allPeople();
     const matches = memorials.flatMap((memorial) => {
       const nameKey = normalized(memorial.name);
       const words = nameKey.split(' ');
@@ -72,6 +62,6 @@ export async function GET(request: Request) {
       .map(({ score: _score, exact: _exact, ...match }) => match);
     return Response.json({ matches: results, matchType: surnameSearch ? 'surname' : 'name', fuzzy: !exactMatches.length && results.length > 0, query }, { headers: { 'Cache-Control': 'no-store' } });
   } catch {
-    return Response.json({ matches: [], error: 'The Remember Someone calendar is unavailable right now.' }, { status: 503 });
+    return Response.json({ matches: [], error: 'Remember Someone is unavailable right now.' }, { status: 503 });
   }
 }
