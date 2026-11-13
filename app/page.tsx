@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, type ReactNode } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { calendarEventsForMonth, type CalendarEvent, type HistoricalArticle } from '@/lib/events';
 import { birthdayCalendar, birthdayReminder, googleMemorialLink, type BirthdayPerson } from '@/lib/google-reminders';
 
@@ -134,16 +135,20 @@ export default function Home() {
     <main className="home-page">
       <section className="calendar-section" aria-label="Calendar">
         <div className="month-controls">
-          <h1>{months[date.month]} <span>{date.year}</span></h1>
-          <div className="month-buttons">
-            <button aria-label="Previous month" onClick={() => changeMonth(-1)}>‹</button>
-            <button className="today-button" onClick={goToToday}>Today</button>
-            <button aria-label="Next month" onClick={() => changeMonth(1)}>›</button>
-            <button className="reminder-button" onClick={() => setShowReminderBuilder(true)}>Remember someone</button>
+          <div className="month-navigation">
+            <div className="month-buttons">
+              <button className="today-button" onClick={goToToday}>Today</button>
+              <div className="month-arrows">
+                <button aria-label="Previous month" onClick={() => changeMonth(-1)}><ChevronLeft size={20} aria-hidden="true" /></button>
+                <button aria-label="Next month" onClick={() => changeMonth(1)}><ChevronRight size={20} aria-hidden="true" /></button>
+              </div>
+            </div>
+            <h1>{months[date.month]} <span>{date.year}</span></h1>
           </div>
+          <button className="reminder-button" onClick={() => setShowReminderBuilder(true)}>Remember someone</button>
         </div>
         {connection==='error'&&<p role="status">Google Calendar is unavailable. Reload to try again.</p>}
-        <div className="calendar-grid">
+        <div className="calendar-grid" style={{ gridTemplateRows: `34px repeat(${weekCount}, minmax(84px, 1fr))` }}>
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
             <div className="weekday" key={day}>{day}</div>
           ))}
