@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { articleParagraphs } from '@/lib/article-display';
 import { calendarEventsForMonth, type CalendarEvent, type HistoricalArticle } from '@/lib/events';
 import { birthdayCalendar, birthdayReminder, googleMemorialLink, type BirthdayPerson } from '@/lib/google-reminders';
 
@@ -184,7 +185,7 @@ export default function Home() {
               <img src={selectedEvent.image} alt={selectedEvent.title} />
             </figure>}
             <div className="modal-copy">
-              {(selectedEvent.description || '').split(/\n\s*\n/).map((paragraph, index) => paragraph.trim() && <p style={{whiteSpace:'pre-wrap'}} key={index}>{linkifyPlainText(paragraph, `event-${index}`)}</p>)}
+              {articleParagraphs(selectedEvent.description || '').map((paragraph, index) => <p key={index}>{linkifyPlainText(paragraph, `event-${index}`)}</p>)}
             </div>
             <p className="event-modal-date">{selectedEvent.time ? `${selectedEvent.time} · ` : ''}{formatDate(selectedEvent.kind === 'history' ? selectedEvent.historicalDate || selectedEvent.date : selectedEvent.date)}</p>
             {selectedEvent.location && <p className="event-modal-location">{selectedEvent.location}</p>}

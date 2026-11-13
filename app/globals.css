@@ -90,7 +90,7 @@ button { -webkit-tap-highlight-color: transparent; }
 .modal-image figcaption { padding-top: 7px; color: var(--muted); font-size: 10px; }
 .modal-image a, .modal-copy a { color: var(--green); text-decoration: underline; text-underline-offset: 2px; }
 .modal-copy { display: grid; gap: 12px; }
-.modal-copy p { margin: 0; color: #444746; font-family: inherit; font-size: 16px; line-height: 1.65; overflow-wrap: anywhere; }
+.modal-copy p { margin: 0; color: #444746; font-family: inherit; font-size: 16px; line-height: 1.65; overflow-wrap: anywhere; white-space: normal; }
 .modal-sources { display: grid; gap: 5px; margin: 12px 0 0; padding-left: 18px; color: var(--muted); font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; }
 .modal-sources a { text-decoration: underline; text-underline-offset: 2px; }
 .event-modal-date, .event-modal-location { margin: 18px 0 0; color: var(--muted); font-size: 12px; }

@@ -7,5 +7,17 @@ const placeholderParagraphs = [
 ];
 
 export function displayedArticleParagraphs(originalParagraphs: string[]): string[] {
-  return demoArticleText ? placeholderParagraphs : originalParagraphs;
+  return (demoArticleText ? placeholderParagraphs : originalParagraphs)
+    .flatMap(articleParagraphs);
+}
+
+// Calendar descriptions often contain line wraps copied from a document.
+// Only blank lines start paragraphs; single newlines, tabs, and repeated
+// spaces are display whitespace, not instructions to break the article.
+// Keep this at the display boundary so the writer's source stays untouched.
+export function articleParagraphs(text: string): string[] {
+  return text.replace(/\r\n?/g, '\n')
+    .split(/\n[^\S\n]*\n/)
+    .map(paragraph => paragraph.replace(/\s+/gu, ' ').trim())
+    .filter(Boolean);
 }
