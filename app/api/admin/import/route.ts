@@ -1,6 +1,6 @@
 import { isAdmin, sameOrigin } from '@/lib/admin/auth';
 import { maxUploadBytes, readPeopleSpreadsheet, SpreadsheetError } from '@/lib/admin/spreadsheet';
-import { calendarPeople, importPeople, personKey, readDirectory, undoImport } from '@/lib/people-directory';
+import { importPeople, personKey, readDirectory, undoImport } from '@/lib/people-directory';
 export const runtime='nodejs';
 export const dynamic='force-dynamic';
 export const maxDuration=60;
@@ -27,13 +27,12 @@ export async function POST(request:Request) {
       dateOrder:form.get('dateOrder')==='dmy'?'dmy':'mdy',sheetName:String(form.get('sheetName')||'')||undefined,nameColumn:col('nameColumn'),birthColumn:col('birthColumn'),
     });
     if (parsed.needsColumns) return reply(parsed);
-    const calendar=await calendarPeople();
     if (form.get('mode')==='commit') {
       if (form.get('previewId')!==parsed.id) return reply({error:'The file or settings changed. Please preview it again.'},400);
-      const result=await importPeople({id:parsed.id,fileName:file.name,people:parsed.people,skipped:parsed.issues.length,calendar});
+      const result=await importPeople({id:parsed.id,fileName:file.name,people:parsed.people,skipped:parsed.issues.length});
       return reply({done:true,added:result.added,duplicates:result.duplicates,skipped:result.skipped,id:result.id});
     }
-    const d=await readDirectory(),known=new Set([...calendar,...d.people].map(personKey));
+    const d=await readDirectory(),known=new Set(d.people.map(personKey));
     let added=0,duplicates=0;
     for (const person of parsed.people) { if (known.has(personKey(person))) duplicates++; else { known.add(personKey(person));added++; } }
     return reply({previewId:parsed.id,rows:parsed.rows,added,duplicates,skipped:parsed.issues.length,preview:parsed.people.slice(0,10),issues:parsed.issues,headers:parsed.headers,sheets:parsed.sheets,sheetName:parsed.sheetName});

@@ -4,7 +4,7 @@ import ExcelJS from 'exceljs';
 import {randomBytes,scryptSync} from 'node:crypto';
 import {parseBirthDate,readPeopleSpreadsheet} from '../lib/admin/spreadsheet.ts';
 import {createSession,validSession,verifyCredentials,sameOrigin} from '../lib/admin/auth.ts';
-import {mergePeople,personId} from '../lib/people-directory.ts';
+import {mergePeople,personId,allPeople} from '../lib/people-directory.ts';
 
 const salt=randomBytes(16);process.env.ADMIN_EMAIL='staff@example.com';
 process.env.ADMIN_PASSWORD_HASH=`${salt.toString('hex')}:${scryptSync('test-only-password',salt,64).toString('hex')}`;
@@ -52,8 +52,8 @@ test('CSV skips invalid dates, supports quoted names, and offers manual column m
  assert.equal((await readPeopleSpreadsheet(custom,'people.csv',opts)).needsColumns,true);
  assert.equal((await readPeopleSpreadsheet(custom,'people.csv',{...opts,nameColumn:1,birthColumn:2})).people.length,1);
 });
-test('search merges Calendar and uploaded records without duplicate reminders',()=>{
- const p={id:'calendar-person',name:'Ada Example',birthDate:'1940-04-03'};
+test('uploaded records deduplicate without merging people with different birthdays',()=>{
+ const p={id:'upload-existing',name:'Ada Example',birthDate:'1940-04-03'};
  const duplicate={id:personId(p),name:'ADA  EXAMPLE',birthDate:p.birthDate};
  const different={id:'different',name:p.name,birthDate:'1941-04-03'};
  assert.deepEqual(mergePeople([p],[duplicate,different]),[p,different]);
@@ -78,4 +78,16 @@ test('cemetery template uses the exact five-column format and imports birthdays 
   {name:'Lauren D. Coleman',birthDate:'2011-04-27'},
   {name:'Charlie L. Hall',birthDate:'1945-03-10'},
  ]);
+});
+
+
+test('uploaded-only search never falls back to the old birthday Calendar',async()=>{
+ const keys=['BLOB_STORE_ID','BLOB_READ_WRITE_TOKEN','REMEMBER_BIRTHDAY_FEED_URL'];
+ const saved=Object.fromEntries(keys.map(k=>[k,process.env[k]]));
+ const originalFetch=globalThis.fetch;let calls=0;
+ delete process.env.BLOB_STORE_ID;delete process.env.BLOB_READ_WRITE_TOKEN;
+ process.env.REMEMBER_BIRTHDAY_FEED_URL='https://calendar.example.test/legacy.ics';
+ globalThis.fetch=async()=>{calls++;throw new Error('Calendar must not be called');};
+ try {await assert.rejects(allPeople(),/Private storage is not configured/);assert.equal(calls,0);}
+ finally {globalThis.fetch=originalFetch;for(const k of keys){if(saved[k]===undefined)delete process.env[k];else process.env[k]=saved[k];}}
 });
