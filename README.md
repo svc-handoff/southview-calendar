@@ -27,7 +27,7 @@ The server reads the private feed through `REMEMBER_BIRTHDAY_FEED_URL`, stored a
 
 ## Private staff imports
 
-Staff use `/admin` directly to sign in and upload `.xlsx` or `.csv` files. No public sign-up or write endpoint is available without the staff session. Each file can contain up to 10,000 people and be up to 4 MB. Common name and birth-date headings are detected, and unfamiliar full-name/date columns can be selected manually. A preview shows dates, duplicates, and invalid rows before import. Upload history includes an undo action.
+Staff use `/admin` directly to sign in and upload `.xlsx` or `.csv` files. No public sign-up or write endpoint is available without the staff session. Each file can contain up to 10,000 people and be up to 4 MB. The Excel template uses DateOfBirth, DateOfDeath, FirstName, LastName, MiddleName, with MM/DD/YYYY date formatting. DateOfDeath is accepted but birthday reminders use only DateOfBirth. Common alternate name and birth-date headings are also detected. A preview shows dates, duplicates, and invalid rows before import. The upload screen has no recent-upload history.
 
 Imported names and birth dates are stored in a **private Vercel Blob store**, separate from the public source repository. Original spreadsheets and unrelated columns are not stored. The existing private birthday calendar remains searchable alongside staff imports; imported people are deduplicated by normalized full name and full birth date. Staff imports do not create thousands of Google Calendar events. Public visitors can search for matching people and export individual annual birthday reminders.
 

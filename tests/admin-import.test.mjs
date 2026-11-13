@@ -62,3 +62,20 @@ test('rejects oversized and unreadable files instead of silently importing parti
  await assert.rejects(readPeopleSpreadsheet(Buffer.alloc(4*1024*1024+1),'people.xlsx',opts),/smaller than 4 MB/);
  await assert.rejects(readPeopleSpreadsheet(Buffer.from('not excel'),'people.xlsx',opts),/not a readable Excel file/);
 });
+
+test('cemetery template uses the exact five-column format and imports birthdays rather than deaths',async()=>{
+ const {peopleTemplate,peopleTemplateColumns}=await import('../lib/admin/template.ts');
+ const book=new ExcelJS.Workbook();await book.xlsx.load(await peopleTemplate());
+ const sheet=book.getWorksheet('People');
+ assert.deepEqual(sheet.getRow(1).values.slice(1),['DateOfBirth','DateOfDeath','FirstName','LastName','MiddleName']);
+ assert.deepEqual(peopleTemplateColumns,sheet.getRow(1).values.slice(1));
+ assert.equal(sheet.getColumn(1).numFmt,'mm/dd/yyyy');
+ sheet.addRow(['04/27/2011','04/12/2015','Lauren D.','Coleman','']);
+ sheet.addRow(['03/10/1945','04/16/2015','Charlie','Hall','L.']);
+ const result=await readPeopleSpreadsheet(Buffer.from(await book.xlsx.writeBuffer()),'people.xlsx',opts);
+ assert.equal(result.needsColumns,false);
+ assert.deepEqual(result.people.map(({name,birthDate})=>({name,birthDate})),[
+  {name:'Lauren D. Coleman',birthDate:'2011-04-27'},
+  {name:'Charlie L. Hall',birthDate:'1945-03-10'},
+ ]);
+});

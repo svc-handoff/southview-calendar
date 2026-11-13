@@ -1,23 +1,17 @@
 'use client';
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 
 type Person={name:string;birthDate:string};
 type Issue={row:number;name:string;reason:string};
 type Preview={previewId?:string;added:number;duplicates:number;skipped:number;preview:Person[];issues:Issue[];needsColumns?:boolean;headers:string[];sheets:string[];sheetName:string};
-type Batch={id:string;fileName:string;createdAt:string;added:number;duplicates:number;skipped:number;undone?:boolean};
 function date(value:string) { return new Date(`${value}T00:00:00Z`).toLocaleDateString('en-US',{timeZone:'UTC',month:'long',day:'numeric',year:'numeric'}); }
 export default function AdminPanel({signedIn}:{signedIn:boolean}) {
  const [email,setEmail]=useState(''),[password,setPassword]=useState(''),[error,setError]=useState('');
  const [busy,setBusy]=useState(false),[file,setFile]=useState<File|null>(null),[preview,setPreview]=useState<Preview|null>(null);
- const [dateOrder,setDateOrder]=useState('mdy'),[sheetName,setSheetName]=useState(''),[nameColumn,setNameColumn]=useState(''),[birthColumn,setBirthColumn]=useState('');
- const [done,setDone]=useState<{added:number;duplicates:number;skipped:number}|null>(null),[batches,setBatches]=useState<Batch[]>([]),[total,setTotal]=useState(0),[confirmUndo,setConfirmUndo]=useState('');
+ const dateOrder='mdy';
+ const [sheetName,setSheetName]=useState(''),[nameColumn,setNameColumn]=useState(''),[birthColumn,setBirthColumn]=useState('');
+ const [done,setDone]=useState<{added:number;duplicates:number;skipped:number}|null>(null);
  const input=useRef<HTMLInputElement>(null);
- async function history() {
-  const r=await fetch('/api/admin/import',{cache:'no-store'}),data=await r.json();
-  if (!r.ok) throw new Error(data.error||'Please sign in again.');
-  setBatches(data.imports);setTotal(data.people);
- }
- useEffect(()=>{if(signedIn)void history().catch(e=>setError(e.message));},[signedIn]);
  async function login(event:FormEvent) {
   event.preventDefault();setBusy(true);setError('');
   try { const r=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})}),d=await r.json();
@@ -33,14 +27,9 @@ export default function AdminPanel({signedIn}:{signedIn:boolean}) {
    if(commit&&preview?.previewId)f.set('previewId',preview.previewId);
    const r=await fetch('/api/admin/import',{method:'POST',body:f}),d=await r.json();
    if(!r.ok)throw new Error(d.error||'The file could not be processed. Please try again.');
-   if(d.done){setDone(d);setPreview(null);setFile(null);if(input.current)input.current.value='';await history();}
+   if(d.done){setDone(d);setPreview(null);setFile(null);if(input.current)input.current.value='';}
    else setPreview(d);
   }catch(e){setError(e instanceof Error?e.message:'The upload could not finish. Please try again.');}finally{setBusy(false);}
- }
- async function undo(id:string) {
-  setBusy(true);setError('');
-  try {const f=new FormData();f.set('mode','undo');f.set('id',id);const r=await fetch('/api/admin/import',{method:'POST',body:f}),d=await r.json();if(!r.ok)throw new Error(d.error);setConfirmUndo('');setDone(null);await history();}
-  catch(e){setError(e instanceof Error?e.message:'Could not undo this upload.');}finally{setBusy(false);}
  }
  function downloadIssues() {
   if(!preview)return;
@@ -48,7 +37,6 @@ export default function AdminPanel({signedIn}:{signedIn:boolean}) {
   const content=['Row,Name,Needs attention',...preview.issues.map(i=>[String(i.row),i.name,i.reason].map(quote).join(','))].join('\r\n');
   const url=URL.createObjectURL(new Blob(['\ufeff'+content],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='people-needing-attention.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
  }
- const resetSettings=()=>{setPreview(null);setDone(null);};
  return <main className="admin-page">
   <header className="admin-heading"><div><p className="admin-eyebrow">STAFF ONLY</p><h1>Remember someone</h1></div><a href="/">View calendar</a></header>
   {!signedIn?<section className="admin-card admin-signin"><h2>Sign in</h2><form onSubmit={login}>
@@ -58,10 +46,9 @@ export default function AdminPanel({signedIn}:{signedIn:boolean}) {
   </form></section>:<>
    <div className="admin-session"><span>Private staff uploads</span><button disabled={busy} onClick={async()=>{await fetch('/api/admin/logout',{method:'POST'});window.location.reload();}}>Sign out</button></div>
    <section className="admin-card"><h2>Add people from a spreadsheet</h2><p>Choose an Excel or CSV file with names and birthdays. Up to 10,000 people per file, 4 MB maximum.</p>
-    <p className="admin-help">Use a full date of birth, including the year. Extra columns are ignored. <a href="/api/admin/template">Download a blank template</a></p>
+    <p className="admin-help">Columns: DateOfBirth, DateOfDeath, FirstName, LastName, MiddleName. Dates use MM/DD/YYYY; MiddleName may be blank. <a href="/api/admin/template">Download Excel template</a></p>
     <label className="admin-file-label" htmlFor="people-file">Choose your spreadsheet</label><input ref={input} id="people-file" type="file" accept=".xlsx,.csv" disabled={busy} onChange={e=>changeFile(e.target.files?.[0]||null)} />
-    {file&&<div className="admin-options">
-     <label htmlFor="date-order">Dates written with numbers</label><select id="date-order" disabled={busy} value={dateOrder} onChange={e=>{setDateOrder(e.target.value);resetSettings();}}><option value="mdy">Month / day / year (04/03/1940 = April 3)</option><option value="dmy">Day / month / year (03/04/1940 = April 3)</option></select>
+    {file&&preview&&preview.sheets.length>1&&<div className="admin-options">
      {preview && preview.sheets.length>1&&<><label htmlFor="import-sheet">Sheet to import</label><select id="import-sheet" value={sheetName||preview.sheetName} disabled={busy} onChange={e=>{setSheetName(e.target.value);setPreview(null);setNameColumn('');setBirthColumn('');}}>{preview.sheets.map(s=><option key={s}>{s}</option>)}</select></>}
     </div>}
     {preview?.needsColumns&&<div className="admin-column-picker"><h3>Which columns should we use?</h3><p>We couldn’t identify the names and birthdays automatically. Pick the matching headings below.</p>
@@ -78,9 +65,6 @@ export default function AdminPanel({signedIn}:{signedIn:boolean}) {
     </div>}
     {done&&<div className="admin-success" role="status"><h3>Upload complete</h3><p>{done.added.toLocaleString()} people added. {done.duplicates.toLocaleString()} duplicates skipped. {done.skipped.toLocaleString()} rows need attention.</p><p>The new people are now available in Remember Someone search.</p></div>}
     {error&&<p className="admin-error" role="alert">{error}</p>}
-   </section>
-   <section className="admin-card"><h2>Recent uploads</h2><p>{total.toLocaleString()} people added through staff uploads. Existing birthday-calendar records are also searchable.</p>
-    {!batches.length?<p>No spreadsheets uploaded yet.</p>:<ul className="admin-imports">{batches.map(b=><li key={b.id}><div><strong>{b.fileName}</strong><p>{new Date(b.createdAt).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})} · {b.added.toLocaleString()} added{b.undone?' · Undone':''}</p></div>{!b.undone&&b.added>0&&(confirmUndo===b.id?<div className="admin-undo"><span>Remove the {b.added.toLocaleString()} people added by this upload?</span><button disabled={busy} onClick={()=>void undo(b.id)}>Yes, undo upload</button><button disabled={busy} onClick={()=>setConfirmUndo('')}>Keep it</button></div>:<button disabled={busy} onClick={()=>setConfirmUndo(b.id)}>Undo upload</button>)}</li>)}</ul>}
    </section>
   </>}
  </main>;

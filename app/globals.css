@@ -227,10 +227,4 @@ button { -webkit-tap-highlight-color: transparent; }
 .admin-success p { color:inherit; }
 .admin-actions { display:flex; align-items:baseline; flex-wrap:wrap; gap:12px; }
 .admin-page .admin-text-button { min-height:32px; padding:0; border:0; background:none; font:inherit; }
-.admin-imports { margin:0; padding:0; list-style:none; }
-.admin-imports li { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; padding:20px 0; border-bottom:1px solid var(--line); }
-.admin-imports strong { overflow-wrap:anywhere; }
-.admin-imports p { font-size:14px; margin:4px 0 0; }
-.admin-undo { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
-.admin-undo span { width:100%; }
 @media(max-width:640px) { .admin-page { width:calc(100% - 24px); margin-top:24px; } .admin-card { padding:20px 16px; } .admin-heading { align-items:flex-start; } .admin-heading h1 { font-size:25px; } .admin-heading a { font-size:14px; } .admin-page td,.admin-page th { padding:10px 6px; } }
