@@ -10,6 +10,25 @@ export function displayedArticleParagraphs(originalParagraphs: string[]): string
   return articleParagraphs((demoArticleText ? placeholderParagraphs : originalParagraphs).join('\n\n'));
 }
 
+export function articleSourceLines(text: string): string[] {
+  return text.replace(/\r\n?/g, '\n')
+    // Documents sometimes wrap a URL at a hyphen or slash. Rejoin that
+    // continuation before separating entries so it remains one working link.
+    .replace(/(https?:\/\/\S*[-/])[^\S\n]*\n[^\S\n]*(?!https?:\/\/)(?=[a-z0-9])/g, '$1')
+    .replace(/(https?:\/\/\S+)[^\S\n]+,(?=[\s]|$)/g, '$1,')
+    .split(/\n+/)
+    .flatMap(line => {
+      const trimmed = line.trim();
+      // Split standalone URL lists, while keeping author names, dates,
+      // titles and page numbers together inside written citations.
+      return /^https?:\/\//i.test(trimmed)
+        ? trimmed.replace(/(https?:\/\/\S+?),[ \t]+(?=\S)|,(?=https?:\/\/)/gi, (_match, url: string | undefined) => `${url || ''}\n`).split('\n')
+        : [trimmed];
+    })
+    .map(line => line.replace(/\s+/gu, ' ').trim().replace(/^(https?:\/\/\S+),$/i, '$1'))
+    .filter(Boolean);
+}
+
 // Calendar descriptions often contain line wraps copied from a document.
 // Only blank lines start paragraphs; single newlines, tabs, and repeated
 // spaces are display whitespace, except in the writer's Sources section.
@@ -23,18 +42,7 @@ export function articleParagraphs(text: string): string[] {
     .map(paragraph => paragraph.replace(/\s+/gu, ' ').trim())
     .filter(Boolean);
   if (heading) {
-    const sources = normalized.slice(heading.index + heading[0].length)
-      .split(/\n+/)
-      .flatMap(line => {
-        const trimmed = line.trim();
-        // Standalone URL lists use commas as separators. Prose citations
-        // retain their punctuation (authors, dates, book titles, page numbers).
-        return /^https?:\/\//i.test(trimmed)
-          ? trimmed.replace(/(https?:\/\/\S+?),[ \t]+(?=\S)|,(?=https?:\/\/)/gi, (_match, url: string | undefined) => `${url || ''}\n`).split('\n')
-          : [trimmed];
-      })
-      .map(line => line.replace(/\s+/gu, ' ').trim().replace(/^(https?:\/\/\S+),$/i, '$1'))
-      .filter(Boolean);
+    const sources = articleSourceLines(normalized.slice(heading.index + heading[0].length));
     paragraphs.push(['Sources:', ...sources].join('\n'));
   }
   return paragraphs;

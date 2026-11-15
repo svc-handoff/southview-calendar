@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { articleParagraphs } from '@/lib/article-display';
+import { ArticleCopy } from '@/components/article-copy';
 import { calendarEventsForMonth, type CalendarEvent, type HistoricalArticle } from '@/lib/events';
 import { birthdayCalendar, birthdayReminder, googleMemorialLink, type BirthdayPerson } from '@/lib/google-reminders';
 
@@ -15,24 +16,6 @@ type MemorialMatch = BirthdayPerson;
 function formatDate(date: string) {
   const [year, month, day] = date.split('-').map(Number);
   return new Date(Date.UTC(year, month - 1, day)).toLocaleDateString('en-US', { timeZone: 'UTC', month: 'long', day: 'numeric', year: 'numeric' });
-}
-
-function linkifyPlainText(text: string, key: string) {
-  const links = /(https?:\/\/[^\s<>]+)/g;
-  const result: ReactNode[] = [];
-  let cursor = 0;
-  let match: RegExpExecArray | null;
-  let index = 0;
-  while ((match = links.exec(text))) {
-    result.push(text.slice(cursor, match.index));
-    const raw = match[1];
-    const url = raw.replace(/[.,;:!?)]*$/, '');
-    const punctuation = raw.slice(url.length);
-    result.push(<span key={`${key}-${index++}`}><a href={url} target="_blank" rel="noreferrer">{url}</a>{punctuation}</span>);
-    cursor = links.lastIndex;
-  }
-  result.push(text.slice(cursor));
-  return result;
 }
 
 export default function Home() {
@@ -185,7 +168,7 @@ export default function Home() {
               <img src={selectedEvent.image} alt={selectedEvent.title} />
             </figure>}
             <div className="modal-copy">
-              {articleParagraphs(selectedEvent.description || '').map((paragraph, index) => <p className={paragraph.startsWith('Sources:') ? 'article-sources' : undefined} key={index}>{linkifyPlainText(paragraph, `event-${index}`)}</p>)}
+              <ArticleCopy paragraphs={articleParagraphs(selectedEvent.description || '')} />
             </div>
             <p className="event-modal-date">{selectedEvent.time ? `${selectedEvent.time} · ` : ''}{formatDate(selectedEvent.kind === 'history' ? selectedEvent.historicalDate || selectedEvent.date : selectedEvent.date)}</p>
             {selectedEvent.location && <p className="event-modal-location">{selectedEvent.location}</p>}

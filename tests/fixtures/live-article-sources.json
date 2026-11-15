@@ -1,0 +1,324 @@
+[
+  {
+    "title": "David Tobias Howard Sr. is born",
+    "input": "Sources: South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Charles H. Morgan buys the first recorded South-View shares",
+    "input": "Sources: South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Jesse Bee Blayton Sr. is born",
+    "input": "Sources: https://www.radiohalloffame.com/jesse-b-blayton-sr,\nhttps://blackpast.org/african-american-history/blayton-sr-jesse-b-1897-1977/ ,\nSouth-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "https://www.radiohalloffame.com/jesse-b-blayton-sr",
+      "https://blackpast.org/african-american-history/blayton-sr-jesse-b-1897-1977/",
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "A young descendant unveils Bishop Lucius Holsey’s monument",
+    "input": "Sources: https://en.wikipedia.org/wiki/Lucius_Henry_Holsey, South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "https://en.wikipedia.org/wiki/Lucius_Henry_Holsey",
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Horace Mann Bond is born in Nashville",
+    "input": "Sources: https://www.lincoln.edu/academics/honors-program/about-horace-mann-\nbond.html, https://en.wikipedia.org/wiki/Horace_Mann_Bond, South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "https://www.lincoln.edu/academics/honors-program/about-horace-mann-bond.html",
+      "https://en.wikipedia.org/wiki/Horace_Mann_Bond",
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Sterling Watts is buried in Westview’s segregated Rest Haven section",
+    "input": "Sources: South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Walter Drake Westmoreland is shot down over Hungary",
+    "input": "Sources: South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Amos Rucker dies and is buried at South-View",
+    "input": "Sources: South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Mary Agnes Boswell Jones is born",
+    "input": "Sources: https://news.emory.edu/stories/2019/10/emory-leads-effort-honor-m-\nagnes-jones-elementary-school-namesake, South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "https://news.emory.edu/stories/2019/10/emory-leads-effort-honor-m-agnes-jones-elementary-school-namesake",
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Ruby Doris Smith Robinson dies after building SNCC’s field operations",
+    "input": "Sources: South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Jean Childs Young dies after decades of education and children’s advocacy",
+    "input": "Sources: South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Lorimer Douglas Milton is born",
+    "input": "Sources: https://www.hbs.edu/leadership/20th-century-\nleaders/details?profile=lorimer_d_milton, South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "https://www.hbs.edu/leadership/20th-century-leaders/details?profile=lorimer_d_milton",
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "John Wesley Dobbs dies as Atlanta schools desegregate",
+    "input": "Sources: South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Prince Hall Masons dedicate John Wesley Dobbs’s broken-column memorial",
+    "input": "Sources: South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Henry Ossian Flipper is born",
+    "input": "Sources: South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Dr. Frederick Earl McLendon contacts Martin Luther King Jr. over medical treatment for Selma protesters.",
+    "input": "Sources: https://www.atlantapreservationcenter.com/sites/mclendon-hospital,\nhttps://www.findagrave.com/memorial/198584298/frederick_earl-mclendon, South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "https://www.atlantapreservationcenter.com/sites/mclendon-hospital",
+      "https://www.findagrave.com/memorial/198584298/frederick_earl-mclendon",
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Theodore Martin Alexander Sr. is born",
+    "input": "Sources: South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Atlanta’s Black community moves to buy land for South-View",
+    "input": "Sources: South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Bennie Bell McLendon is born",
+    "input": "Sources: South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "Lillian Miles Lewis dies after a career in libraries and public service",
+    "input": "Sources: South-View: An African American City of the Dead by D.L. Henderson",
+    "expected": [
+      "South-View: An African American City of the Dead by D.L. Henderson"
+    ]
+  },
+  {
+    "title": "William Holmes Borders Sr. is born",
+    "input": "Sources: https://kinginstitute.stanford.edu/borders-william-holmes-sr, https://en.wikipedia.org/wiki/William_Holmes_Borders",
+    "expected": [
+      "https://kinginstitute.stanford.edu/borders-william-holmes-sr",
+      "https://en.wikipedia.org/wiki/William_Holmes_Borders"
+    ]
+  },
+  {
+    "title": "Julian Bond is born",
+    "input": "Sources: https://naacp.org/find-resources/history-explained/civil-rights-leaders/julian-bond",
+    "expected": [
+      "https://naacp.org/find-resources/history-explained/civil-rights-leaders/julian-bond"
+    ]
+  },
+  {
+    "title": "Atlanta educator Bazoline E. Usher is born",
+    "input": "Sources: https://en.wikipedia.org/wiki/Bazoline_Estelle_Usher",
+    "expected": [
+      "https://en.wikipedia.org/wiki/Bazoline_Estelle_Usher"
+    ]
+  },
+  {
+    "title": "Librarian Annie L. McPheeters dies after building Atlanta’s Black history collection",
+    "input": "Sources: https://www.georgiaencyclopedia.org/articles/education/annie-l-mcpheeters-1908-1994/",
+    "expected": [
+      "https://www.georgiaencyclopedia.org/articles/education/annie-l-mcpheeters-1908-1994/"
+    ]
+  },
+  {
+    "title": "John W. E. Bowen calls for education and opportunity at Atlanta’s exposition",
+    "input": "Sources: https://dbcs.rutgers.edu/all-scholars/8564-bowen-john-wesley-edward, https://www.bu.edu/sth-history/prophets/john-wesley-edward-bowen-1885/",
+    "expected": [
+      "https://dbcs.rutgers.edu/all-scholars/8564-bowen-john-wesley-edward",
+      "https://www.bu.edu/sth-history/prophets/john-wesley-edward-bowen-1885/"
+    ]
+  },
+  {
+    "title": "Martin Luther King Jr. is awarded the Nobel Peace Prize",
+    "input": "Sources: https://thekingcenter.org/about-tkc/martin-luther-king-jr/, https://www.history.com/articles/martin-luther-king-jr, https://kinginstitute.stanford.edu/nobel-peace-prize",
+    "expected": [
+      "https://thekingcenter.org/about-tkc/martin-luther-king-jr/",
+      "https://www.history.com/articles/martin-luther-king-jr",
+      "https://kinginstitute.stanford.edu/nobel-peace-prize"
+    ]
+  },
+  {
+    "title": "John Lewis calls for federal action at the March on Washington",
+    "input": "Sources: https://voicesofdemocracy.umd.edu/lewis-speech-at-the-march-on-washington-speech-text/",
+    "expected": [
+      "https://voicesofdemocracy.umd.edu/lewis-speech-at-the-march-on-washington-speech-text/"
+    ]
+  },
+  {
+    "title": "Benjamin E. Mays begins his Morehouse presidency",
+    "input": "Sources: https://www.ebsco.com/research-starters/history/benjamin-e-mays/",
+    "expected": [
+      "https://www.ebsco.com/research-starters/history/benjamin-e-mays/"
+    ]
+  },
+  {
+    "title": "John Lewis dies after a life in the civil-rights movement and Congress",
+    "input": "Sources: https://www.nytimes.com/2020/07/17/us/john-lewis-dead.html",
+    "expected": [
+      "https://www.nytimes.com/2020/07/17/us/john-lewis-dead.html"
+    ]
+  },
+  {
+    "title": "Atlanta honors poet, painter, and minister Thomas Jefferson Flanagan",
+    "input": "Sources: https://digitalcollections.library.gsu.edu/digital/api/collection/AFLCIO/id/115265/download",
+    "expected": [
+      "https://digitalcollections.library.gsu.edu/digital/api/collection/AFLCIO/id/115265/download"
+    ]
+  },
+  {
+    "title": "Jean Childs Young is born in Marion, Alabama",
+    "input": "Sources: https://www.georgiaencyclopedia.org/articles/history-archaeology/jean-childs-young-1933-1994/",
+    "expected": [
+      "https://www.georgiaencyclopedia.org/articles/history-archaeology/jean-childs-young-1933-1994/"
+    ]
+  },
+  {
+    "title": "Alonzo Herndon is born enslaved in Walton County",
+    "input": "Sources: https://www.georgiaencyclopedia.org/articles/business-economy/alonzo-herndon-1858-1927/",
+    "expected": [
+      "https://www.georgiaencyclopedia.org/articles/business-economy/alonzo-herndon-1858-1927/"
+    ]
+  },
+  {
+    "title": "Grace Towns Hamilton dies after a career in Georgia politics",
+    "input": "Sources: https://www.georgiaencyclopedia.org/articles/history-archaeology/grace-towns-hamilton-1907-1992/",
+    "expected": [
+      "https://www.georgiaencyclopedia.org/articles/history-archaeology/grace-towns-hamilton-1907-1992/"
+    ]
+  },
+  {
+    "title": "South-View’s founders transfer 25 acres to the association",
+    "input": "Sources: Henderson, page 24",
+    "expected": [
+      "Henderson, page 24"
+    ]
+  },
+  {
+    "title": "Henry Rutherford Butler calls for care of South-View’s grounds",
+    "input": "Sources: https://yorkritegapha.com/h_r_butler/\nhttps://www.georgiaencyclopedia.org/articles/science-medicine/henry-rutherford-butler-1862-1931/m-11248/\nHenderson, page 60",
+    "expected": [
+      "https://yorkritegapha.com/h_r_butler/",
+      "https://www.georgiaencyclopedia.org/articles/science-medicine/henry-rutherford-butler-1862-1931/m-11248/",
+      "Henderson, page 60"
+    ]
+  },
+  {
+    "title": "South-View Cemetery receives its charter",
+    "input": "Sources: Henderson, page 23\nhttps://atlantaspastrevisited.com/2017/04/07/david-t-howard-pt-1-the-man-behind-the-name/\nThe Atlanta Constitution on April 18, 1935",
+    "expected": [
+      "Henderson, page 23",
+      "https://atlantaspastrevisited.com/2017/04/07/david-t-howard-pt-1-the-man-behind-the-name/",
+      "The Atlanta Constitution on April 18, 1935"
+    ]
+  },
+  {
+    "title": "A neighbor legally challenges South-View’s early burials",
+    "input": "Sources: https://www.newspapers.com/image/968866661/?match=25&terms=south-view%20harper%20burials&search-id=4f25383e-7895-4a8d-af0d-e61ff16496c1&search-rank=2\nHenderson, page 23",
+    "expected": [
+      "https://www.newspapers.com/image/968866661/?match=25&terms=south-view%20harper%20burials&search-id=4f25383e-7895-4a8d-af0d-e61ff16496c1&search-rank=2",
+      "Henderson, page 23"
+    ]
+  },
+  {
+    "title": "Bloody Sunday: John Lewis and marchers are attacked in Selma",
+    "input": "Sources: https://www.history.com/articles/selma-bloody-sunday-attack-civil-rights-movement\nhttps://www.britannica.com/topic/Edmund-Pettus-Bridge",
+    "expected": [
+      "https://www.history.com/articles/selma-bloody-sunday-attack-civil-rights-movement",
+      "https://www.britannica.com/topic/Edmund-Pettus-Bridge"
+    ]
+  },
+  {
+    "title": "Annie L. McPheeters is born in Floyd County",
+    "input": "Sources: Williams, Kerrie. \"Annie L. McPheeters.\" New Georgia Encyclopedia, 19 May 2010, https://www.georgiaencyclopedia.org/articles/education/annie-l-mcpheeters-1908-1994/.\nMcPheeters, Annie L., Interviewed by Kathryn L. Nasstrom, 8 June 1992, P1992-09, Series J. Black and White Women in Atlanta Public Life, Georgia Government Documentation Project, Special Collections   and Archives, Georgia State University Library, Atlanta.",
+    "expected": [
+      "Williams, Kerrie. \"Annie L. McPheeters.\" New Georgia Encyclopedia, 19 May 2010, https://www.georgiaencyclopedia.org/articles/education/annie-l-mcpheeters-1908-1994/.",
+      "McPheeters, Annie L., Interviewed by Kathryn L. Nasstrom, 8 June 1992, P1992-09, Series J. Black and White Women in Atlanta Public Life, Georgia Government Documentation Project, Special Collections and Archives, Georgia State University Library, Atlanta."
+    ]
+  },
+  {
+    "title": "John Lewis is born near Troy, Alabama",
+    "input": "Sources: https://history.house.gov/People/Detail/16948",
+    "expected": [
+      "https://history.house.gov/People/Detail/16948"
+    ]
+  },
+  {
+    "title": "Martin Luther King Jr. is born in Atlanta",
+    "input": "Sources: https://www.nps.gov/articles/featured_stories_malu.htm\nhttps://kinginstitute.stanford.edu/king-resources/major-king-events-chronology-1929-1968",
+    "expected": [
+      "https://www.nps.gov/articles/featured_stories_malu.htm",
+      "https://kinginstitute.stanford.edu/king-resources/major-king-events-chronology-1929-1968"
+    ]
+  },
+  {
+    "title": "Atlanta renames Houston Street for John Wesley Dobbs",
+    "input": "Sources: https://www.georgiaencyclopedia.org/articles/history-archaeology/john-wesley-dobbs-1882-1961/",
+    "expected": [
+      "https://www.georgiaencyclopedia.org/articles/history-archaeology/john-wesley-dobbs-1882-1961/"
+    ]
+  },
+  {
+    "title": "John Lewis begins service in the U.S. House",
+    "input": "Sources: https://history.house.gov/People/Detail/16948?",
+    "expected": [
+      "https://history.house.gov/People/Detail/16948?"
+    ]
+  }
+]

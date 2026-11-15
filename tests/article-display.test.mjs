@@ -1,6 +1,35 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import {readFileSync} from 'node:fs';
+import {createElement} from 'react';
+import {renderToStaticMarkup} from 'react-dom/server';
+import ts from 'typescript';
 import { articleParagraphs, displayedArticleParagraphs } from '../lib/article-display.ts';
+import sourceFixtures from './fixtures/live-article-sources.json' with {type:'json'};
+
+const componentSource=readFileSync(new URL('../components/article-copy.tsx',import.meta.url),'utf8');
+const compiled=ts.transpileModule(componentSource,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText
+  .replaceAll('"react/jsx-runtime"',JSON.stringify(import.meta.resolve('react/jsx-runtime')));
+const {ArticleCopy}=await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
+const plainHtml=html=>html.replace(/<[^>]*>/g,'').replaceAll('&amp;','&').replaceAll('&quot;','"').replaceAll('&#x27;',"'").replaceAll('&lt;','<').replaceAll('&gt;','>');
+
+for(const fixture of sourceFixtures) {
+  test(`source formatting and rendered rows: ${fixture.title}`,()=>{
+    const paragraphs=articleParagraphs('Article text stays unchanged.\n\n'+fixture.input);
+    assert.deepEqual(paragraphs,['Article text stays unchanged.',['Sources:',...fixture.expected].join('\n')]);
+    const html=renderToStaticMarkup(createElement(ArticleCopy,{paragraphs}));
+    const sourceSection=html.match(/<section class="article-sources"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+    assert.ok(sourceSection,'a separate Sources section is rendered');
+    const rows=[...sourceSection.matchAll(/<p>([\s\S]*?)<\/p>/g)].map(m=>plainHtml(m[1]));
+    assert.deepEqual(rows,['Sources:',...fixture.expected],'every source has its own block with exact citation punctuation');
+    assert.deepEqual(displayedArticleParagraphs(['Article text stays unchanged.',fixture.input]),paragraphs,'modals and legacy article pages match');
+    for(const source of fixture.expected.filter(s=>s.startsWith('https://'))) {
+      const url=source.replace(/[.,;:!?)]*$/,'');
+      const href=renderToStaticMarkup(createElement('a',{href:url})).match(/href="([^"]*)"/)[1];
+      assert.ok(sourceSection.includes(`href="${href}"`),'complete source URL is clickable');
+    }
+  });
+}
 
 test('document line wraps flow naturally while real paragraphs stay separate', () => {
   const text = 'He also campaigned\nfor\nBlack education.\n\nOn November 17, 1927, a monument was\nerected at\nSouth-View.';
