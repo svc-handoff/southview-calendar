@@ -5,13 +5,22 @@ type Person={name:string;birthDate:string};
 type Issue={row:number;name:string;reason:string};
 type Preview={previewId?:string;added:number;duplicates:number;skipped:number;preview:Person[];issues:Issue[];needsColumns?:boolean;headers:string[];sheets:string[];sheetName:string};
 function date(value:string) { return new Date(`${value}T00:00:00Z`).toLocaleDateString('en-US',{timeZone:'UTC',month:'long',day:'numeric',year:'numeric'}); }
-export default function AdminPanel({signedIn}:{signedIn:boolean}) {
+export default function AdminPanel({signedIn,initialPublicHidden}:{signedIn:boolean;initialPublicHidden:boolean}) {
+ const [publicHidden,setPublicHidden]=useState(initialPublicHidden),[visibilityBusy,setVisibilityBusy]=useState(false),[visibilityError,setVisibilityError]=useState('');
  const [email,setEmail]=useState(''),[password,setPassword]=useState(''),[error,setError]=useState('');
  const [busy,setBusy]=useState(false),[file,setFile]=useState<File|null>(null),[preview,setPreview]=useState<Preview|null>(null);
  const dateOrder='mdy';
  const [sheetName,setSheetName]=useState(''),[nameColumn,setNameColumn]=useState(''),[birthColumn,setBirthColumn]=useState('');
  const [done,setDone]=useState<{added:number;duplicates:number;skipped:number}|null>(null);
  const input=useRef<HTMLInputElement>(null);
+ async function toggleWebsite(){
+  setVisibilityBusy(true);setVisibilityError('');
+  try{
+   const response=await fetch('/api/admin/visibility',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({hidden:!publicHidden})});
+   const data=await response.json();if(!response.ok)throw new Error(data.error||'The website setting could not be saved.');
+   setPublicHidden(data.hidden);
+  }catch(e){setVisibilityError(e instanceof Error?e.message:'The website setting could not be saved.');}finally{setVisibilityBusy(false);}
+ }
  async function login(event:FormEvent) {
   event.preventDefault();setBusy(true);setError('');
   try { const r=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})}),d=await r.json();
@@ -48,6 +57,11 @@ export default function AdminPanel({signedIn}:{signedIn:boolean}) {
    {error&&<p className="admin-error" role="alert">{error}</p>}<button className="admin-primary" disabled={busy}>{busy?'Signing in…':'Sign in'}</button>
   </form></section>:<>
    <div className="admin-session"><span>Private staff uploads</span><button disabled={busy} onClick={async()=>{await fetch('/api/admin/logout',{method:'POST'});window.location.reload();}}>Sign out</button></div>
+   <section className="admin-card"><h2>Website kill switch</h2>
+    <p className="admin-help">When on, visitors see a blank page. This dashboard stays available.</p>
+    <div className="admin-actions"><button type="button" role="switch" aria-label="Hide public website" aria-checked={publicHidden} className="admin-kill-switch" disabled={visibilityBusy} onClick={()=>void toggleWebsite()}>{visibilityBusy?'Saving…':`Kill switch: ${publicHidden?'ON':'OFF'}`}</button><span role="status">{publicHidden?'Website hidden':'Website visible'}</span></div>
+    {visibilityError&&<p className="admin-error" role="alert">{visibilityError}</p>}
+   </section>
    <section className="admin-card"><h2>Add people from a spreadsheet</h2><p>Choose an Excel or CSV file with names and birthdays. Up to 10,000 people per file, 4 MB maximum.</p>
     <p className="admin-help">Use Name and DOB, or DateOfBirth, DateOfDeath, FirstName, LastName, MiddleName. We’ll detect the columns automatically. Dates use MM/DD/YYYY. <a href="/api/admin/template">Download Excel template</a></p>
     <label className="admin-file-label" htmlFor="people-file">Choose your spreadsheet</label><input ref={input} id="people-file" type="file" accept=".xlsx,.csv" disabled={busy} onChange={e=>changeFile(e.target.files?.[0]||null)} />

@@ -3,8 +3,10 @@ export const dynamic = 'force-dynamic';
 
 import { allPeople } from '@/lib/people-directory';
 import { normalized, searchPeople } from '@/lib/people-search';
+import {publicSiteHidden} from '@/lib/site-visibility';
 
 export async function GET(request: Request) {
+  if(await publicSiteHidden())return Response.json({matches:[],hidden:true},{headers:{'Cache-Control':'no-store'}});
   const query = (new URL(request.url).searchParams.get('name') || '').trim();
   if (normalized(query).length < 3 || query.length > 100) return Response.json({ matches: [], error: 'Enter at least 3 characters.' }, { status: 400, headers: { 'Cache-Control': 'no-store' } });
   try {

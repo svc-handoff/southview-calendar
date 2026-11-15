@@ -23,6 +23,8 @@ Remember Someone reads only names and birth dates added through the private `/ad
 
 ## Private staff imports
 
+The **Website kill switch** on `/admin` hides the entire public website behind a blank page, including embedded calendars and article links. `/admin` remains available so staff can turn it off again. The setting is stored privately and survives deployments. Open public pages check for changes every 10 seconds and when visitors return to the tab. The switch starts off; it does not delete calendar entries or uploaded people.
+
 Staff use `/admin` directly to sign in and upload `.xlsx` or `.csv` files. No public sign-up or write endpoint is available without the staff session. Each file can contain up to 10,000 people and be up to 4 MB. The Excel template uses DateOfBirth, DateOfDeath, FirstName, LastName, MiddleName, with MM/DD/YYYY date formatting. DateOfDeath is accepted but birthday reminders use only DateOfBirth. Common alternate name and birth-date headings are also detected. A preview shows dates, duplicates, and invalid rows before import. The upload screen has no recent-upload history.
 
 Imported names and birth dates are stored in a **private Vercel Blob store**, separate from the public source repository. Original spreadsheets and unrelated columns are not stored. Remember Someone searches only staff-uploaded records; it does not read the old birthday Google Calendar. Imported people are deduplicated by normalized full name and full birth date. Staff imports do not create thousands of Google Calendar events. Public visitors can search for matching people and export individual annual birthday reminders.

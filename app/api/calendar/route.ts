@@ -1,8 +1,10 @@
 import { readCalendarSnapshot } from '@/lib/google-calendar';
+import {publicSiteHidden} from '@/lib/site-visibility';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request:Request){
+ if(await publicSiteHidden())return Response.json({status:'hidden',events:[],articles:[]},{headers:{'Cache-Control':'no-store'}});
  const url=new URL(request.url),year=Number(url.searchParams.get('year')),month=Number(url.searchParams.get('month'));
  if(!Number.isInteger(year)||year<1900||year>2200||!Number.isInteger(month)||month<1||month>12)return Response.json({status:'error',message:'Invalid calendar month.'},{status:400});
  try{

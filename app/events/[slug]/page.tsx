@@ -3,10 +3,13 @@ import { displayHistoricalDate, resolveHistoricalArticle } from '@/lib/events';
 import { readCalendarSnapshot } from '@/lib/google-calendar';
 import { demoArticleText, displayedArticleParagraphs } from '@/lib/article-display';
 import { ArticleCopy } from '@/components/article-copy';
+import {PublicSiteGuard} from '@/components/public-site-guard';
+import {publicSiteHidden} from '@/lib/site-visibility';
 
 export const dynamic = 'force-dynamic';
 
 export default async function EventPage({ params }: { params: Promise<{ slug: string }> }) {
+  if(await publicSiteHidden())return <PublicSiteGuard initialHidden={true}/>;
   const { slug } = await params;
   const snapshot = await readCalendarSnapshot(new Date().getFullYear());
   const article = resolveHistoricalArticle(slug,snapshot.articles);
@@ -14,7 +17,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
   if (slug !== article.slug) redirect(`/events/${article.slug}`);
 
   return (
-    <main className="event-page">
+    <PublicSiteGuard initialHidden={false}><main className="event-page">
       <a className="person-back" href="/" aria-label="Back to calendar">←</a>
       <article className="event-article">
         <p className="event-date">{displayHistoricalDate(article.date)}</p>
@@ -32,6 +35,6 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           ? <a href={article.source} target="_blank" rel="noreferrer">{article.sourceLabel || 'View source'} ↗</a>
           : article.source}</p>)}
       </article>
-    </main>
+    </main></PublicSiteGuard>
   );
 }
