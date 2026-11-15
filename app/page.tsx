@@ -82,12 +82,12 @@ export default function Home() {
     setLookupLoading(true);
     try {
       const response = await fetch(`/api/memorials?name=${encodeURIComponent(lookupName)}`, { cache: 'no-store' });
-      const data = await response.json() as { matches?: MemorialMatch[]; error?: string; matchType?: string; fuzzy?: boolean };
+      const data = await response.json() as { matches?: MemorialMatch[]; error?: string; directoryEmpty?: boolean; matchType?: string; fuzzy?: boolean };
       if (!response.ok) throw new Error(data.error || 'Search could not be completed.');
       const found: MemorialMatch[] = data.matches || [];
       setMatches(found);
 
-      if (!found.length) setLookupError('No birthdays found. Try another name.');
+      if (!found.length) setLookupError(data.directoryEmpty ? 'Birthday search is not ready yet. Please try again later.' : 'No birthdays found. Try another name.');
     } catch (error) {
       setLookupError(error instanceof Error ? error.message : 'Search could not be completed.');
     } finally {
@@ -182,6 +182,7 @@ export default function Home() {
         }}>
           <button className="dialog-close" aria-label="Close" onClick={() => setShowReminderBuilder(false)}>×</button>
           <h2 id="reminder-title">Remember someone</h2>
+          <p className="reminder-help">Find someone to add a yearly birthday reminder to your calendar. Choose Google Calendar, or download an .ics calendar file to open and import into your calendar app.</p>
           <form className="reminder-search" onSubmit={(event) => { event.preventDefault(); void searchMemorial(); }}>
             <label htmlFor="memorial-name">Name</label>
             <div className="reminder-search-row">

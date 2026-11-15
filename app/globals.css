@@ -105,6 +105,7 @@ button { -webkit-tap-highlight-color: transparent; }
 .reminder-dialog { position: fixed; inset: 50% auto auto 50%; width: min(520px, calc(100% - 28px)); max-height: min(86vh, 760px); overflow-y: auto; transform: translate(-50%, -50%); margin: 0; padding: 27px; border: 1px solid var(--line); border-radius: 16px; background: #fff; box-shadow: 0 8px 28px #3c404326, 0 2px 8px #3c404326; }
 .reminder-dialog::backdrop { background: #20212466; }
 .reminder-dialog h2 { margin: 0 0 10px; font-size: 21px; font-weight: 500; }
+.reminder-help { margin: 0 0 18px; color: var(--muted); font-size: 14px; line-height: 1.5; }
 .reminder-intro { margin: 0 0 20px; color: #444746; font-size: 13px; line-height: 1.55; }
 .reminder-search { display: grid; gap: 7px; }
 .reminder-search label { color: var(--muted); font-size: 11px; }
