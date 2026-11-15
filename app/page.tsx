@@ -185,7 +185,7 @@ export default function Home() {
               <img src={selectedEvent.image} alt={selectedEvent.title} />
             </figure>}
             <div className="modal-copy">
-              {articleParagraphs(selectedEvent.description || '').map((paragraph, index) => <p key={index}>{linkifyPlainText(paragraph, `event-${index}`)}</p>)}
+              {articleParagraphs(selectedEvent.description || '').map((paragraph, index) => <p className={paragraph.startsWith('Sources:') ? 'article-sources' : undefined} key={index}>{linkifyPlainText(paragraph, `event-${index}`)}</p>)}
             </div>
             <p className="event-modal-date">{selectedEvent.time ? `${selectedEvent.time} · ` : ''}{formatDate(selectedEvent.kind === 'history' ? selectedEvent.historicalDate || selectedEvent.date : selectedEvent.date)}</p>
             {selectedEvent.location && <p className="event-modal-location">{selectedEvent.location}</p>}

@@ -22,7 +22,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           <img src={article.image} alt={article.alt} />
         </figure>}
         <div className="event-copy">
-          {displayedArticleParagraphs(article.paragraphs).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+          {displayedArticleParagraphs(article.paragraphs).map((paragraph, index) => <p className={paragraph.startsWith('Sources:') ? 'article-sources' : undefined} key={index}>{paragraph}</p>)}
           {!demoArticleText && article.dateNote && <aside className="event-note">Date note: {article.dateNote}</aside>}
         </div>
         {!demoArticleText && (article.sources?.length ? <div className="event-source"><strong>Sources</strong><ul>{article.sources.map((source, index) => <li key={`${source.url || source.note}-${index}`}>

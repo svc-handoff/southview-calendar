@@ -7,17 +7,35 @@ const placeholderParagraphs = [
 ];
 
 export function displayedArticleParagraphs(originalParagraphs: string[]): string[] {
-  return (demoArticleText ? placeholderParagraphs : originalParagraphs)
-    .flatMap(articleParagraphs);
+  return articleParagraphs((demoArticleText ? placeholderParagraphs : originalParagraphs).join('\n\n'));
 }
 
 // Calendar descriptions often contain line wraps copied from a document.
 // Only blank lines start paragraphs; single newlines, tabs, and repeated
-// spaces are display whitespace, not instructions to break the article.
+// spaces are display whitespace, except in the writer's Sources section.
 // Keep this at the display boundary so the writer's source stays untouched.
 export function articleParagraphs(text: string): string[] {
-  return text.replace(/\r\n?/g, '\n')
+  const normalized = text.replace(/\r\n?/g, '\n');
+  const heading = /(?:^|\n)[^\S\n]*Sources?\s*:[^\S\n]*/i.exec(normalized);
+  const body = heading ? normalized.slice(0, heading.index) : normalized;
+  const paragraphs = body
     .split(/\n[^\S\n]*\n/)
     .map(paragraph => paragraph.replace(/\s+/gu, ' ').trim())
     .filter(Boolean);
+  if (heading) {
+    const sources = normalized.slice(heading.index + heading[0].length)
+      .split(/\n+/)
+      .flatMap(line => {
+        const trimmed = line.trim();
+        // Standalone URL lists use commas as separators. Prose citations
+        // retain their punctuation (authors, dates, book titles, page numbers).
+        return /^https?:\/\//i.test(trimmed)
+          ? trimmed.replace(/(https?:\/\/\S+?),[ \t]+(?=\S)|,(?=https?:\/\/)/gi, (_match, url: string | undefined) => `${url || ''}\n`).split('\n')
+          : [trimmed];
+      })
+      .map(line => line.replace(/\s+/gu, ' ').trim().replace(/^(https?:\/\/\S+),$/i, '$1'))
+      .filter(Boolean);
+    paragraphs.push(['Sources:', ...sources].join('\n'));
+  }
+  return paragraphs;
 }

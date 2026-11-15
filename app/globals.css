@@ -156,6 +156,7 @@ button { -webkit-tap-highlight-color: transparent; }
 .event-article figcaption a, .event-source a { text-decoration: underline; text-underline-offset: 2px; }
 .event-copy { display: grid; gap: 12px; margin-top: 22px; }
 .event-copy p { margin: 0; color: #444746; font-family: inherit; font-size: 16px; line-height: 1.68; }
+.modal-copy p.article-sources, .event-copy p.article-sources { white-space: pre-line; overflow-wrap: anywhere; }
 .event-note { margin-top: 12px; color: var(--muted); font-size: 12px; line-height: 1.55; }
 .event-source { margin-top: 20px; color: var(--muted); font-size: 11px; line-height: 1.6; }
 
