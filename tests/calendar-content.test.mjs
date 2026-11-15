@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {historicalArticles,resolveHistoricalArticle,calendarEventsForMonth,timelineEntries} from '../lib/events.ts';
 import {calendarArticleDescription,parseCalendarFeed} from '../lib/google-calendar.ts';
+import wrappedImageSources from './fixtures/wrapped-image-sources.json' with {type:'json'};
 
 const escape=value=>value.replaceAll('\\','\\\\').replaceAll('\n','\\n').replaceAll(',','\\,').replaceAll(';','\\;');
 function fold(line){
@@ -21,6 +22,31 @@ const record=(article,extra={})=>[
   `DESCRIPTION:${escape(extra.description||calendarArticleDescription(article))}`,
   `LAST-MODIFIED:${extra.modified||'20261027T000000Z'}`,
 ];
+
+for(const fixture of wrappedImageSources){
+ test(`restores complete image URL and removes its fragments from prose: ${fixture.title}`,()=>{
+  const body='The writer’s exact article, with punctuation.\n\nSources: Henderson, page 24';
+  for(const separator of ['\n','\n\n']){
+   const parsed=parseCalendarFeed(feed([[
+    'UID:wrapped-image',`SUMMARY:${escape(fixture.title)}`,'DTSTART;VALUE=DATE:19400101','RRULE:FREQ=YEARLY',
+    `DESCRIPTION:${escape(fixture.imageDescription+separator+body)}`,
+   ]]),2026,'history');
+   assert.equal(parsed.articles[0].image,fixture.image);
+   assert.equal(parsed.articles[0].imageSource,fixture.source);
+   assert.equal(parsed.events[0].image,fixture.image);
+   assert.equal(parsed.events[0].description,body);
+   assert.deepEqual(parsed.articles[0].paragraphs,body.split('\n\n'));
+  }
+ });
+}
+
+test('unfamiliar image URLs do not consume article prose while looking for a saved URL',()=>{
+ const image='https://example.com/images/portrait.jpg';
+ const description=image+'\nThe article begins here.\n\nSources: Henderson, page 24';
+ const parsed=parseCalendarFeed(feed([['UID:new-image','SUMMARY:New article','DTSTART;VALUE=DATE:19400101',`DESCRIPTION:${escape(description)}`]]),2026,'history');
+ assert.equal(parsed.events[0].image,image);
+ assert.equal(parsed.events[0].description,description.slice(image.length+1));
+});
 
 test('distinct milestones remain separate, with usable articles and images',()=>{
   assert.equal(historicalArticles.length,54);

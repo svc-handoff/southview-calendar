@@ -14,6 +14,24 @@ const displayTimeZone = 'America/New_York';
 const timeFormatter = new Intl.DateTimeFormat('en-US', {timeZone:displayTimeZone,hour:'numeric',minute:'2-digit'});
 const dateFormatter = new Intl.DateTimeFormat('en-CA', {timeZone:displayTimeZone,year:'numeric',month:'2-digit',day:'2-digit'});
 const siteOrigin = 'https://southview-october-stories.cozyyak33.chatgpt.site';
+const savedImageSources = Object.keys(editedImages);
+
+function restoreWrappedImageSource(description:string) {
+ const lines=description.split('\n'),first=lines[0]?.trim();
+ if(!first||!/^https?:\/\//i.test(first)||(editedImages as Record<string,string>)[first])return description;
+ let candidates=savedImageSources.filter(source=>source.startsWith(first));
+ let joined=first;
+ for(let index=1;index<lines.length&&candidates.length;index++){
+  const fragment=lines[index].trim();
+  if(!fragment||/\s/.test(fragment))break;
+  joined+=fragment;
+  candidates=candidates.filter(source=>source.startsWith(joined));
+  // Only rejoin an exact saved image URL; never consume article prose by
+  // guessing where an unfamiliar URL might end.
+  if(candidates.includes(joined))return [joined,...lines.slice(index+1)].join('\n');
+ }
+ return description;
+}
 
 export function calendarArticleDescription(article:HistoricalArticle){
  const metadata={version:1,slug:article.slug,historicalDate:article.date,subjectId:article.subjectId,storySlug:article.storySlug,
@@ -173,7 +191,7 @@ export function parseCalendarFeed(ics:string, year:number, calendarKind?:Calenda
    });
    return clock.format(excluded)===clock.format(start!);
   }))return [];
-  const rawDescription=removeGoogleMeetDetails(plainDescription(e.DESCRIPTION||''));
+  const rawDescription=restoreWrappedImageSource(removeGoogleMeetDetails(plainDescription(e.DESCRIPTION||'')));
   const title=unescapeIcs(e.SUMMARY||'Untitled event');
   const history=readArticle(rawDescription,title);
   const location=unescapeIcs(e.LOCATION||'').trim();
