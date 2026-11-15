@@ -69,6 +69,13 @@ function columnsFor(sheet: ExcelJS.Worksheet, row: number) {
   const find = (words: string[]) => { for (let col=1; col<=Math.min(header.cellCount,100); col++) if (words.includes(key(text(header.getCell(col).value)))) return col; return 0; };
   return { full:find(aliases.full),first:find(aliases.first),middle:find(aliases.middle),last:find(aliases.last),birth:find(aliases.birth) };
 }
+function detectFormat(sheet: ExcelJS.Worksheet) {
+  for (let row = 1; row <= Math.min(20, sheet.rowCount); row++) {
+    const columns = columnsFor(sheet, row);
+    if (columns.birth && (columns.full || (columns.first && columns.last))) return { row, columns };
+  }
+  return null;
+}
 export async function readPeopleSpreadsheet(buffer: Buffer, fileName: string, options: { dateOrder: DateOrder; sheetName?: string; nameColumn?: number; birthColumn?: number }) {
   if (!buffer.length || buffer.length > maxUploadBytes) throw new SpreadsheetError('Choose an Excel or CSV file smaller than 4 MB.');
   const workbook = new ExcelJS.Workbook();
@@ -78,13 +85,13 @@ export async function readPeopleSpreadsheet(buffer: Buffer, fileName: string, op
     else throw new SpreadsheetError('Choose an .xlsx or .csv file.');
   } catch (error) { if (error instanceof SpreadsheetError) throw error; throw new SpreadsheetError('We could not open this spreadsheet. Please save it as .xlsx or .csv and try again.'); }
   const sheets = workbook.worksheets.filter(s => s.actualRowCount > 0).map(s => s.name);
-  const sheet = options.sheetName ? workbook.getWorksheet(options.sheetName) : workbook.worksheets.find(s => s.actualRowCount > 0);
+  // Prefer the people table over a workbook's cover/instructions sheet.
+  const sheet = options.sheetName ? workbook.getWorksheet(options.sheetName)
+    : workbook.worksheets.find(s => s.actualRowCount > 0 && detectFormat(s)) || workbook.worksheets.find(s => s.actualRowCount > 0);
   if (!sheet || !sheet.actualRowCount) throw new SpreadsheetError('This spreadsheet is empty.');
-  let headerRow = 1, cols = columnsFor(sheet, 1);
-  if (!options.nameColumn && !options.birthColumn) for (let n=1; n<=Math.min(20,sheet.rowCount); n++) {
-    const found=columnsFor(sheet,n);
-    if (found.birth && (found.full || (found.first && found.last))) { headerRow=n; cols=found; break; }
-  }
+  const detected = detectFormat(sheet);
+  const headerRow = detected?.row || 1;
+  const cols = detected?.columns || columnsFor(sheet, headerRow);
   if (options.nameColumn) cols.full = options.nameColumn;
   if (options.birthColumn) cols.birth = options.birthColumn;
   const headers: string[] = [];

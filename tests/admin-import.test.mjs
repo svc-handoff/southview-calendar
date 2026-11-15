@@ -52,6 +52,31 @@ test('CSV skips invalid dates, supports quoted names, and offers manual column m
  assert.equal((await readPeopleSpreadsheet(custom,'people.csv',opts)).needsColumns,true);
  assert.equal((await readPeopleSpreadsheet(custom,'people.csv',{...opts,nameColumn:1,birthColumn:2})).people.length,1);
 });
+test('two-column Name/DOB files work in Excel and CSV without splitting full names',async()=>{
+ const rows=[['Name','DOB'],["  Mary   Jane O’Neal-Smith Jr.  ",'03/10/1945'],['Cher','05/20/1946']];
+ const book=new ExcelJS.Workbook();book.addWorksheet('People').addRows(rows);
+ const files=[['people.xlsx',Buffer.from(await book.xlsx.writeBuffer())],['people.csv',Buffer.from(rows.map(r=>r.join(',')).join('\n'))]];
+ for(const [filename,buffer] of files){
+  const result=await readPeopleSpreadsheet(buffer,filename,opts);
+  assert.equal(result.needsColumns,false,filename);
+  assert.deepEqual(result.people.map(({name,birthDate})=>({name,birthDate})),[
+   {name:'Mary Jane O’Neal-Smith Jr.',birthDate:'1945-03-10'},
+   {name:'Cher',birthDate:'1946-05-20'},
+  ],filename);
+ }
+});
+test('automatically locates the people sheet and headers below introductory rows',async()=>{
+ const book=new ExcelJS.Workbook();book.addWorksheet('Read me').addRow(['Instructions for staff']);
+ const sheet=book.addWorksheet('Birthdays');sheet.addRow(['Our family']);sheet.addRow([]);
+ sheet.addRow(['Notes',' d.o.b. ',' NAME ']);sheet.addRow(['Ignored','1940-04-03','Ada Example']);
+ const buffer=Buffer.from(await book.xlsx.writeBuffer());
+ const result=await readPeopleSpreadsheet(buffer,'family.xlsx',opts);
+ assert.equal(result.needsColumns,false);assert.equal(result.sheetName,'Birthdays');
+ assert.deepEqual(result.people.map(({name,birthDate})=>({name,birthDate})),[{name:'Ada Example',birthDate:'1940-04-03'}]);
+ const chosen=await readPeopleSpreadsheet(buffer,'family.xlsx',{...opts,sheetName:'Birthdays'});
+ assert.equal(chosen.id,result.id,'automatic preview and explicit selection resolve to the same import');
+ assert.equal((await readPeopleSpreadsheet(buffer,'family.xlsx',{...opts,sheetName:'Read me'})).needsColumns,true);
+});
 test('uploaded records deduplicate without merging people with different birthdays',()=>{
  const p={id:'upload-existing',name:'Ada Example',birthDate:'1940-04-03'};
  const duplicate={id:personId(p),name:'ADA  EXAMPLE',birthDate:p.birthDate};
