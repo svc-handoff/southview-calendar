@@ -14,13 +14,22 @@ const compiled=ts.transpileModule(componentSource,{compilerOptions:{jsx:ts.JsxEm
 const {ArticleCopy}=await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
 const plainHtml=html=>html.replace(/<[^>]*>/g,'').replaceAll('&amp;','&').replaceAll('&quot;','"').replaceAll('&#x27;',"'").replaceAll('&lt;','<').replaceAll('&gt;','>');
 
-test('short citation labels remain clickable and image credits stay outside Sources',()=>{
+test('short citation labels remain clickable without image-credit footers',()=>{
   const paragraphs=articleParagraphs('An article ([Williams](https://example.com/article)).\n\nSources:\nA source — https://example.com/article\n\nImage credit: Creator\nImage source: https://example.com/photo');
   const html=renderToStaticMarkup(createElement(ArticleCopy,{paragraphs}));
   assert.ok(html.includes('href="https://example.com/article" target="_blank" rel="noreferrer">Williams</a>'));
   const sourceSection=html.match(/<section class="article-sources"[^>]*>([\s\S]*?)<\/section>/)[1];
   assert.ok(!sourceSection.includes('Image credit:'));
-  assert.ok(html.includes('class="article-image-credit"'));
+  assert.ok(!html.includes('Image credit:'));
+  assert.ok(!html.includes('Image source:'));
+  assert.ok(!html.includes('https://example.com/photo'));
+  const joinedFooter=renderToStaticMarkup(createElement(ArticleCopy,{paragraphs:[
+    'Article text.', 'Sources:\nA source — https://example.com/article\nImage credit: Creator\nImage source: https://example.com/photo',
+  ]}));
+  assert.ok(joinedFooter.includes('Article text.'));
+  assert.ok(joinedFooter.includes('A source'));
+  assert.ok(!joinedFooter.includes('Image credit:'));
+  assert.ok(!joinedFooter.includes('Image source:'));
 });
 
 for(const fixture of sourceFixtures) {

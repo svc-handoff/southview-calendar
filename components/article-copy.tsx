@@ -1,4 +1,4 @@
-import { Fragment, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 function linkedText(text: string): ReactNode[] {
   const result: ReactNode[] = [];
@@ -22,26 +22,17 @@ function linkedText(text: string): ReactNode[] {
   return result;
 }
 
-function imageCredit(lines: string[], key: number) {
-  return <p className="article-image-credit" key={key}><small>{lines.map((line, index) =>
-    <Fragment key={index}>{index > 0 && <br />}{linkedText(line)}</Fragment>
-  )}</small></p>;
-}
-
 export function ArticleCopy({ paragraphs }: { paragraphs: string[] }) {
   return paragraphs.map((paragraph, index) => {
-    if (paragraph.startsWith('Image credit:')) return imageCredit(paragraph.split('\n'), index);
-    if (!paragraph.startsWith('Sources:')) return <p key={index}>{linkedText(paragraph)}</p>;
-    const lines = paragraph.split('\n').slice(1);
-    const creditIndex = lines.findIndex(line => line.startsWith('Image credit:'));
-    const sources = creditIndex < 0 ? lines : lines.slice(0, creditIndex);
-    const credit = creditIndex < 0 ? [] : lines.slice(creditIndex);
-    return <Fragment key={index}>
-      <section className="article-sources" aria-label="Sources">
-        <p><strong>Sources:</strong></p>
-        {sources.map((source, sourceIndex) => <p key={sourceIndex}>{linkedText(source)}</p>)}
-      </section>
-      {credit.length > 0 && imageCredit(credit, index)}
-    </Fragment>;
+    // Keep image provenance in the stored description without displaying a footer.
+    const lines = paragraph.split('\n');
+    const creditIndex = lines.findIndex(line => /^Image (?:credit|source):/i.test(line.trim()));
+    const content = (creditIndex < 0 ? lines : lines.slice(0, creditIndex)).join('\n').trim();
+    if (!content) return null;
+    if (!content.startsWith('Sources:')) return <p key={index}>{linkedText(content)}</p>;
+    return <section className="article-sources" aria-label="Sources" key={index}>
+      <p><strong>Sources:</strong></p>
+      {content.split('\n').slice(1).map((source, sourceIndex) => <p key={sourceIndex}>{linkedText(source)}</p>)}
+    </section>;
   });
 }
