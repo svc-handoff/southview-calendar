@@ -134,6 +134,15 @@ function plainDescription(value:string) {
   mdash:'—',ndash:'–',hellip:'…',lsquo:'‘',rsquo:'’',ldquo:'“',rdquo:'”',bull:'•',copy:'©',reg:'®',trade:'™'};
  return unescapeIcs(value)
   .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi,'')
+  .replace(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi, (_match, attributes: string, label: string) => {
+    const href = /\bhref\s*=\s*(?:"([^"]*)"|'([^']*)')/i.exec(attributes);
+    const target = (href?.[1] || href?.[2] || '').replace(/&amp;/gi, '&');
+    const text = label.replace(/<[^>]*>/g, '');
+    if (!/^https?:\/\/[^\s<>"]+$/i.test(target)) return text;
+    // Plain URL links must remain plain for the image-first description format.
+    return text.replace(/&amp;/gi, '&') === target ? target : '[' + text + '](' + target + ')';
+  })
+  .replace(/<(?:em|i)\b[^>]*>([\s\S]*?)<\/(?:em|i)>/gi, '*$1*')
   .replace(/<br\s*\/?\s*>/gi,'\n')
   .replace(/<\/(?:p|div|li|h[1-6])\s*>/gi,'\n\n')
   .replace(/<[^>]*>/g,'')

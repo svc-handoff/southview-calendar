@@ -9,9 +9,19 @@ import sourceFixtures from './fixtures/live-article-sources.json' with {type:'js
 
 const componentSource=readFileSync(new URL('../components/article-copy.tsx',import.meta.url),'utf8');
 const compiled=ts.transpileModule(componentSource,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText
-  .replaceAll('"react/jsx-runtime"',JSON.stringify(import.meta.resolve('react/jsx-runtime')));
+  .replaceAll('"react/jsx-runtime"',JSON.stringify(import.meta.resolve('react/jsx-runtime')))
+  .replaceAll("'react'",JSON.stringify(import.meta.resolve('react')));
 const {ArticleCopy}=await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
 const plainHtml=html=>html.replace(/<[^>]*>/g,'').replaceAll('&amp;','&').replaceAll('&quot;','"').replaceAll('&#x27;',"'").replaceAll('&lt;','<').replaceAll('&gt;','>');
+
+test('short citation labels remain clickable and image credits stay outside Sources',()=>{
+  const paragraphs=articleParagraphs('An article ([Williams](https://example.com/article)).\n\nSources:\nA source — https://example.com/article\n\nImage credit: Creator\nImage source: https://example.com/photo');
+  const html=renderToStaticMarkup(createElement(ArticleCopy,{paragraphs}));
+  assert.ok(html.includes('href="https://example.com/article" target="_blank" rel="noreferrer">Williams</a>'));
+  const sourceSection=html.match(/<section class="article-sources"[^>]*>([\s\S]*?)<\/section>/)[1];
+  assert.ok(!sourceSection.includes('Image credit:'));
+  assert.ok(html.includes('class="article-image-credit"'));
+});
 
 for(const fixture of sourceFixtures) {
   test(`source formatting and rendered rows: ${fixture.title}`,()=>{
