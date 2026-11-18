@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { articleParagraphs } from '@/lib/article-display';
 import { ArticleCopy } from '@/components/article-copy';
+import { localCalendarDate } from '@/lib/calendar-date';
 import { calendarEventsForMonth, type CalendarEvent, type HistoricalArticle } from '@/lib/events';
 import { birthdayCalendar, birthdayReminder, googleMemorialLink, type BirthdayPerson } from '@/lib/google-reminders';
 
@@ -19,10 +20,8 @@ function formatDate(date: string) {
 }
 
 export default function Calendar() {
-  const [date, setDate] = useState(() => {
-    const today = new Date();
-    return { year: today.getFullYear(), month: today.getMonth() };
-  });
+  const [date, setDate] = useState<{ year: number; month: number } | null>(null);
+  const [today, setToday] = useState<string | null>(null);
   const [live, setLive] = useState<CalendarEvent[]>([]);
   const [calendarArticles,setCalendarArticles] = useState<HistoricalArticle[]>([]);
   const [connection, setConnection] = useState('loading');
@@ -33,6 +32,25 @@ export default function Calendar() {
   const [lookupError, setLookupError] = useState('');
   const [lookupLoading, setLookupLoading] = useState(false);
   useEffect(() => {
+    // Resolve the visitor's date after hydration, never the server's time zone.
+    const updateToday = () => {
+      const local = localCalendarDate();
+      setToday(local.key);
+      setDate(current => current ?? { year: local.year, month: local.month });
+    };
+    updateToday();
+    const interval = window.setInterval(updateToday, 60_000);
+    window.addEventListener('focus', updateToday);
+    document.addEventListener('visibilitychange', updateToday);
+    return () => {
+      window.clearInterval(interval);
+      window.removeEventListener('focus', updateToday);
+      document.removeEventListener('visibilitychange', updateToday);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!date) return;
     const controller = new AbortController();
     fetch(`/api/calendar?year=${date.year}&month=${date.month + 1}`, { signal: controller.signal })
       .then(async (response) => {
@@ -57,6 +75,8 @@ export default function Calendar() {
     return () => window.removeEventListener('keydown', closeOnEscape);
   }, [selectedEvent]);
 
+  if (!date) return <main className="home-page"><section className="calendar-section" aria-label="Calendar" aria-busy="true" /></main>;
+
   const events = calendarEventsForMonth(date.year,date.month+1,live,calendarArticles);
   const offset = new Date(date.year, date.month, 1).getDay();
   const dayCount = new Date(date.year, date.month + 1, 0).getDate();
@@ -67,13 +87,15 @@ export default function Calendar() {
   });
 
   function changeMonth(amount: number) {
+    if (!date) return;
     const next = new Date(date.year, date.month + amount, 1);
     setDate({ year: next.getFullYear(), month: next.getMonth() });
   }
 
   function goToToday() {
-    const today = new Date();
-    setDate({ year: today.getFullYear(), month: today.getMonth() });
+    const local = localCalendarDate();
+    setToday(local.key);
+    setDate({ year: local.year, month: local.month });
   }
 
   async function searchMemorial() {
@@ -141,12 +163,12 @@ export default function Calendar() {
               ? `${date.year}-${String(date.month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
               : '';
             const dayEvents = events.filter((event) => event.date === dateKey);
-            const isToday = day !== null && new Date().toDateString() === new Date(date.year, date.month, day).toDateString();
+            const isToday = day !== null && dateKey === today;
             return (
               <div className={`calendar-day${day ? '' : ' blank'}`} key={index}>
                 {day !== null && (
                   <>
-                    <span className={`day-number${isToday ? ' today' : ''}`}>{day}</span>
+                    <span className={`day-number${isToday ? ' today' : ''}`} aria-current={isToday ? 'date' : undefined}>{day}</span>
                     <div className="day-events">{dayEvents.map(renderEvent)}</div>
                   </>
                 )}
