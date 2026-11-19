@@ -241,5 +241,9 @@ button { -webkit-tap-highlight-color: transparent; }
 .reminder-results > .reminder-message { margin: 0; }
 .reminder-show-more { justify-self: center; min-height: 40px; padding: 0 17px; font-size: 13px; }
 .reminder-date { display: grid; gap: 6px; margin-top: 4px; }
-.reminder-date-choice { display: grid; gap: 4px; }
-.reminder-date-choice select { width: 100%; min-width: 0; min-height: 40px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: inherit; font: inherit; font-size: 16px; }
+.reminder-anniversary-toggle { display: inline-flex; flex-wrap: wrap; gap: 3px; margin: 0 0 15px; padding: 3px; border: 1px solid var(--line); border-radius: 24px; }
+.reminder-anniversary-toggle label { position: relative; cursor: pointer; }
+.reminder-anniversary-toggle input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.reminder-anniversary-toggle span { display: flex; align-items: center; min-height: 36px; padding: 5px 13px; border-radius: 20px; color: #3c4043; font-size: 13px; font-weight: 500; }
+.reminder-anniversary-toggle input:checked + span { background: #d3e3fd; color: #041e49; }
+.reminder-anniversary-toggle input:focus-visible + span { outline: 2px solid #0b57d0; outline-offset: 1px; }

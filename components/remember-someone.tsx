@@ -12,11 +12,13 @@ type SearchResults = {
   unavailable: SearchSettings;
 };
 
-const dates = [
-  { field: 'birthDate', kind: 'birth', label: 'Born', option: 'Birthday' },
-  { field: 'deathDate', kind: 'death', label: 'Died', option: 'Death anniversary' },
-  { field: 'burialDate', kind: 'burial', label: 'Buried', option: 'Burial anniversary' },
-] as const;
+type VitalAnniversary = 'birth' | 'death';
+
+const dates = {
+  birth: { field: 'birthDate', label: 'Born', missing: 'No birthday on record.' },
+  death: { field: 'deathDate', label: 'Died', missing: 'No death date on record.' },
+  burial: { field: 'burialDate', label: 'Buried', missing: 'No burial date on record.' },
+} as const;
 
 const dateLabel = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', month: 'long', day: 'numeric', year: 'numeric' });
 const resultsPerPage = 5;
@@ -31,41 +33,29 @@ function download(person: MemorialPerson, kind: AnniversaryKind, date: string) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-function PersonResult({ person }: { person: MemorialPerson }) {
-  const [kind, setKind] = useState<AnniversaryKind>('birth');
-  const options = dates.flatMap(option => {
-    const date = person[option.field];
-    return date ? [{ ...option, date, formatted: dateLabel.format(new Date(`${date}T00:00:00Z`)) }] : [];
-  });
-  const selected = options.find(option => option.kind === kind) ?? options[0];
-  if (!selected) return null;
+function PersonResult({ person, kind }: { person: MemorialPerson; kind: AnniversaryKind }) {
+  const { field, label, missing } = dates[kind];
+  const date = person[field];
+  if (!date) {
+    return <article className="reminder-match" aria-label={person.name}><strong>{person.name}</strong><span>{missing}</span></article>;
+  }
 
-  const reminder = anniversaryReminder(person, selected.kind, selected.date);
+  const reminder = anniversaryReminder(person, kind, date);
   return (
     <article className="reminder-match" aria-label={person.name}>
       <strong>{person.name}</strong>
       <div className="reminder-date">
-        {options.length > 1 ? (
-          <label className="reminder-date-choice">
-            <span>Remember on</span>
-            <select value={selected.kind} onChange={event => {
-              const choice = options.find(option => option.kind === event.target.value);
-              if (choice) setKind(choice.kind);
-            }}>
-              {options.map(option => <option key={option.kind} value={option.kind}>{option.option} ({option.formatted})</option>)}
-            </select>
-          </label>
-        ) : <span>{selected.label} {selected.formatted}</span>}
+        <span>{label} {dateLabel.format(new Date(`${date}T00:00:00Z`))}</span>
         <div className="reminder-export-actions">
           <a className="google-reminders" href={googleMemorialLink(reminder)} target="_blank" rel="noopener noreferrer" aria-label={`Add ${reminder.title} to Google Calendar`}>Google Calendar ↗</a>
-          <button type="button" className="download-reminders" onClick={() => download(person, selected.kind, selected.date)} aria-label={`Download ${reminder.title}`}>Download .ics</button>
+          <button type="button" className="download-reminders" onClick={() => download(person, kind, date)} aria-label={`Download ${reminder.title}`}>Download .ics</button>
         </div>
       </div>
     </article>
   );
 }
 
-function Results({ title, matches, unavailable, surname }: { title: string; matches: MemorialPerson[]; unavailable: boolean; surname?: string }) {
+function Results({ title, matches, unavailable, kind, surname }: { title: string; matches: MemorialPerson[]; unavailable: boolean; kind: AnniversaryKind; surname?: string }) {
   const [visibleCount, setVisibleCount] = useState(resultsPerPage);
 
   return (
@@ -73,7 +63,7 @@ function Results({ title, matches, unavailable, surname }: { title: string; matc
       <h3>{title}</h3>
       {surname && <p className="reminder-message">Showing records with the same last name.</p>}
       {!matches.length && <p className="reminder-message" role="status">{unavailable ? 'This search is temporarily unavailable.' : 'No matching records.'}</p>}
-      {matches.slice(0, visibleCount).map(person => <PersonResult key={person.id} person={person} />)}
+      {matches.slice(0, visibleCount).map(person => <PersonResult key={person.id} person={person} kind={kind} />)}
       {matches.length > visibleCount && (
         <button
           type="button"
@@ -88,8 +78,9 @@ function Results({ title, matches, unavailable, surname }: { title: string; matc
   );
 }
 
-export function RememberSomeone({ onClose }: { onClose: () => void }) {
+export function RememberSomeone({ onClose, vitalSearchEnabled }: { onClose: () => void; vitalSearchEnabled: boolean }) {
   const [name, setName] = useState('');
+  const [anniversary, setAnniversary] = useState<VitalAnniversary>('birth');
   const [results, setResults] = useState<SearchResults | null>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -120,6 +111,18 @@ export function RememberSomeone({ onClose }: { onClose: () => void }) {
       <button className="dialog-close" aria-label="Close" onClick={onClose}>×</button>
       <h2 id="reminder-title">Remember someone</h2>
       <p className="reminder-help">Find someone and add a yearly reminder. Choose Google Calendar or download an .ics file to import into your calendar app.</p>
+      {(results?.enabled.vital ?? vitalSearchEnabled) && (
+        <div className="reminder-anniversary-toggle" role="group" aria-label="Remember on">
+          <label>
+            <input type="radio" name="reminder-anniversary" checked={anniversary === 'birth'} onChange={() => setAnniversary('birth')} />
+            <span>Birthday</span>
+          </label>
+          <label>
+            <input type="radio" name="reminder-anniversary" checked={anniversary === 'death'} onChange={() => setAnniversary('death')} />
+            <span>Death anniversary</span>
+          </label>
+        </div>
+      )}
       <form className="reminder-search" onSubmit={search}>
         <label htmlFor="memorial-name">Name</label>
         <div className="reminder-search-row">
@@ -128,8 +131,8 @@ export function RememberSomeone({ onClose }: { onClose: () => void }) {
         </div>
       </form>
       {error && <p className="reminder-message" role="status">{error}</p>}
-      {results?.enabled.vital && <Results title="Birth and death records" matches={results.matches} unavailable={results.unavailable.vital} />}
-      {results?.enabled.burial && <Results title="Burial records" matches={results.burialMatches} unavailable={results.unavailable.burial} surname={results.burialSurname} />}
+      {results?.enabled.vital && <Results title="Birth and death records" matches={results.matches} unavailable={results.unavailable.vital} kind={anniversary} />}
+      {results?.enabled.burial && <Results title="Burial records" matches={results.burialMatches} unavailable={results.unavailable.burial} kind="burial" surname={results.burialSurname} />}
     </dialog>
   );
 }

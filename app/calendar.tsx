@@ -170,7 +170,7 @@ export default function Calendar({ searchSettings }: { searchSettings: SearchSet
         </div>
       )}
 
-      {showReminderBuilder && <RememberSomeone onClose={() => setShowReminderBuilder(false)} />}
+      {showReminderBuilder && <RememberSomeone onClose={() => setShowReminderBuilder(false)} vitalSearchEnabled={searchSettings.vital} />}
     </main>
   );
 }
