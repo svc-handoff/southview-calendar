@@ -13,9 +13,9 @@ type SearchResults = {
 };
 
 const dates = [
-  { field: 'birthDate', kind: 'birth', label: 'Born' },
-  { field: 'deathDate', kind: 'death', label: 'Died' },
-  { field: 'burialDate', kind: 'burial', label: 'Buried' },
+  { field: 'birthDate', kind: 'birth', label: 'Born', option: 'Birthday' },
+  { field: 'deathDate', kind: 'death', label: 'Died', option: 'Death anniversary' },
+  { field: 'burialDate', kind: 'burial', label: 'Buried', option: 'Burial anniversary' },
 ] as const;
 
 const dateLabel = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', month: 'long', day: 'numeric', year: 'numeric' });
@@ -31,6 +31,40 @@ function download(person: MemorialPerson, kind: AnniversaryKind, date: string) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+function PersonResult({ person }: { person: MemorialPerson }) {
+  const [kind, setKind] = useState<AnniversaryKind>('birth');
+  const options = dates.flatMap(option => {
+    const date = person[option.field];
+    return date ? [{ ...option, date, formatted: dateLabel.format(new Date(`${date}T00:00:00Z`)) }] : [];
+  });
+  const selected = options.find(option => option.kind === kind) ?? options[0];
+  if (!selected) return null;
+
+  const reminder = anniversaryReminder(person, selected.kind, selected.date);
+  return (
+    <article className="reminder-match" aria-label={person.name}>
+      <strong>{person.name}</strong>
+      <div className="reminder-date">
+        {options.length > 1 ? (
+          <label className="reminder-date-choice">
+            <span>Remember on</span>
+            <select value={selected.kind} onChange={event => {
+              const choice = options.find(option => option.kind === event.target.value);
+              if (choice) setKind(choice.kind);
+            }}>
+              {options.map(option => <option key={option.kind} value={option.kind}>{option.option} ({option.formatted})</option>)}
+            </select>
+          </label>
+        ) : <span>{selected.label} {selected.formatted}</span>}
+        <div className="reminder-export-actions">
+          <a className="google-reminders" href={googleMemorialLink(reminder)} target="_blank" rel="noopener noreferrer" aria-label={`Add ${reminder.title} to Google Calendar`}>Google Calendar ↗</a>
+          <button type="button" className="download-reminders" onClick={() => download(person, selected.kind, selected.date)} aria-label={`Download ${reminder.title}`}>Download .ics</button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 function Results({ title, matches, unavailable, surname }: { title: string; matches: MemorialPerson[]; unavailable: boolean; surname?: string }) {
   const [visibleCount, setVisibleCount] = useState(resultsPerPage);
 
@@ -39,25 +73,7 @@ function Results({ title, matches, unavailable, surname }: { title: string; matc
       <h3>{title}</h3>
       {surname && <p className="reminder-message">Showing records with the same last name.</p>}
       {!matches.length && <p className="reminder-message" role="status">{unavailable ? 'This search is temporarily unavailable.' : 'No matching records.'}</p>}
-      {matches.slice(0, visibleCount).map(person => (
-        <article className="reminder-match" key={person.id}>
-          <strong>{person.name}</strong>
-          {dates.map(({ field, kind, label }) => {
-            const date = person[field];
-            if (!date) return null;
-            const reminder = anniversaryReminder(person, kind, date);
-            return (
-              <div className="reminder-date" key={field}>
-                <span>{label} {dateLabel.format(new Date(`${date}T00:00:00Z`))}</span>
-                <div className="reminder-export-actions">
-                  <a className="google-reminders" href={googleMemorialLink(reminder)} target="_blank" rel="noopener noreferrer" aria-label={`Add ${reminder.title} to Google Calendar`}>Google Calendar ↗</a>
-                  <button type="button" className="download-reminders" onClick={() => download(person, kind, date)} aria-label={`Download ${reminder.title}`}>Download .ics</button>
-                </div>
-              </div>
-            );
-          })}
-        </article>
-      ))}
+      {matches.slice(0, visibleCount).map(person => <PersonResult key={person.id} person={person} />)}
       {matches.length > visibleCount && (
         <button
           type="button"

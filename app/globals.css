@@ -241,3 +241,5 @@ button { -webkit-tap-highlight-color: transparent; }
 .reminder-results > .reminder-message { margin: 0; }
 .reminder-show-more { justify-self: center; min-height: 40px; padding: 0 17px; font-size: 13px; }
 .reminder-date { display: grid; gap: 6px; margin-top: 4px; }
+.reminder-date-choice { display: grid; gap: 4px; }
+.reminder-date-choice select { width: 100%; min-width: 0; min-height: 40px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: inherit; font: inherit; font-size: 16px; }
