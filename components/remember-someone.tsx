@@ -19,6 +19,7 @@ const dates = [
 ] as const;
 
 const dateLabel = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', month: 'long', day: 'numeric', year: 'numeric' });
+const resultsPerPage = 5;
 
 function download(person: MemorialPerson, kind: AnniversaryKind, date: string) {
   const content = anniversaryCalendar(anniversaryReminder(person, kind, date), kind);
@@ -31,12 +32,14 @@ function download(person: MemorialPerson, kind: AnniversaryKind, date: string) {
 }
 
 function Results({ title, matches, unavailable, surname }: { title: string; matches: MemorialPerson[]; unavailable: boolean; surname?: string }) {
+  const [visibleCount, setVisibleCount] = useState(resultsPerPage);
+
   return (
     <section className="reminder-results" aria-label={title}>
       <h3>{title}</h3>
       {surname && <p className="reminder-message">Showing records with the same last name.</p>}
       {!matches.length && <p className="reminder-message" role="status">{unavailable ? 'This search is temporarily unavailable.' : 'No matching records.'}</p>}
-      {matches.map(person => (
+      {matches.slice(0, visibleCount).map(person => (
         <article className="reminder-match" key={person.id}>
           <strong>{person.name}</strong>
           {dates.map(({ field, kind, label }) => {
@@ -55,6 +58,16 @@ function Results({ title, matches, unavailable, surname }: { title: string; matc
           })}
         </article>
       ))}
+      {matches.length > visibleCount && (
+        <button
+          type="button"
+          className="google-reminders reminder-show-more"
+          aria-label={`Show more ${title.toLowerCase()}`}
+          onClick={() => setVisibleCount(count => count + resultsPerPage)}
+        >
+          Show more
+        </button>
+      )}
     </section>
   );
 }

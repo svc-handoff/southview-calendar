@@ -238,4 +238,5 @@ button { -webkit-tap-highlight-color: transparent; }
 .reminder-results h3 { margin: 0; font-size: 14px; font-weight: 600; }
 .reminder-results + .reminder-results { padding-top: 16px; border-top: 1px solid var(--line); }
 .reminder-results > .reminder-message { margin: 0; }
+.reminder-show-more { justify-self: start; padding: 0 14px; }
 .reminder-date { display: grid; gap: 6px; margin-top: 4px; }
