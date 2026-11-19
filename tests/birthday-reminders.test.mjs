@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { birthdayCalendar, birthdayReminder, googleMemorialLink, memorialDates } from '../lib/google-reminders.ts';
+import { anniversaryCalendar, anniversaryReminder, birthdayCalendar, birthdayReminder, googleMemorialLink, memorialDates } from '../lib/google-reminders.ts';
 import { parseBirthdayEvents } from '../lib/birthday-calendar.ts';
 
 const now = new Date('2026-11-01T17:00:00Z');
@@ -40,4 +40,17 @@ test('an imported reminder can start this year and retain the original birth dat
   assert.equal(people.length, 1);
   assert.equal(people[0].birthDate, '2011-04-27');
   assert.equal(new URL(googleMemorialLink(birthdayReminder(people[0]), now)).searchParams.get('dates'), '20270427/20270428');
+});
+
+test('death and burial reminders export distinct yearly dates and titles', () => {
+  for (const [kind, date, next] of [['death', '2015-04-12', '20270412'], ['burial', '1920-05-09', '20270509']]) {
+    const reminder = anniversaryReminder(person, kind, date);
+    const google = new URL(googleMemorialLink(reminder, now));
+    assert.equal(google.searchParams.get('text'), `Lauren D. Coleman — ${kind} anniversary`);
+    assert.ok(google.searchParams.get('dates').startsWith(next + '/'));
+    const ics = anniversaryCalendar(reminder, kind, now).replace(/\r\n /g, '');
+    assert.ok(ics.includes('DTSTART;VALUE=DATE:' + next));
+    assert.ok(ics.includes('-' + kind + '@southview-calendar'));
+    assert.ok(ics.includes('RRULE:FREQ=YEARLY'));
+  }
 });

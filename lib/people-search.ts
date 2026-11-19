@@ -1,5 +1,3 @@
-import type { BirthdayPerson } from './google-reminders.ts';
-
 export function normalized(value: string) {
   return value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
 }
@@ -34,7 +32,7 @@ function fuzzyNameScore(query: string, candidateWords: string[]) {
   return scores.reduce((total, score) => total + score, 0) / scores.length;
 }
 
-export function searchPeople(memorials: BirthdayPerson[], query: string) {
+export function searchPeople<T extends { name: string }>(memorials: T[], query: string) {
     const queryKey = normalized(query);
     const singleWordSearch = !queryKey.includes(' ');
     const matches = memorials.flatMap((memorial) => {
@@ -51,4 +49,17 @@ export function searchPeople(memorials: BirthdayPerson[], query: string) {
       .slice(0, 100)
       .map(({ score: _score, exact: _exact, ...match }) => match);
     return { matches: results, matchType: singleWordSearch ? 'name-word' : 'name', fuzzy: !exactMatches.length && results.length > 0, query };
+}
+
+export function searchBurials<T extends { name: string }>(records: T[], query: string) {
+  const { matches } = searchPeople(records, query);
+  if (matches.length) return { matches };
+
+  const suffixes = / (jr|sr|ii|iii|iv)$/;
+  const words = normalized(query).replace(suffixes, '').split(' ');
+  const surname = words.at(-1);
+  if (words.length < 2 || !surname || surname.length < 3) return { matches };
+
+  const surnameMatches = records.filter(person => normalized(person.name).replace(suffixes, '').split(' ').at(-1) === surname);
+  return { matches: searchPeople(surnameMatches, surname).matches, surname: surnameMatches.length ? surname : undefined };
 }

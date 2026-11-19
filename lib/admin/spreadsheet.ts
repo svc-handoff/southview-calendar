@@ -2,7 +2,7 @@ import ExcelJS from 'exceljs';
 import { Readable } from 'node:stream';
 import { createHash } from 'node:crypto';
 import { personId } from '../people-directory.ts';
-import type { BirthdayPerson } from '../google-reminders.ts';
+import type { MemorialPerson, RecordSource } from '../memorial-records.ts';
 
 export const maxUploadBytes = 4 * 1024 * 1024;
 export type DateOrder = 'mdy' | 'dmy';
@@ -11,7 +11,7 @@ export class SpreadsheetError extends Error {}
 const key = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, '');
 function text(value: ExcelJS.CellValue): string {
   if (value == null) return '';
-  if (value instanceof Date) return value.toISOString().slice(0, 10);
+  if (value instanceof Date) return Number.isFinite(value.getTime()) ? value.toISOString().slice(0, 10) : '';
   if (typeof value === 'object') {
     if ('richText' in value) return value.richText.map(v => v.text).join('');
     if ('text' in value) return value.text;
@@ -58,25 +58,40 @@ function checkWorkbookSize(buffer: Buffer) {
     offset += 46 + buffer.readUInt16LE(offset + 28) + buffer.readUInt16LE(offset + 30) + buffer.readUInt16LE(offset + 32);
   }
 }
-const aliases = {
-  full: ['name','fullname','person','personname','deceasedname'],
-  first: ['firstname','first','givenname'], middle: ['middlename','middle','middleinitial'],
-  last: ['lastname','last','surname','familyname'],
-  birth: ['dob','birthdate','dateofbirth','birthday','birth'],
-};
-function columnsFor(sheet: ExcelJS.Worksheet, row: number) {
-  const header = sheet.getRow(row);
-  const find = (words: string[]) => { for (let col=1; col<=Math.min(header.cellCount,100); col++) if (words.includes(key(text(header.getCell(col).value)))) return col; return 0; };
-  return { full:find(aliases.full),first:find(aliases.first),middle:find(aliases.middle),last:find(aliases.last),birth:find(aliases.birth) };
-}
-function detectFormat(sheet: ExcelJS.Worksheet) {
+function detectFormat(sheet: ExcelJS.Worksheet, source: RecordSource) {
   for (let row = 1; row <= Math.min(20, sheet.rowCount); row++) {
-    const columns = columnsFor(sheet, row);
-    if (columns.birth && (columns.full || (columns.first && columns.last))) return { row, columns };
+    const columns = new Map<string, number>();
+    let headings = 0;
+    sheet.getRow(row).eachCell((cell, index) => {
+      const label = key(text(cell.value));
+      if (text(cell.value).trim()) headings++;
+      if (label) columns.set(label, index);
+    });
+    if (headings !== columns.size) continue;
+    const name = columns.get('name');
+    if (source === 'burial') {
+      const burial = columns.get('burialdate');
+      if (columns.size === 2 && name && burial) return { row, name, burial };
+      continue;
+    }
+    const birth = columns.get('dateofbirth') ?? columns.get('birthdate') ?? columns.get('dob');
+    const death = columns.get('dateofdeath') ?? columns.get('deathdate') ?? columns.get('dod');
+    if (!birth || !death) continue;
+    if (columns.size === 3 && name) return { row, name, birth, death };
+    const first = columns.get('firstname');
+    const middle = columns.get('middlename');
+    const last = columns.get('lastname');
+    if (columns.size === 5 && first && middle && last) return { row, first, middle, last, birth, death };
   }
   return null;
 }
-export async function readPeopleSpreadsheet(buffer: Buffer, fileName: string, options: { dateOrder: DateOrder; sheetName?: string; nameColumn?: number; birthColumn?: number }) {
+
+export async function readPeopleSpreadsheet(buffer: Buffer, fileName: string, options: {
+  dateOrder: DateOrder;
+  source?: RecordSource;
+  sheetName?: string;
+}) {
+  const { source = 'vital', dateOrder } = options;
   if (!buffer.length || buffer.length > maxUploadBytes) throw new SpreadsheetError('Choose an Excel or CSV file smaller than 4 MB.');
   const workbook = new ExcelJS.Workbook();
   try {
@@ -84,32 +99,64 @@ export async function readPeopleSpreadsheet(buffer: Buffer, fileName: string, op
     else if (/\.csv$/i.test(fileName)) await workbook.csv.read(Readable.from([buffer]), { map: value => value });
     else throw new SpreadsheetError('Choose an .xlsx or .csv file.');
   } catch (error) { if (error instanceof SpreadsheetError) throw error; throw new SpreadsheetError('We could not open this spreadsheet. Please save it as .xlsx or .csv and try again.'); }
-  const sheets = workbook.worksheets.filter(s => s.actualRowCount > 0).map(s => s.name);
-  // Prefer the people table over a workbook's cover/instructions sheet.
-  const sheet = options.sheetName ? workbook.getWorksheet(options.sheetName)
-    : workbook.worksheets.find(s => s.actualRowCount > 0 && detectFormat(s)) || workbook.worksheets.find(s => s.actualRowCount > 0);
-  if (!sheet || !sheet.actualRowCount) throw new SpreadsheetError('This spreadsheet is empty.');
-  const detected = detectFormat(sheet);
-  const headerRow = detected?.row || 1;
-  const cols = detected?.columns || columnsFor(sheet, headerRow);
-  if (options.nameColumn) cols.full = options.nameColumn;
-  if (options.birthColumn) cols.birth = options.birthColumn;
-  const headers: string[] = [];
-  for (let c=1;c<=Math.min(sheet.getRow(headerRow).cellCount,100);c++) headers.push(text(sheet.getRow(headerRow).getCell(c).value) || `Column ${c}`);
-  if (!cols.birth || (!cols.full && !(cols.first && cols.last))) return { needsColumns: true as const, headers, sheets, sheetName: sheet.name };
-  const people: BirthdayPerson[] = [], issues: ImportIssue[] = [];
-  let rows = 0;
-  for (let n=headerRow+1;n<=sheet.rowCount;n++) {
-    const row=sheet.getRow(n);
-    if (!row.hasValues) continue;
-    if (++rows > 10000) throw new SpreadsheetError('This file has more than 10,000 people. Please split it into smaller files.');
-    const name = (cols.full ? text(row.getCell(cols.full).value) : [cols.first,cols.middle,cols.last].filter(Boolean).map(c=>text(row.getCell(c).value)).join(' ')).replace(/\s+/g,' ').trim();
-    const birthDate = parseBirthDate(row.getCell(cols.birth).value, options.dateOrder, Boolean(workbook.properties.date1904));
-    if (!name || name.length > 180 || !/\p{L}/u.test(name)) { issues.push({row:n,name:name.slice(0,180),reason:'Missing or unreadable name'}); continue; }
-    if (!birthDate) { issues.push({row:n,name,reason:'Missing or invalid birthday (use a full date, including the year)'}); continue; }
-    const person={name,birthDate}; people.push({...person,id:personId(person)});
+  const worksheets = workbook.worksheets.filter(sheet => sheet.actualRowCount > 0);
+  if (!worksheets.length) throw new SpreadsheetError('This spreadsheet is empty.');
+  const matchingSheets = worksheets.flatMap(sheet => {
+    const columns = detectFormat(sheet, source);
+    return columns ? [{ sheet, columns }] : [];
+  });
+  const selected = options.sheetName
+    ? matchingSheets.find(({ sheet }) => sheet.name === options.sheetName)
+    : matchingSheets[0];
+  if (!selected) {
+    throw new SpreadsheetError(source === 'burial'
+      ? 'Use exactly two columns: Name and Burial Date.'
+      : 'Use Name, Birthdate, Deathdate or DateOfBirth, DateOfDeath, FirstName, LastName, MiddleName.');
   }
+
+  const { sheet, columns } = selected;
+  const people: MemorialPerson[] = [], issues: ImportIssue[] = [];
+  const allowed = new Set([columns.name, columns.first, columns.middle, columns.last, columns.birth, columns.death, columns.burial]);
+  let rows = 0;
+  sheet.eachRow((row, index) => {
+    if (index <= columns.row) return;
+    if (++rows > 10000) throw new SpreadsheetError('This file has more than 10,000 people. Please split it into smaller files.');
+    const name = (columns.name ? text(row.getCell(columns.name).value)
+      : [columns.first!, columns.middle!, columns.last!].map(col => text(row.getCell(col).value)).join(' '))
+      .replace(/\s+/g, ' ').trim();
+    let extraColumn = false;
+    row.eachCell((cell, col) => { if (!allowed.has(col) && text(cell.value)) extraColumn = true; });
+    if (extraColumn) throw new SpreadsheetError('Remove extra columns from the records before uploading.');
+    if (!name || name.length > 180 || !/\p{L}/u.test(name)) {
+      issues.push({ row: index, name: name.slice(0, 180), reason: 'Missing or unreadable name' });
+      return;
+    }
+    const person: Omit<MemorialPerson, 'id'> = { name };
+    for (const [field, column] of [
+      ['birthDate', columns.birth], ['deathDate', columns.death], ['burialDate', columns.burial],
+    ] as const) {
+      if (!column) continue;
+      const value = row.getCell(column).value;
+      if (value == null || (typeof value === 'string' && !value.trim())) continue;
+      const date = parseBirthDate(value, dateOrder, Boolean(workbook.properties.date1904));
+      if (!date) {
+        const label = field === 'birthDate' ? 'birth' : field === 'deathDate' ? 'death' : 'burial';
+        issues.push({ row: index, name, reason: `Invalid ${label} date. Use a full date, including the year.` });
+        return;
+      }
+      person[field] = date;
+    }
+    if (!person.birthDate && !person.deathDate && !person.burialDate) {
+      issues.push({ row: index, name, reason: source === 'burial' ? 'Missing burial date' : 'Missing birth and death dates' });
+      return;
+    }
+    if (person.birthDate && person.deathDate && person.birthDate > person.deathDate) {
+      issues.push({ row: index, name, reason: 'Death date is before birth date' });
+      return;
+    }
+    people.push({ ...person, id: personId(person) });
+  });
   if (!rows) throw new SpreadsheetError('There are no people below the column headings.');
-  const id = createHash('sha256').update(buffer).update(JSON.stringify({...options,sheetName:sheet.name})).digest('hex');
-  return { needsColumns:false as const,people,issues,rows,id,sheets,sheetName:sheet.name,headers };
+  const id = createHash('sha256').update(buffer).update(JSON.stringify({ dateOrder, source, sheetName: sheet.name })).digest('hex');
+  return { people, issues, rows, id, sheets: matchingSheets.map(({ sheet }) => sheet.name), sheetName: sheet.name };
 }

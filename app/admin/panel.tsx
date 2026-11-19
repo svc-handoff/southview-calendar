@@ -1,18 +1,20 @@
 'use client';
-import { useRef, useState, type FormEvent } from 'react';
 
-type Person={name:string;birthDate:string};
-type Issue={row:number;name:string;reason:string};
-type Preview={previewId?:string;added:number;duplicates:number;skipped:number;preview:Person[];issues:Issue[];needsColumns?:boolean;headers:string[];sheets:string[];sheetName:string};
-function date(value:string) { return new Date(`${value}T00:00:00Z`).toLocaleDateString('en-US',{timeZone:'UTC',month:'long',day:'numeric',year:'numeric'}); }
-export default function AdminPanel({signedIn,initialPublicHidden}:{signedIn:boolean;initialPublicHidden:boolean}) {
+import { useState, type FormEvent } from 'react';
+import { RecordUpload } from './record-upload';
+import { recordSources, type RecordSource, type SearchSettings } from '@/lib/memorial-records';
+
+export default function AdminPanel({ signedIn, initialPublicHidden, searchSettings }: {
+  signedIn: boolean;
+  initialPublicHidden: boolean;
+  searchSettings: SearchSettings | null;
+}) {
  const [publicHidden,setPublicHidden]=useState(initialPublicHidden),[visibilityBusy,setVisibilityBusy]=useState(false),[visibilityError,setVisibilityError]=useState('');
  const [email,setEmail]=useState(''),[password,setPassword]=useState(''),[error,setError]=useState('');
- const [busy,setBusy]=useState(false),[file,setFile]=useState<File|null>(null),[preview,setPreview]=useState<Preview|null>(null);
- const dateOrder='mdy';
- const [sheetName,setSheetName]=useState(''),[nameColumn,setNameColumn]=useState(''),[birthColumn,setBirthColumn]=useState('');
- const [done,setDone]=useState<{added:number;duplicates:number;skipped:number}|null>(null);
- const input=useRef<HTMLInputElement>(null);
+ const [busy,setBusy]=useState(false);
+ const [enabled, setEnabled] = useState(searchSettings);
+ const [searchBusy, setSearchBusy] = useState(false);
+ const [searchError, setSearchError] = useState('');
  async function toggleWebsite(){
   setVisibilityBusy(true);setVisibilityError('');
   try{
@@ -27,27 +29,24 @@ export default function AdminPanel({signedIn,initialPublicHidden}:{signedIn:bool
    if(!r.ok)throw new Error(d.error);setPassword('');window.location.reload();
   }catch(e){setError(e instanceof Error?e.message:'Could not sign in.');}finally{setBusy(false);}
  }
- function changeFile(value:File|null) {
-  setFile(value);setPreview(null);setDone(null);setError('');setSheetName('');setNameColumn('');setBirthColumn('');
-  if(value)void upload(false,value,{sheetName:'',nameColumn:'',birthColumn:''});
- }
- async function upload(commit=false, chosenFile=file, selection={sheetName,nameColumn,birthColumn}) {
-  if(!chosenFile)return;setBusy(true);setError('');
+ async function toggleSearch(source: RecordSource) {
+  if (!enabled) return;
+  setSearchBusy(true);
+  setSearchError('');
   try {
-   const f=new FormData();f.set('file',chosenFile);f.set('mode',commit?'commit':'preview');f.set('dateOrder',dateOrder);
-   if(selection.sheetName)f.set('sheetName',selection.sheetName);if(selection.nameColumn)f.set('nameColumn',selection.nameColumn);if(selection.birthColumn)f.set('birthColumn',selection.birthColumn);
-   if(commit&&preview?.previewId)f.set('previewId',preview.previewId);
-   const r=await fetch('/api/admin/import',{method:'POST',body:f}),d=await r.json();
-   if(!r.ok)throw new Error(d.error||'The file could not be processed. Please try again.');
-   if(d.done){setDone(d);setPreview(null);setFile(null);if(input.current)input.current.value='';}
-   else setPreview(d);
-  }catch(e){setError(e instanceof Error?e.message:'The upload could not finish. Please try again.');}finally{setBusy(false);}
- }
- function downloadIssues() {
-  if(!preview)return;
-  const quote=(v:string)=>`"${(/^[=+@-]/.test(v)?"'":'')+v.replaceAll('"','""')}"`;
-  const content=['Row,Name,Needs attention',...preview.issues.map(i=>[String(i.row),i.name,i.reason].map(quote).join(','))].join('\r\n');
-  const url=URL.createObjectURL(new Blob(['\ufeff'+content],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='people-needing-attention.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+   const response = await fetch('/api/admin/memorial-settings', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ source, enabled: !enabled[source] }),
+   });
+   const data = await response.json();
+   if (!response.ok) throw new Error(data.error || 'The search setting could not be saved.');
+   setEnabled(data);
+  } catch (error) {
+   setSearchError(error instanceof Error ? error.message : 'The search setting could not be saved.');
+  } finally {
+   setSearchBusy(false);
+  }
  }
  return <main className="admin-page">
   <header className="admin-heading"><div><p className="admin-eyebrow">STAFF ONLY</p><h1>Remember someone</h1></div><a href="/">View calendar</a></header>
@@ -62,28 +61,19 @@ export default function AdminPanel({signedIn,initialPublicHidden}:{signedIn:bool
     <div className="admin-actions"><button type="button" role="switch" aria-label="Hide public website" aria-checked={publicHidden} className="admin-kill-switch" disabled={visibilityBusy} onClick={()=>void toggleWebsite()}>{visibilityBusy?'Saving…':`Kill switch: ${publicHidden?'ON':'OFF'}`}</button><span role="status">{publicHidden?'Website hidden':'Website visible'}</span></div>
     {visibilityError&&<p className="admin-error" role="alert">{visibilityError}</p>}
    </section>
-   <section className="admin-card"><h2>Add people from a spreadsheet</h2><p>Choose an Excel or CSV file with names and birthdays. Up to 10,000 people per file, 4 MB maximum.</p>
-    <p className="admin-help">Use Name and DOB, or DateOfBirth, DateOfDeath, FirstName, LastName, MiddleName. We’ll detect the columns automatically. Dates use MM/DD/YYYY. <a href="/api/admin/template">Download Excel template</a></p>
-    <label className="admin-file-label" htmlFor="people-file">Choose your spreadsheet</label><input ref={input} id="people-file" type="file" accept=".xlsx,.csv" disabled={busy} onChange={e=>changeFile(e.target.files?.[0]||null)} />
-    {file&&preview&&preview.sheets.length>1&&<div className="admin-options">
-     <label htmlFor="import-sheet">Sheet to import</label><select id="import-sheet" value={sheetName||preview.sheetName} disabled={busy} onChange={e=>{const next=e.target.value;setSheetName(next);setPreview(null);setNameColumn('');setBirthColumn('');void upload(false,file,{sheetName:next,nameColumn:'',birthColumn:''});}}>{preview.sheets.map(s=><option key={s}>{s}</option>)}</select>
+   <section className="admin-card">
+    <h2>Remember Someone searches</h2>
+    {!enabled && <p role="status">Search settings could not be loaded. Refresh to try again.</p>}
+    {enabled && <div className="admin-actions">
+     {recordSources.map(source => {
+      const label = source === 'vital' ? 'Birth and death search' : 'Burial search';
+      return <button type="button" role="switch" aria-label={label} aria-checked={enabled[source]} key={source} disabled={searchBusy} onClick={() => void toggleSearch(source)}>{label} {enabled[source] ? 'on' : 'off'}</button>;
+     })}
     </div>}
-    {preview?.needsColumns&&<div className="admin-column-picker"><h3>Which columns should we use?</h3><p>We couldn’t identify the names and birthdays automatically. Pick the matching headings below.</p>
-     <label htmlFor="name-column">Person’s full name</label><select id="name-column" value={nameColumn} onChange={e=>setNameColumn(e.target.value)}><option value="">Choose a column</option>{preview.headers.map((h,i)=><option key={i} value={i+1}>{h}</option>)}</select>
-     <label htmlFor="birth-column">Date of birth</label><select id="birth-column" value={birthColumn} onChange={e=>setBirthColumn(e.target.value)}><option value="">Choose a column</option>{preview.headers.map((h,i)=><option key={i} value={i+1}>{h}</option>)}</select>
-    </div>}
-    {busy&&!preview&&<p role="status">Reading your spreadsheet…</p>}
-    {file&&!busy&&(!preview||preview.needsColumns)&&<button className="admin-primary" disabled={Boolean(preview?.needsColumns&&(!nameColumn||!birthColumn))} onClick={()=>void upload()}>{preview?.needsColumns?'Preview people':'Try preview again'}</button>}
-    {preview?.previewId&&<div className="admin-preview"><h3>Check before adding</h3><p><strong>{preview.added.toLocaleString()} new</strong> · {preview.duplicates.toLocaleString()} already present · {preview.skipped.toLocaleString()} need attention</p>
-     <div className="admin-table-wrap"><table><thead><tr><th>Name</th><th>Birthday</th></tr></thead><tbody>{preview.preview.map((p,i)=><tr key={i}><td>{p.name}</td><td>{date(p.birthDate)}</td></tr>)}</tbody></table></div>
-     <p className="admin-help">Showing the first {preview.preview.length} valid entries. These birthdays repeat every year.</p>
-     {preview.skipped>0&&<p>{preview.skipped.toLocaleString()} rows will be skipped. <button className="admin-text-button" onClick={downloadIssues}>Download rows needing attention</button></p>}
-     <div className="admin-actions"><button className="admin-primary" disabled={busy||!preview.added} onClick={()=>void upload(true)}>{busy?'Adding people…':`Add ${preview.added.toLocaleString()} people`}</button><button disabled={busy} onClick={()=>input.current?.click()}>Choose another file</button></div>
-     {busy&&<p role="status">Please keep this page open until the upload finishes. Retrying won’t add duplicates.</p>}
-    </div>}
-    {done&&<div className="admin-success" role="status"><h3>Upload complete</h3><p>{done.added.toLocaleString()} people added. {done.duplicates.toLocaleString()} duplicates skipped. {done.skipped.toLocaleString()} rows need attention.</p><p>The new people are now available in Remember Someone search.</p></div>}
-    {error&&<p className="admin-error" role="alert">{error}</p>}
+    {searchError && <p className="admin-error" role="alert">{searchError}</p>}
    </section>
+   <RecordUpload source="vital" />
+   <RecordUpload source="burial" />
   </>}
  </main>;
 }

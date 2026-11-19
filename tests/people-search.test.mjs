@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import {searchPeople} from '../lib/people-search.ts';
+import {searchBurials, searchPeople} from '../lib/people-search.ts';
 
 const person=(id,name)=>({id,name,birthDate:'1940-04-03'});
 const people=[person('ada','Ada M. Example'),person('sam','Sam Example Jr.'),person('anne','Anne Other'),person('accent','José O’Neal')];
@@ -28,4 +28,12 @@ test('unrelated searches stay empty and responses contain only matched people',(
 test('large family searches return at most 100 results',()=>{
  const relatives=Array.from({length:120},(_,i)=>person(String(i),`Relative ${i} Example`));
  assert.equal(searchPeople(relatives,'Example').matches.length,100);
+});
+
+test('burial search can fall back to a clearly identified surname match', () => {
+ const john = person('john', 'John Russell Jr.');
+ const herman = person('herman', 'Herman Russell');
+ const unrelated = person('other', 'Russell Example');
+ assert.deepEqual(searchBurials([john, unrelated], 'Herman Russell'), { matches: [john], surname: 'russell' });
+ assert.deepEqual(searchBurials([john, herman, unrelated], 'Herman Russell'), { matches: [herman] });
 });

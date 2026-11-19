@@ -2,7 +2,18 @@ export type MemorialReminder = { id: string; title: string; date: string };
 export type BirthdayPerson = { id: string; name: string; birthDate: string };
 
 export function birthdayReminder(person: BirthdayPerson): MemorialReminder {
-  return { id: `${person.id}-birth`, title: `${person.name} — birth anniversary`, date: person.birthDate };
+  return anniversaryReminder(person, 'birth', person.birthDate);
+}
+
+export type AnniversaryKind = 'birth' | 'death' | 'burial';
+const anniversaryNames: Record<AnniversaryKind, string> = {
+  birth: 'birth anniversary',
+  death: 'death anniversary',
+  burial: 'burial anniversary',
+};
+
+export function anniversaryReminder(person: { id: string; name: string }, kind: AnniversaryKind, date: string): MemorialReminder {
+  return { id: `${person.id}-${kind}`, title: `${person.name} — ${anniversaryNames[kind]}`, date };
 }
 
 // Pick the next occurrence of the birthday; all-day DTEND is exclusive.
@@ -40,17 +51,22 @@ function foldIcsLine(line: string) {
 }
 
 export function birthdayCalendar(person: BirthdayPerson, now = new Date()) {
-  const reminder = birthdayReminder(person);
+  return anniversaryCalendar(birthdayReminder(person), 'birth', now);
+}
+
+export function anniversaryCalendar(reminder: MemorialReminder, kind: AnniversaryKind, now = new Date()) {
+  const label = anniversaryNames[kind];
+  const alarmLabel = label[0].toUpperCase() + label.slice(1);
   const { start, end } = memorialDates(reminder.date, now);
   return [
     'BEGIN:VCALENDAR', 'VERSION:2.0',
-    'PRODID:-//South-View Cemetery//Birth Anniversaries//EN',
-    'CALSCALE:GREGORIAN', 'X-WR-CALNAME:South-View Birth Anniversaries',
+    'PRODID:-//South-View Cemetery//Anniversary Reminders//EN',
+    'CALSCALE:GREGORIAN', 'X-WR-CALNAME:South-View Anniversaries',
     'BEGIN:VEVENT', `UID:${icsEscape(reminder.id)}@southview-calendar`,
     `DTSTAMP:${now.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')}`,
     `DTSTART;VALUE=DATE:${start}`, `DTEND;VALUE=DATE:${end}`,
     'RRULE:FREQ=YEARLY', `SUMMARY:${icsEscape(reminder.title)}`,
-    'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Birth anniversary tomorrow',
+    'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${alarmLabel} tomorrow`,
     'TRIGGER:-P1D', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR', '',
   ].map(foldIcsLine).join('\r\n');
 }

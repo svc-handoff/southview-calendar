@@ -6,20 +6,20 @@ import { articleParagraphs } from '@/lib/article-display';
 import { ArticleCopy } from '@/components/article-copy';
 import { localCalendarDate } from '@/lib/calendar-date';
 import { calendarEventsForMonth, type CalendarEvent, type HistoricalArticle } from '@/lib/events';
-import { birthdayCalendar, birthdayReminder, googleMemorialLink, type BirthdayPerson } from '@/lib/google-reminders';
+import { RememberSomeone } from '@/components/remember-someone';
+import type { SearchSettings } from '@/lib/memorial-records';
 
 const months = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
-type MemorialMatch = BirthdayPerson;
 function formatDate(date: string) {
   const [year, month, day] = date.split('-').map(Number);
   return new Date(Date.UTC(year, month - 1, day)).toLocaleDateString('en-US', { timeZone: 'UTC', month: 'long', day: 'numeric', year: 'numeric' });
 }
 
-export default function Calendar() {
+export default function Calendar({ searchSettings }: { searchSettings: SearchSettings }) {
   const [date, setDate] = useState<{ year: number; month: number } | null>(null);
   const [today, setToday] = useState<string | null>(null);
   const [live, setLive] = useState<CalendarEvent[]>([]);
@@ -27,10 +27,6 @@ export default function Calendar() {
   const [connection, setConnection] = useState('loading');
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
   const [showReminderBuilder, setShowReminderBuilder] = useState(false);
-  const [lookupName, setLookupName] = useState('');
-  const [matches, setMatches] = useState<MemorialMatch[]>([]);
-  const [lookupError, setLookupError] = useState('');
-  const [lookupLoading, setLookupLoading] = useState(false);
   useEffect(() => {
     // Resolve the visitor's date after hydration, never the server's time zone.
     const updateToday = () => {
@@ -98,35 +94,6 @@ export default function Calendar() {
     setDate({ year: local.year, month: local.month });
   }
 
-  async function searchMemorial() {
-    setLookupError('');
-    setMatches([]);
-    setLookupLoading(true);
-    try {
-      const response = await fetch(`/api/memorials?name=${encodeURIComponent(lookupName)}`, { cache: 'no-store' });
-      const data = await response.json() as { matches?: MemorialMatch[]; error?: string; directoryEmpty?: boolean; matchType?: string; fuzzy?: boolean };
-      if (!response.ok) throw new Error(data.error || 'Search could not be completed.');
-      const found: MemorialMatch[] = data.matches || [];
-      setMatches(found);
-
-      if (!found.length) setLookupError(data.directoryEmpty ? 'Birthday search is not ready yet. Please try again later.' : 'No birthdays found. Try another name.');
-    } catch (error) {
-      setLookupError(error instanceof Error ? error.message : 'Search could not be completed.');
-    } finally {
-      setLookupLoading(false);
-    }
-  }
-
-  function downloadBirthday(person: BirthdayPerson) {
-    const blob = new Blob([birthdayCalendar(person)], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `south-view-birthday-${person.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}.ics`;
-    link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }
-
   function renderEvent(event: CalendarEvent) {
     return (
       <button className={`calendar-event ${event.kind === 'tour' ? 'tour-event' : 'history-event'}`} key={event.id} onClick={() => setSelectedEvent(event)}>
@@ -151,7 +118,7 @@ export default function Calendar() {
             </div>
             <h1>{months[date.month]} <span>{date.year}</span></h1>
           </div>
-          <button className="reminder-button" onClick={() => setShowReminderBuilder(true)}>Remember someone</button>
+          {(searchSettings.vital || searchSettings.burial) && <button className="reminder-button" onClick={() => setShowReminderBuilder(true)}>Remember someone</button>}
         </div>
         {connection==='error'&&<p role="status">Google Calendar is unavailable. Reload to try again.</p>}
         <div className="calendar-grid" style={{ gridTemplateRows: `34px repeat(${weekCount}, minmax(84px, 1fr))` }}>
@@ -198,38 +165,7 @@ export default function Calendar() {
         </div>
       )}
 
-      {showReminderBuilder && (
-        <dialog open className="reminder-dialog" aria-labelledby="reminder-title" onClick={(event) => {
-          if (event.target === event.currentTarget) setShowReminderBuilder(false);
-        }}>
-          <button className="dialog-close" aria-label="Close" onClick={() => setShowReminderBuilder(false)}>×</button>
-          <h2 id="reminder-title">Remember someone</h2>
-          <p className="reminder-help">Find someone to add a yearly birthday reminder to your calendar. Choose Google Calendar, or download an .ics calendar file to open and import into your calendar app.</p>
-          <form className="reminder-search" onSubmit={(event) => { event.preventDefault(); void searchMemorial(); }}>
-            <label htmlFor="memorial-name">Name</label>
-            <div className="reminder-search-row">
-                <input id="memorial-name" value={lookupName} onChange={(event) => setLookupName(event.target.value)} autoComplete="off" required minLength={3} maxLength={100} />
-              <button type="submit" disabled={lookupLoading}>{lookupLoading ? 'Searching…' : 'Search'}</button>
-            </div>
-          </form>
-          {lookupError && <p className="reminder-message" role="status">{lookupError}</p>}
-          {matches.length > 0 && (
-            <div className="reminder-results" aria-label="Matching cemetery records">
-              <p className="reminder-message">{matches.length} {matches.length === 1 ? 'match' : 'matches'}</p>
-              {matches.map((person) => (
-                <article className="reminder-match" key={person.id} aria-label={`${person.name}, born ${formatDate(person.birthDate)}`}>
-                  <strong>{person.name}</strong>
-                  <span>Born {formatDate(person.birthDate)}</span>
-                  <div className="reminder-export-actions">
-                    <a className="google-reminders" href={googleMemorialLink(birthdayReminder(person))} target="_blank" rel="noopener noreferrer" aria-label={`Add ${person.name}'s birth anniversary to Google Calendar`}>Google Calendar ↗</a>
-                    <button type="button" className="download-reminders" onClick={() => downloadBirthday(person)} aria-label={`Download ${person.name}'s birth anniversary`}>Download .ics</button>
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
-        </dialog>
-      )}
+      {showReminderBuilder && <RememberSomeone onClose={() => setShowReminderBuilder(false)} />}
     </main>
   );
 }
