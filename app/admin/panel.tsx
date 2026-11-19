@@ -67,7 +67,7 @@ export default function AdminPanel({ signedIn, initialPublicHidden, searchSettin
     {enabled && <div className="admin-actions">
      {recordSources.map(source => {
       const label = source === 'vital' ? 'Birth and death search' : 'Burial search';
-      return <button type="button" role="switch" aria-label={label} aria-checked={enabled[source]} key={source} disabled={searchBusy} onClick={() => void toggleSearch(source)}>{label} {enabled[source] ? 'on' : 'off'}</button>;
+      return <button type="button" role="switch" aria-label={label} aria-checked={enabled[source]} className="admin-search-switch" key={source} disabled={searchBusy} onClick={() => void toggleSearch(source)}>{label} {enabled[source] ? 'on' : 'off'}</button>;
      })}
     </div>}
     {searchError && <p className="admin-error" role="alert">{searchError}</p>}
