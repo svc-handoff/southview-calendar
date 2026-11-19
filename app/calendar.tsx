@@ -13,6 +13,7 @@ const months = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
 ];
+const currentEventLabel = 'Happening at South-View';
 
 function formatDate(date: string) {
   const [year, month, day] = date.split('-').map(Number);
@@ -95,10 +96,14 @@ export default function Calendar({ searchSettings }: { searchSettings: SearchSet
   }
 
   function renderEvent(event: CalendarEvent) {
+    const isCurrent = event.kind === 'tour';
     return (
-      <button className={`calendar-event ${event.kind === 'tour' ? 'tour-event' : 'history-event'}`} key={event.id} onClick={() => setSelectedEvent(event)}>
+      <button className={`calendar-event ${isCurrent ? 'tour-event' : 'history-event'}`} key={event.id} onClick={() => setSelectedEvent(event)}>
         <span className="event-dot" aria-hidden="true" />
-        <span>{event.title}</span>
+        <span className="calendar-event-text">
+          {isCurrent && <span className="calendar-event-label">{currentEventLabel}</span>}
+          {event.title}
+        </span>
         {event.id === 'demo-tour' && <small>DEMO</small>}
       </button>
     );
@@ -151,7 +156,7 @@ export default function Calendar({ searchSettings }: { searchSettings: SearchSet
         }}>
           <section className="event-modal" role="dialog" aria-modal="true" aria-labelledby="selected-event-title">
             <button className="dialog-close" aria-label="Close" onClick={() => setSelectedEvent(null)}>×</button>
-            <p className="tour-label">{selectedEvent.kind === 'tour' ? 'Current event' : 'Historical event'}</p>
+            <p className="tour-label">{selectedEvent.kind === 'tour' ? currentEventLabel : 'Historical event'}</p>
             <h2 id="selected-event-title">{selectedEvent.title}</h2>
             {selectedEvent.image && <figure className="modal-image">
               <img src={selectedEvent.image} alt={selectedEvent.title} />

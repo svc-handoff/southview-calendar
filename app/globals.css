@@ -52,6 +52,8 @@ button { -webkit-tap-highlight-color: transparent; }
 .tour-event { background: #c4eed0; color: #0a3818; }
 .tour-event:hover { background: #b3e6c2; }
 .tour-event .event-dot { background: #188038; }
+.calendar-event-text { min-width: 0; }
+.calendar-event-label { display: block; margin-bottom: 2px; font-size: .85em; font-weight: 600; }
 .calendar-event small { flex: 0 0 auto; color: inherit; font-size: 8px; font-weight: 700; letter-spacing: .5px; }
 .calendar-status { min-height: 18px; padding-top: 7px; color: var(--muted); font-size: 11px; }
 
