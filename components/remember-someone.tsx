@@ -112,16 +112,18 @@ export function RememberSomeone({ onClose, vitalSearchEnabled }: { onClose: () =
       <h2 id="reminder-title">Remember someone</h2>
       <p className="reminder-help">Find someone and add a yearly reminder. Choose Google Calendar or download an .ics file to import into your calendar app.</p>
       {(results?.enabled.vital ?? vitalSearchEnabled) && (
-        <div className="reminder-anniversary-toggle" role="group" aria-label="Remember on">
-          <label>
-            <input type="radio" name="reminder-anniversary" checked={anniversary === 'birth'} onChange={() => setAnniversary('birth')} />
-            <span>Birthday</span>
-          </label>
-          <label>
-            <input type="radio" name="reminder-anniversary" checked={anniversary === 'death'} onChange={() => setAnniversary('death')} />
-            <span>Death anniversary</span>
-          </label>
-        </div>
+        <button
+          type="button"
+          className="reminder-anniversary-switch"
+          role="switch"
+          aria-label="Use death anniversary"
+          aria-checked={anniversary === 'death'}
+          onClick={() => setAnniversary(current => current === 'birth' ? 'death' : 'birth')}
+        >
+          <span className="reminder-switch-birth">Birthday</span>
+          <span className="reminder-switch-track" aria-hidden="true"><span /></span>
+          <span className="reminder-switch-death">Death anniversary</span>
+        </button>
       )}
       <form className="reminder-search" onSubmit={search}>
         <label htmlFor="memorial-name">Name</label>
